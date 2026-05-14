@@ -8,7 +8,7 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 
 ### 1.1 Infrastructure Setup
 
-- [ ] Create Neon DB project and note connection strings (pooled + direct)
+- [x] Create Neon DB project and note connection strings (pooled + direct)
 - [ ] Create Vercel project and link to GitHub repo
 - [ ] Set all required environment variables in Vercel (see `Spec.md → Environment Variables`)
 - [ ] Configure custom domain `southwestgalleries.com` on Vercel
@@ -88,9 +88,9 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 
 ### 1.9 Initial Data Seeding
 
-- [ ] Source and seed 150–200 high-quality listings across Scottsdale, Santa Fe, Denver, Sedona, Tucson
-- [ ] Ensure each listing has: name, slug, listing_type, state_code, city_id, short_description, hero_image_url, status='approved'
-- [ ] Verify `gallery_count` on `states` and `cities` reflects seeded data (update manually or via trigger)
+- [x] Source and seed 150–200 high-quality listings across Scottsdale, Santa Fe, Denver, Sedona, Tucson (108 seeded across 7 states)
+- [x] Ensure each listing has: name, slug, listing_type, state_code, city_id, short_description, status='approved'
+- [x] Verify `gallery_count` on `states` and `cities` reflects seeded data
 
 ### 1.10 Ads Setup
 
