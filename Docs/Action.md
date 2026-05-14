@@ -9,10 +9,10 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 ### 1.1 Infrastructure Setup
 
 - [x] Create Neon DB project and note connection strings (pooled + direct)
-- [ ] Create Vercel project and link to GitHub repo
-- [ ] Set all required environment variables in Vercel (see `Spec.md → Environment Variables`)
+- [x] Create Vercel project and link to GitHub repo
+- [x] Set all required environment variables in Vercel (NEON_DB_KEY, ADMIN_PASSWORD)
 - [ ] Configure custom domain `southwestgalleries.com` on Vercel
-- [ ] Confirm Astro project builds and deploys cleanly to Vercel
+- [x] Confirm Astro project builds and deploys cleanly to Vercel
 
 ### 1.2 Database Migrations
 
