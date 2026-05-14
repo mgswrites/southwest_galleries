@@ -1,0 +1,58 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import { getArtStyles, getArtStyle, getListingsByArtStyle } from '../../lib/queries';
+
+export async function getStaticPaths() {
+  const styles = await getArtStyles();
+  return styles.map((s) => ({ params: { style: s.slug } }));
+}
+
+const { style: styleSlug } = Astro.params;
+const styleData = await getArtStyle(styleSlug!);
+if (!styleData) return Astro.redirect('/art-styles/');
+
+const listings = await getListingsByArtStyle(styleData.id);
+
+const title = styleData.meta_title ?? `${styleData.name} Art Galleries in the Southwest | Southwest Galleries`;
+const description = styleData.meta_description ?? styleData.description ?? `Find galleries specializing in ${styleData.name} art across the American Southwest.`;
+---
+
+<Base {title} {description}>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[
+        { label: 'Home', href: '/' },
+        { label: 'Art Styles', href: '/art-styles/' },
+        { label: styleData.name },
+      ]} />
+      <h1>{styleData.name} Art Galleries</h1>
+      {styleData.description && <p>{styleData.description}</p>}
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    {listings.length > 0 ? (
+      <div class="listings-grid">
+        {listings.map((l) => (
+          <ListingCard
+            slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
+            short_description={l.short_description} hero_image_url={l.hero_image_url}
+            neighborhood={l.neighborhood} city_name={l.city_name} city_slug={l.city_slug}
+            state_slug={l.state_slug}
+          />
+        ))}
+      </div>
+    ) : (
+      <p style="color:var(--muted);text-align:center;padding:3rem">
+        No listings yet for this style. <a href="/submit/">Submit one →</a>
+      </p>
+    )}
+  </div>
+</Base>
+
+<style>
+  .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+</style>

@@ -1,17 +1,162 @@
 ---
+export const prerender = true;
+import Base from '../layouts/Base.astro';
+import ListingCard from '../components/ListingCard.astro';
+import { getStates } from '../lib/queries';
+import sql from '../lib/db';
 
+const states = await getStates();
+const featuredListings = await sql`
+  SELECT l.id, l.slug, l.name, l.listing_type, l.tier, l.short_description,
+         l.hero_image_url, l.neighborhood,
+         c.name AS city_name, c.slug AS city_slug,
+         s.slug AS state_slug
+  FROM listings l
+  LEFT JOIN cities c ON c.id = l.city_id
+  LEFT JOIN states s ON s.code = l.state_code
+  WHERE l.tier IN ('featured', 'premium')
+    AND l.status = 'approved'
+    AND l.deleted_at IS NULL
+  ORDER BY CASE l.tier WHEN 'premium' THEN 1 ELSE 2 END, RANDOM()
+  LIMIT 6
+`;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Southwest Galleries',
+  url: 'https://southwestgalleries.com',
+  description: 'The definitive art and cultural directory for the American Southwest.',
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Southwest Galleries',
+  url: 'https://southwestgalleries.com',
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: 'https://southwestgalleries.com/search/?q={search_term_string}',
+    'query-input': 'required name=search_term_string',
+  },
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base
+  title="Southwest Galleries — Art Galleries, Museums & Cultural Venues"
+  description="The definitive directory of art galleries, museums, and cultural venues across the American Southwest. Discover art in Arizona, New Mexico, Colorado, Nevada, Utah, and beyond."
+  schema={[orgSchema, websiteSchema]}
+>
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Discover Art in the American Southwest</h1>
+      <p>The definitive directory of galleries, museums, and cultural venues across Arizona, New Mexico, Colorado, and beyond.</p>
+      <div class="hero-actions">
+        <a href="/galleries/" class="btn-primary">Browse Galleries</a>
+        <a href="/guides/" class="btn-secondary">Read Guides</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="browse-states">
+    <div class="container">
+      <h2>Browse by State</h2>
+      <div class="states-row">
+        {states.map((s) => (
+          <a href={`/galleries/${s.slug}/`} class="state-link">
+            <span class="state-name">{s.name}</span>
+            {s.gallery_count > 0 && <span class="state-count">{s.gallery_count}</span>}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {featuredListings.length > 0 && (
+    <section class="featured-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Galleries</h2>
+          <a href="/galleries/" class="see-all">See all →</a>
+        </div>
+        <div class="listings-grid">
+          {featuredListings.map((l) => (
+            <ListingCard
+              slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
+              short_description={l.short_description} hero_image_url={l.hero_image_url}
+              neighborhood={l.neighborhood} city_name={l.city_name} city_slug={l.city_slug}
+              state_slug={l.state_slug}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="cta-section">
+    <div class="container cta-inner">
+      <div>
+        <h2>Own a gallery or museum?</h2>
+        <p>Get your venue in front of thousands of art lovers and collectors.</p>
+      </div>
+      <a href="/submit/" class="btn-primary">Submit Your Listing</a>
+    </div>
+  </section>
+
+  <section class="art-styles-promo">
+    <div class="container">
+      <h2>Explore by Art Style</h2>
+      <div class="style-links">
+        <a href="/art-styles/native-american/">Native American</a>
+        <a href="/art-styles/contemporary/">Contemporary</a>
+        <a href="/art-styles/western-cowboy/">Western & Cowboy</a>
+        <a href="/art-styles/landscape-plein-air/">Plein Air</a>
+        <a href="/art-styles/ceramics-pottery/">Ceramics & Pottery</a>
+        <a href="/art-styles/sculpture/">Sculpture</a>
+        <a href="/art-styles/photography/">Photography</a>
+        <a href="/art-styles/jewelry/">Jewelry</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background: linear-gradient(135deg, #2a1a0e 0%, #5c2d0e 50%, #2a8c8c 100%);
+    color: #fff;
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+  .hero-inner { max-width: 680px; margin: 0 auto; }
+  .hero h1 { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; line-height: 1.15; margin-bottom: 1rem; }
+  .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.85); margin-bottom: 2rem; line-height: 1.6; }
+  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: var(--clay); color: #fff; padding: 0.75rem 1.75rem; border-radius: 6px; font-weight: 700; font-size: 1rem; text-decoration: none; }
+  .btn-primary:hover { background: #a8521f; text-decoration: none; }
+  .btn-secondary { background: rgba(255,255,255,0.15); color: #fff; padding: 0.75rem 1.75rem; border-radius: 6px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid rgba(255,255,255,0.3); }
+  .btn-secondary:hover { background: rgba(255,255,255,0.25); text-decoration: none; }
+
+  .browse-states { background: var(--sand); padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+  .browse-states h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+  .states-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .state-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.1rem; background: #fff; border: 1px solid var(--border); border-radius: 20px; color: var(--ink); font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: border-color 0.15s, background 0.15s; }
+  .state-link:hover { border-color: var(--turquoise); background: #f0fafa; text-decoration: none; }
+  .state-count { background: var(--turquoise); color: #fff; font-size: 0.7rem; padding: 0.1rem 0.4rem; border-radius: 10px; font-weight: 700; }
+
+  .featured-section { padding: 3rem 0; }
+  .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; }
+  .section-header h2 { font-size: 1.4rem; font-weight: 700; }
+  .see-all { font-size: 0.875rem; color: var(--turquoise); text-decoration: none; font-weight: 600; }
+  .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+  .cta-section { background: var(--ink); color: #fff; padding: 3rem 0; }
+  .cta-inner { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .cta-inner h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.35rem; }
+  .cta-inner p { color: #aaa; font-size: 0.95rem; }
+
+  .art-styles-promo { padding: 3rem 0; background: var(--sand); }
+  .art-styles-promo h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
+  .style-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .style-links a { padding: 0.45rem 1rem; background: #fff; border: 1px solid var(--border); border-radius: 20px; font-size: 0.875rem; color: var(--ink); text-decoration: none; }
+  .style-links a:hover { border-color: var(--turquoise); background: #f0fafa; text-decoration: none; }
+</style>

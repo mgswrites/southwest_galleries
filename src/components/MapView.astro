@@ -1,0 +1,53 @@
+---
+export interface Marker {
+  lat: number;
+  lng: number;
+  label: string;
+  href: string;
+}
+export interface Props {
+  markers: Marker[];
+  centerLat?: number;
+  centerLng?: number;
+  zoom?: number;
+  height?: string;
+}
+
+const {
+  markers,
+  centerLat = markers[0]?.lat ?? 34.0,
+  centerLng = markers[0]?.lng ?? -111.0,
+  zoom = 12,
+  height = '400px',
+} = Astro.props;
+
+const mapId = `map-${Math.random().toString(36).slice(2)}`;
+---
+
+<div id={mapId} class="map-container" style={`height:${height}`} aria-label="Map of listings"></div>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" is:inline></script>
+
+<script define:vars={{ mapId, markers, centerLat, centerLng, zoom }}>
+  (function () {
+    const el = document.getElementById(mapId);
+    if (!el || !window.L) return;
+
+    const map = L.map(el).setView([centerLat, centerLng], zoom);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 18,
+    }).addTo(map);
+
+    markers.forEach(({ lat, lng, label, href }) => {
+      L.marker([lat, lng])
+        .addTo(map)
+        .bindPopup(`<a href="${href}" style="font-weight:600">${label}</a>`);
+    });
+  })();
+</script>
+
+<style>
+  .map-container { width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+</style>

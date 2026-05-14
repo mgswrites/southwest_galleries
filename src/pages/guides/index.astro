@@ -1,0 +1,56 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import { getPublishedPosts } from '../../lib/queries';
+
+const posts = await getPublishedPosts();
+---
+
+<Base
+  title="Southwest Art Guides | Southwest Galleries"
+  description="Editorial guides to art galleries, neighborhoods, and the art scene across the American Southwest."
+>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[{ label: 'Home', href: '/' }, { label: 'Guides' }]} />
+      <h1>Southwest Art Guides</h1>
+      <p>In-depth guides to galleries, neighborhoods, and the art scene across the Southwest.</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    {posts.length > 0 ? (
+      <div class="posts-grid">
+        {posts.map((p) => (
+          <a href={`/guides/${p.slug}/`} class="post-card">
+            {p.hero_image_url && (
+              <img src={p.hero_image_url} alt={p.title} loading="lazy" />
+            )}
+            <div class="post-body">
+              <h2>{p.title}</h2>
+              {p.excerpt && <p>{p.excerpt}</p>}
+              <span class="post-meta">
+                {p.author_name}
+                {p.published_at && ` · ${new Date(p.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}`}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p style="color:var(--muted);text-align:center;padding:3rem">Editorial guides coming soon.</p>
+    )}
+  </div>
+</Base>
+
+<style>
+  .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+  .post-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; color: inherit; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; }
+  .post-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .post-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .post-body { padding: 1.25rem; }
+  .post-body h2 { font-size: 1.05rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.5rem; }
+  .post-body p { font-size: 0.875rem; color: var(--muted); line-height: 1.5; margin-bottom: 0.75rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .post-meta { font-size: 0.75rem; color: #999; }
+</style>

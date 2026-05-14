@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /submit/
+Disallow: /admin/
+Disallow: /search/
+Allow: /
+
+Sitemap: https://southwestgalleries.com/sitemap-index.xml

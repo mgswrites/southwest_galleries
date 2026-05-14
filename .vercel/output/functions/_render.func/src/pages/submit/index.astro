@@ -1,0 +1,215 @@
+---
+export const prerender = false;
+
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import { submissionSchema } from '../../lib/schema';
+import { createSubmission } from '../../lib/queries';
+
+let success = false;
+let errors: Record<string, string> = {};
+let formData: Record<string, string> = {};
+
+if (Astro.request.method === 'POST') {
+  const raw = await Astro.request.formData();
+  formData = Object.fromEntries(raw.entries()) as Record<string, string>;
+  const result = submissionSchema.safeParse({
+    ...formData,
+    art_styles: raw.getAll('art_styles'),
+  });
+
+  if (result.success) {
+    await createSubmission(result.data);
+    success = true;
+  } else {
+    for (const [field, issues] of Object.entries(result.error.flatten().fieldErrors)) {
+      errors[field] = issues?.[0] ?? 'Invalid';
+    }
+  }
+}
+
+const ART_STYLES = [
+  { value: 'native-american', label: 'Native American' },
+  { value: 'contemporary', label: 'Contemporary' },
+  { value: 'western-cowboy', label: 'Western & Cowboy' },
+  { value: 'landscape-plein-air', label: 'Landscape & Plein Air' },
+  { value: 'ceramics-pottery', label: 'Ceramics & Pottery' },
+  { value: 'sculpture', label: 'Sculpture' },
+  { value: 'photography', label: 'Photography' },
+  { value: 'jewelry', label: 'Jewelry' },
+  { value: 'glass-art', label: 'Glass Art' },
+  { value: 'abstract', label: 'Abstract' },
+  { value: 'figurative', label: 'Figurative' },
+  { value: 'adobe-pueblo', label: 'Adobe & Pueblo' },
+];
+
+const STATES = [
+  { value: 'AZ', label: 'Arizona' }, { value: 'CO', label: 'Colorado' },
+  { value: 'NM', label: 'New Mexico' }, { value: 'NV', label: 'Nevada' },
+  { value: 'TX', label: 'Texas' }, { value: 'UT', label: 'Utah' },
+  { value: 'CA', label: 'California' },
+];
+
+const TYPES = [
+  { value: 'gallery', label: 'Gallery' }, { value: 'museum', label: 'Museum' },
+  { value: 'cultural_center', label: 'Cultural Center' }, { value: 'artist_studio', label: 'Artist Studio' },
+  { value: 'art_fair', label: 'Art Fair' }, { value: 'sculpture_park', label: 'Sculpture Park' },
+  { value: 'auction_house', label: 'Auction House' }, { value: 'art_school', label: 'Art School' },
+];
+---
+
+<Base
+  title="Submit a Listing | Southwest Galleries"
+  description="Add your gallery, museum, or cultural venue to the Southwest Galleries directory."
+>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[{ label: 'Home', href: '/' }, { label: 'Submit a Listing' }]} />
+      <h1>Submit a Listing</h1>
+      <p>List your gallery, museum, or cultural venue. Free listings are reviewed within 2–3 business days.</p>
+    </div>
+  </div>
+
+  <div class="container form-container">
+    {success ? (
+      <div class="success-box">
+        <h2>Submission received!</h2>
+        <p>Thank you for submitting your listing. We'll review it and publish it within 2–3 business days.</p>
+        <a href="/" class="btn">Return Home</a>
+      </div>
+    ) : (
+      <form method="POST" novalidate>
+        <fieldset>
+          <legend>Venue Information</legend>
+
+          <div class="field">
+            <label for="name">Venue Name *</label>
+            <input type="text" id="name" name="name" value={formData.name ?? ''} required />
+            {errors.name && <span class="error">{errors.name}</span>}
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="listing_type">Type *</label>
+              <select id="listing_type" name="listing_type" required>
+                <option value="">Select type…</option>
+                {TYPES.map((t) => (
+                  <option value={t.value} selected={formData.listing_type === t.value}>{t.label}</option>
+                ))}
+              </select>
+              {errors.listing_type && <span class="error">{errors.listing_type}</span>}
+            </div>
+
+            <div class="field">
+              <label for="state_code">State *</label>
+              <select id="state_code" name="state_code" required>
+                <option value="">Select state…</option>
+                {STATES.map((s) => (
+                  <option value={s.value} selected={formData.state_code === s.value}>{s.label}</option>
+                ))}
+              </select>
+              {errors.state_code && <span class="error">{errors.state_code}</span>}
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="city_name">City *</label>
+              <input type="text" id="city_name" name="city_name" value={formData.city_name ?? ''} required />
+              {errors.city_name && <span class="error">{errors.city_name}</span>}
+            </div>
+            <div class="field">
+              <label for="address">Street Address</label>
+              <input type="text" id="address" name="address" value={formData.address ?? ''} />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="website_url">Website URL</label>
+              <input type="url" id="website_url" name="website_url" value={formData.website_url ?? ''} placeholder="https://" />
+              {errors.website_url && <span class="error">{errors.website_url}</span>}
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" value={formData.phone ?? ''} />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="email">Venue Email</label>
+            <input type="email" id="email" name="email" value={formData.email ?? ''} />
+            {errors.email && <span class="error">{errors.email}</span>}
+          </div>
+
+          <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows={5}>{formData.description ?? ''}</textarea>
+            <span class="hint">Tell visitors what makes your venue special. Max 2,000 characters.</span>
+          </div>
+
+          <div class="field">
+            <label>Art Styles (select all that apply)</label>
+            <div class="checkbox-grid">
+              {ART_STYLES.map((s) => (
+                <label class="checkbox-label">
+                  <input type="checkbox" name="art_styles" value={s.value} />
+                  {s.label}
+                </label>
+              ))}
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Your Information</legend>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="submitter_name">Your Name</label>
+              <input type="text" id="submitter_name" name="submitter_name" value={formData.submitter_name ?? ''} />
+            </div>
+            <div class="field">
+              <label for="submitter_email">Your Email *</label>
+              <input type="email" id="submitter_email" name="submitter_email" value={formData.submitter_email ?? ''} required />
+              {errors.submitter_email && <span class="error">{errors.submitter_email}</span>}
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="submitter_note">Anything else we should know?</label>
+            <textarea id="submitter_note" name="submitter_note" rows={3}>{formData.submitter_note ?? ''}</textarea>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="submit-btn">Submit Listing</button>
+      </form>
+    )}
+  </div>
+</Base>
+
+<style>
+  .form-container { max-width: 720px; padding-top: 2rem; padding-bottom: 4rem; }
+  fieldset { border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; }
+  legend { font-weight: 700; font-size: 1rem; padding: 0 0.5rem; }
+  .field { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label { font-size: 0.875rem; font-weight: 600; color: var(--ink); }
+  input, select, textarea {
+    border: 1px solid var(--border); border-radius: 5px; padding: 0.55rem 0.75rem;
+    font-size: 0.9rem; font-family: inherit; width: 100%;
+    transition: border-color 0.15s;
+  }
+  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--turquoise); }
+  .error { font-size: 0.8rem; color: #c0392b; }
+  .hint { font-size: 0.75rem; color: var(--muted); }
+  .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.4rem; margin-top: 0.25rem; }
+  .checkbox-label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: normal; cursor: pointer; }
+  .submit-btn { background: var(--clay); color: #fff; border: none; padding: 0.75rem 2rem; font-size: 1rem; font-weight: 700; border-radius: 6px; cursor: pointer; }
+  .submit-btn:hover { background: #a8521f; }
+  .success-box { text-align: center; padding: 3rem; background: var(--sand); border-radius: 8px; }
+  .success-box h2 { margin-bottom: 0.75rem; }
+  .success-box p { color: var(--muted); margin-bottom: 1.5rem; }
+  .btn { display: inline-block; background: var(--clay); color: #fff; padding: 0.65rem 1.5rem; border-radius: 6px; font-weight: 600; text-decoration: none; }
+  @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+</style>

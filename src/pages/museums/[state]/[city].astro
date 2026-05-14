@@ -1,0 +1,70 @@
+---
+export const prerender = true;
+import Base from '../../../layouts/Base.astro';
+import BreadcrumbNav from '../../../components/BreadcrumbNav.astro';
+import ListingCard from '../../../components/ListingCard.astro';
+import { getStates, getState, getCitiesByState, getCity } from '../../../lib/queries';
+import sql from '../../../lib/db';
+
+export async function getStaticPaths() {
+  const states = await getStates();
+  const paths = [];
+  for (const s of states) {
+    const cities = await getCitiesByState(s.code);
+    for (const c of cities) {
+      paths.push({ params: { state: s.slug, city: c.slug } });
+    }
+  }
+  return paths;
+}
+
+const { state: stateSlug, city: citySlug } = Astro.params;
+const stateData = await getState(stateSlug!);
+if (!stateData) return Astro.redirect('/');
+const cityData = await getCity(stateData.code, citySlug!);
+if (!cityData) return Astro.redirect(`/museums/${stateSlug}/`);
+
+const listings = await sql`
+  SELECT id, slug, name, listing_type, tier, short_description, hero_image_url, neighborhood, address_line1
+  FROM listings
+  WHERE city_id = ${cityData.id}
+    AND listing_type IN ('museum', 'cultural_center', 'sculpture_park')
+    AND status = 'approved'
+    AND deleted_at IS NULL
+  ORDER BY CASE tier WHEN 'premium' THEN 1 WHEN 'featured' THEN 2 WHEN 'basic' THEN 3 ELSE 4 END, name
+`;
+
+const title = `Museums in ${cityData.name}, ${stateData.name} | Southwest Galleries`;
+const description = `Discover museums and cultural centers in ${cityData.name}, ${stateData.name}.`;
+---
+
+<Base {title} {description}>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[
+        { label: 'Home', href: '/' },
+        { label: stateData.name, href: `/galleries/${stateSlug}/` },
+        { label: 'Museums', href: `/museums/${stateSlug}/` },
+        { label: cityData.name },
+      ]} />
+      <h1>Museums in {cityData.name}</h1>
+      <p>{description}</p>
+    </div>
+  </div>
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    <div class="listings-grid">
+      {listings.map((l) => (
+        <ListingCard slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
+          short_description={l.short_description} hero_image_url={l.hero_image_url}
+          neighborhood={l.neighborhood} city_name={cityData.name} />
+      ))}
+    </div>
+    {listings.length === 0 && (
+      <p style="color:var(--muted);text-align:center;padding:3rem">No museum listings yet. <a href="/submit/">Submit one →</a></p>
+    )}
+  </div>
+</Base>
+
+<style>
+  .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+</style>

@@ -1,0 +1,58 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import { getStates } from '../../lib/queries';
+
+const states = await getStates();
+
+const title = 'Art Galleries in the American Southwest | Southwest Galleries';
+const description = 'Browse art galleries across Arizona, New Mexico, Colorado, Nevada, Utah, and beyond. Find the best galleries by state and city.';
+---
+
+<Base {title} {description}>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[{ label: 'Home', href: '/' }, { label: 'Galleries' }]} />
+      <h1>Art Galleries in the Southwest</h1>
+      <p>Discover galleries across 7 states in the American Southwest.</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    <div class="states-grid">
+      {states.map((state) => (
+        <a href={`/galleries/${state.slug}/`} class="state-card">
+          {state.hero_image_url && (
+            <img src={state.hero_image_url} alt={`Art galleries in ${state.name}`} loading="lazy" />
+          )}
+          <div class="state-info">
+            <h2>{state.name}</h2>
+            <p>{state.gallery_count > 0 ? `${state.gallery_count} listings` : 'Listings coming soon'}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .states-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+  .state-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    color: inherit;
+    text-decoration: none;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .state-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .state-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .state-info { padding: 1rem; }
+  .state-info h2 { font-size: 1.1rem; font-weight: 700; }
+  .state-info p { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
+</style>

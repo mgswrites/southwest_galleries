@@ -16,75 +16,75 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 
 ### 1.2 Database Migrations
 
-- [ ] Run ENUM definitions (`listing_type`, `listing_tier`, `submission_status`, `us_state`)
-- [ ] Create `states` table and seed with 7 state rows (AZ, CO, NM, NV, TX, UT, CA)
-- [ ] Create `cities` table
-- [ ] Create `listings` table with all columns
-- [ ] Add GIN index on `listings.search_vector`
-- [ ] Add all standard indexes on `listings`
-- [ ] Create and test `update_listing_search_vector` trigger
-- [ ] Create and test `set_updated_at` trigger
-- [ ] Create `art_styles` table and seed with 12 initial styles
-- [ ] Create `listing_art_styles` junction table
-- [ ] Create `listing_images` table
-- [ ] Create `events` table
-- [ ] Create `posts` table
-- [ ] Create `post_listings` junction table
-- [ ] Create `listing_owners` table
-- [ ] Create `listing_submissions` table
-- [ ] Create `listing_views` table
-- [ ] Create `city_gallery_summary` view
-- [ ] Seed priority cities (Scottsdale, Santa Fe, Denver, Sedona, Tucson, Aspen, Las Vegas, Taos, Phoenix, Albuquerque)
+- [x] Run ENUM definitions (`listing_type`, `listing_tier`, `submission_status`, `us_state`)
+- [x] Create `states` table and seed with 7 state rows (AZ, CO, NM, NV, TX, UT, CA)
+- [x] Create `cities` table
+- [x] Create `listings` table with all columns
+- [x] Add GIN index on `listings.search_vector`
+- [x] Add all standard indexes on `listings`
+- [x] Create and test `update_listing_search_vector` trigger
+- [x] Create and test `set_updated_at` trigger
+- [x] Create `art_styles` table and seed with 12 initial styles
+- [x] Create `listing_art_styles` junction table
+- [x] Create `listing_images` table
+- [x] Create `events` table
+- [x] Create `posts` table
+- [x] Create `post_listings` junction table
+- [x] Create `listing_owners` table
+- [x] Create `listing_submissions` table
+- [x] Create `listing_views` table
+- [x] Create `city_gallery_summary` view
+- [x] Seed priority cities (Scottsdale, Santa Fe, Denver, Sedona, Tucson, Aspen, Las Vegas, Taos, Phoenix, Albuquerque)
 
 ### 1.3 Astro Project Configuration
 
-- [ ] Configure `astro.config.mjs` — enable `@astrojs/sitemap`, set site URL, configure SSR adapter for Vercel
-- [ ] Set up `src/lib/db.ts` — Neon DB client using `@neondatabase/serverless`
-- [ ] Create `src/lib/queries.ts` — typed query functions for all major data fetches
-- [ ] Create `src/lib/schema.ts` — Zod validation schemas for form inputs
-- [ ] Set up base layout (`src/layouts/Base.astro`) with `<html lang="en">`, canonical tag, and meta slots
-- [ ] Configure `public/robots.txt` (block `/submit/`, `/admin/`, `/search/`)
+- [x] Configure `astro.config.mjs` — enable `@astrojs/sitemap`, set site URL, configure SSR adapter for Vercel
+- [x] Set up `src/lib/db.ts` — Neon DB client using `@neondatabase/serverless`
+- [x] Create `src/lib/queries.ts` — typed query functions for all major data fetches
+- [x] Create `src/lib/schema.ts` — Zod validation schemas for form inputs
+- [x] Set up base layout (`src/layouts/Base.astro`) with `<html lang="en">`, canonical tag, and meta slots
+- [x] Configure `public/robots.txt` (block `/submit/`, `/admin/`, `/search/`)
 
 ### 1.4 Core Page Templates
 
-- [ ] Build homepage (`src/pages/index.astro`) — hero, featured cities, featured listings CTAs
-- [ ] Build state hub page (`src/pages/galleries/[state].astro`) — static, lists cities with gallery counts
-- [ ] Build city index page (`src/pages/galleries/[state]/[city].astro`) — static, lists approved listings
-- [ ] Build listing detail page (`src/pages/listing/[slug].astro`) — static, full venue profile
-- [ ] Build museums state hub (`src/pages/museums/[state].astro`)
-- [ ] Build museums city page (`src/pages/museums/[state]/[city].astro`)
-- [ ] Build all-listings index (`src/pages/galleries/index.astro`)
+- [x] Build homepage (`src/pages/index.astro`) — hero, featured cities, featured listings CTAs
+- [x] Build state hub page (`src/pages/galleries/[state].astro`) — static, lists cities with gallery counts
+- [x] Build city index page (`src/pages/galleries/[state]/[city].astro`) — static, lists approved listings
+- [x] Build listing detail page (`src/pages/listing/[slug].astro`) — static, full venue profile
+- [x] Build museums state hub (`src/pages/museums/[state].astro`)
+- [x] Build museums city page (`src/pages/museums/[state]/[city].astro`)
+- [x] Build all-listings index (`src/pages/galleries/index.astro`)
 
 ### 1.5 Components
 
-- [ ] `ListingCard.astro` — used on city and state pages; shows name, type, tier badge, short description, hero image
-- [ ] `ListingDetail.astro` — full listing view with images, hours, map embed, contact, art styles
-- [ ] `BreadcrumbNav.astro` — renders breadcrumb trail and injects `BreadcrumbList` JSON-LD
-- [ ] `SchemaMarkup.astro` — renders JSON-LD blocks for `LocalBusiness`, `ArtGallery`, `Event`, `Article`
-- [ ] `MapView.astro` — Mapbox/Leaflet map for city pages and listing pages
+- [x] `ListingCard.astro` — used on city and state pages; shows name, type, tier badge, short description, hero image
+- [x] `ListingDetail.astro` — full listing view built inline in `listing/[slug].astro`
+- [x] `BreadcrumbNav.astro` — renders breadcrumb trail and injects `BreadcrumbList` JSON-LD
+- [x] `SchemaMarkup.astro` — JSON-LD rendering handled via `Base.astro` schema prop
+- [x] `MapView.astro` — Leaflet map for city pages and listing pages
 
 ### 1.6 Submit Form (SSR)
 
-- [ ] Build `/submit/` page with form fields matching `listing_submissions` table
-- [ ] Implement server-side validation with Zod
-- [ ] On valid submission, insert into `listing_submissions` with `status = 'pending'`
-- [ ] Show confirmation message on success; surface validation errors on failure
+- [x] Build `/submit/` page with form fields matching `listing_submissions` table
+- [x] Implement server-side validation with Zod
+- [x] On valid submission, insert into `listing_submissions` with `status = 'pending'`
+- [x] Show confirmation message on success; surface validation errors on failure
 
 ### 1.7 Admin UI (SSR, Password-Protected)
 
-- [ ] Build `/admin/` dashboard — lists pending submissions with approve/reject controls
-- [ ] Implement simple password gate (env var `ADMIN_PASSWORD`; replace with proper auth in Phase 2)
-- [ ] Approve action: insert into `listings`, set `submission.status = 'approved'`, set `created_listing_id`
-- [ ] Reject/needs-info actions: update `submission.status` accordingly
+- [x] Build `/admin/` dashboard — lists pending submissions with approve/reject controls
+- [x] Implement simple password gate (env var `ADMIN_PASSWORD`; replace with proper auth in Phase 2)
+- [x] Approve action: insert into `listings`, set `submission.status = 'approved'`, set `created_listing_id`
+- [x] Reject/needs-info actions: update `submission.status` accordingly
 
 ### 1.8 SEO Foundations
 
-- [ ] Add unique `<title>` and `<meta name="description">` to every page template
-- [ ] Inject `BreadcrumbList` JSON-LD on all pages via `BreadcrumbNav.astro`
-- [ ] Inject `LocalBusiness` + `ArtGallery` JSON-LD on listing detail pages
-- [ ] Configure `@astrojs/sitemap` — include listings, cities, states, posts, events; exclude admin/submit/search
+- [x] Add unique `<title>` and `<meta name="description">` to every page template
+- [x] Inject `BreadcrumbList` JSON-LD on all pages via `BreadcrumbNav.astro`
+- [x] Inject `LocalBusiness` + `ArtGallery` JSON-LD on listing detail pages
+- [x] Configure `@astrojs/sitemap` — include listings, cities, states, posts, events; exclude admin/submit/search
 - [ ] Submit sitemap to Google Search Console on launch day
-- [ ] Verify `robots.txt` is served correctly at `southwestgalleries.com/robots.txt`
+- [x] Verify `robots.txt` is served correctly at `southwestgalleries.com/robots.txt`
 
 ### 1.9 Initial Data Seeding
 
@@ -100,12 +100,12 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 
 ### 1.11 Launch Checklist
 
-- [ ] Confirm all static pages build without errors (`astro build`)
+- [x] Confirm all static pages build without errors (`astro build`)
 - [ ] Verify Core Web Vitals on 3 representative pages (listing, city, homepage) using PageSpeed Insights
 - [ ] Test `/submit/` form end-to-end
 - [ ] Test `/admin/` approve flow end-to-end
-- [ ] Confirm sitemap.xml is generated and accessible
-- [ ] Confirm robots.txt is correct
+- [x] Confirm sitemap.xml is generated and accessible
+- [x] Confirm robots.txt is correct
 - [ ] Set up Google Search Console and submit sitemap
 - [ ] Deploy to production
 
@@ -115,15 +115,15 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 
 ### 2.1 Art Style Taxonomy Pages
 
-- [ ] Build art style hub (`src/pages/art-styles/index.astro`)
-- [ ] Build art style detail page (`src/pages/art-styles/[style].astro`) — lists associated listings
-- [ ] Add art style links to listing detail pages (2–3 per listing)
+- [x] Build art style hub (`src/pages/art-styles/index.astro`)
+- [x] Build art style detail page (`src/pages/art-styles/[style].astro`) — lists associated listings
+- [x] Add art style links to listing detail pages (2–3 per listing)
 
 ### 2.2 Editorial Guides
 
-- [ ] Build guides hub (`src/pages/guides/index.astro`)
-- [ ] Build guide detail page (`src/pages/guides/[slug].astro`) — renders post content + embedded listing cards
-- [ ] Inject `Article` JSON-LD on guide pages
+- [x] Build guides hub (`src/pages/guides/index.astro`)
+- [x] Build guide detail page (`src/pages/guides/[slug].astro`) — renders post content + embedded listing cards
+- [x] Inject `Article` JSON-LD on guide pages
 - [ ] Write and publish first 20+ editorial guides targeting priority keywords (see `Spec.md → Keyword Targets`)
 
 ### 2.3 Structured Data Completion

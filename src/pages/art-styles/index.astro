@@ -1,0 +1,40 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import { getArtStyles } from '../../lib/queries';
+
+const styles = await getArtStyles();
+---
+
+<Base
+  title="Art Styles in the Southwest | Southwest Galleries"
+  description="Explore galleries by art style — Native American, Western, Contemporary, Plein Air, Ceramics, and more."
+>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[{ label: 'Home', href: '/' }, { label: 'Art Styles' }]} />
+      <h1>Browse by Art Style</h1>
+      <p>Find galleries and venues specializing in specific styles of Southwest art.</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    <div class="styles-grid">
+      {styles.map((s) => (
+        <a href={`/art-styles/${s.slug}/`} class="style-card">
+          <h2>{s.name}</h2>
+          {s.description && <p>{s.description}</p>}
+        </a>
+      ))}
+    </div>
+  </div>
+</Base>
+
+<style>
+  .styles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+  .style-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; color: inherit; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; background: #fff; }
+  .style-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: var(--turquoise); text-decoration: none; }
+  .style-card h2 { font-size: 1rem; font-weight: 700; color: var(--turquoise); margin-bottom: 0.4rem; }
+  .style-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; }
+</style>

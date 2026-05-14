@@ -1,0 +1,93 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import { getPublishedPosts, getPost, getPostListings } from '../../lib/queries';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+  return posts.map((p) => ({ params: { slug: p.slug } }));
+}
+
+const { slug } = Astro.params;
+const post = await getPost(slug!);
+if (!post) return Astro.redirect('/guides/');
+
+const listings = await getPostListings(post.id);
+
+const title = post.meta_title ?? `${post.title} | Southwest Galleries`;
+const description = post.meta_description ?? post.excerpt ?? '';
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: description || undefined,
+  image: post.hero_image_url ?? undefined,
+  author: { '@type': 'Organization', name: post.author_name },
+  datePublished: post.published_at,
+  publisher: {
+    '@type': 'Organization',
+    name: 'Southwest Galleries',
+    url: 'https://southwestgalleries.com',
+  },
+};
+---
+
+<Base {title} {description} ogImage={post.hero_image_url ?? undefined} schema={articleSchema}>
+  <div class="container article-container">
+    <BreadcrumbNav crumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Guides', href: '/guides/' },
+      { label: post.title },
+    ]} />
+
+    {post.hero_image_url && (
+      <img src={post.hero_image_url} alt={post.title} class="hero-image" />
+    )}
+
+    <article>
+      <h1>{post.title}</h1>
+      <div class="article-meta">
+        <span>{post.author_name}</span>
+        {post.published_at && (
+          <span>{new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+        )}
+      </div>
+      <div class="article-body" set:html={post.content} />
+    </article>
+
+    {listings.length > 0 && (
+      <section class="featured-listings">
+        <h2>Featured in This Guide</h2>
+        <div class="listings-grid">
+          {listings.map((l) => (
+            <ListingCard
+              slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
+              short_description={l.short_description} hero_image_url={l.hero_image_url}
+              city_name={l.city_name} city_slug={l.city_slug} state_slug={l.state_slug}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</Base>
+
+<style>
+  .article-container { max-width: 800px; padding-top: 1rem; padding-bottom: 3rem; }
+  .hero-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; margin: 1rem 0 2rem; }
+  h1 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.75rem; }
+  .article-meta { display: flex; gap: 1rem; color: var(--muted); font-size: 0.875rem; margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+  .article-body { line-height: 1.8; font-size: 1rem; color: #2a2420; }
+  .article-body :global(h2) { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; }
+  .article-body :global(h3) { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }
+  .article-body :global(p) { margin-bottom: 1.25rem; }
+  .article-body :global(a) { color: var(--turquoise); }
+  .article-body :global(ul), .article-body :global(ol) { margin: 0 0 1.25rem 1.5rem; }
+  .article-body :global(li) { margin-bottom: 0.35rem; }
+  .featured-listings { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem; max-width: 100%; }
+  .featured-listings h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
+  .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+</style>

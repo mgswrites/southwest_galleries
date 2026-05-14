@@ -1,0 +1,241 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import MapView from '../../components/MapView.astro';
+import { getAllApprovedListingSlugs, getListing, getListingArtStyles, getListingImages } from '../../lib/queries';
+
+export async function getStaticPaths() {
+  const rows = await getAllApprovedListingSlugs();
+  return rows.map((r) => ({ params: { slug: r.slug } }));
+}
+
+const { slug } = Astro.params;
+const listing = await getListing(slug!);
+if (!listing) return Astro.redirect('/galleries/');
+
+const [artStyles, images] = await Promise.all([
+  getListingArtStyles(listing.id),
+  getListingImages(listing.id),
+]);
+
+const typeLabel: Record<string, string> = {
+  gallery: 'Art Gallery', museum: 'Museum', cultural_center: 'Cultural Center',
+  artist_studio: 'Artist Studio', art_fair: 'Art Fair',
+  sculpture_park: 'Sculpture Park', auction_house: 'Auction House', art_school: 'Art School',
+};
+
+const hours = listing.hours_json as Record<string, string> | null;
+const dayNames: Record<string, string> = {
+  mon: 'Monday', tue: 'Tuesday', wed: 'Wednesday', thu: 'Thursday',
+  fri: 'Friday', sat: 'Saturday', sun: 'Sunday',
+};
+
+const title = listing.meta_title ?? `${listing.name} | ${listing.city_name}, ${listing.state_name} | Southwest Galleries`;
+const description = listing.meta_description ?? listing.short_description ?? `Visit ${listing.name} in ${listing.city_name}, ${listing.state_name}. Find hours, location, and more.`;
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'ArtGallery'],
+  name: listing.name,
+  description: listing.short_description ?? undefined,
+  url: listing.website_url ?? undefined,
+  telephone: listing.phone ?? undefined,
+  address: listing.address_line1 ? {
+    '@type': 'PostalAddress',
+    streetAddress: listing.address_line1,
+    addressLocality: listing.city_name,
+    addressRegion: listing.state_code,
+    postalCode: listing.zip_code ?? undefined,
+    addressCountry: 'US',
+  } : undefined,
+  geo: listing.latitude ? {
+    '@type': 'GeoCoordinates',
+    latitude: listing.latitude,
+    longitude: listing.longitude,
+  } : undefined,
+  image: listing.hero_image_url ?? undefined,
+  foundingDate: listing.established_year ? String(listing.established_year) : undefined,
+};
+---
+
+<Base {title} {description} ogImage={listing.hero_image_url ?? undefined} schema={localBusinessSchema}>
+  <div class="container listing-container">
+    <BreadcrumbNav crumbs={[
+      { label: 'Home', href: '/' },
+      { label: 'Galleries', href: '/galleries/' },
+      { label: listing.state_name, href: `/galleries/${listing.state_slug}/` },
+      { label: listing.city_name, href: `/galleries/${listing.state_slug}/${listing.city_slug}/` },
+      { label: listing.name },
+    ]} />
+
+    <div class="listing-hero">
+      {listing.hero_image_url && (
+        <img src={listing.hero_image_url} alt={`${listing.name} exterior, ${listing.city_name} ${listing.state_name}`} />
+      )}
+    </div>
+
+    <div class="listing-layout">
+      <div class="listing-main">
+        <div class="listing-title-row">
+          <div>
+            <span class="type-label">{typeLabel[listing.listing_type] ?? listing.listing_type}</span>
+            {(listing.tier === 'featured' || listing.tier === 'premium') && (
+              <span class="tier-label">{listing.tier === 'premium' ? 'Premium' : 'Featured'}</span>
+            )}
+            <h1>{listing.name}</h1>
+            {listing.neighborhood && <p class="neighborhood">{listing.neighborhood} · {listing.city_name}, {listing.state_name}</p>}
+          </div>
+          {listing.logo_url && <img src={listing.logo_url} alt={`${listing.name} logo`} class="logo" />}
+        </div>
+
+        {listing.full_description && (
+          <div class="description" set:html={listing.full_description} />
+        )}
+        {!listing.full_description && listing.short_description && (
+          <p class="description">{listing.short_description}</p>
+        )}
+
+        {images.length > 0 && (
+          <div class="image-gallery">
+            {images.map((img) => (
+              <figure>
+                <img src={img.url} alt={img.alt_text ?? listing.name} loading="lazy" />
+                {img.caption && <figcaption>{img.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        )}
+
+        {artStyles.length > 0 && (
+          <div class="art-styles">
+            <h2>Art Styles</h2>
+            <div class="style-tags">
+              {artStyles.map((s) => (
+                <a href={`/art-styles/${s.slug}/`} class="style-tag">{s.name}</a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <aside class="listing-sidebar">
+        <div class="sidebar-card">
+          {listing.address_line1 && (
+            <div class="sidebar-row">
+              <strong>Address</strong>
+              <p>{listing.address_line1}{listing.address_line2 ? `, ${listing.address_line2}` : ''}<br />
+              {listing.city_name}, {listing.state_code} {listing.zip_code ?? ''}</p>
+            </div>
+          )}
+
+          {listing.phone && (
+            <div class="sidebar-row">
+              <strong>Phone</strong>
+              <a href={`tel:${listing.phone}`}>{listing.phone}</a>
+            </div>
+          )}
+
+          {listing.website_url && (
+            <div class="sidebar-row">
+              <strong>Website</strong>
+              <a href={listing.website_url} target="_blank" rel="noopener noreferrer">
+                {new URL(listing.website_url).hostname.replace('www.', '')}
+              </a>
+            </div>
+          )}
+
+          {listing.established_year && (
+            <div class="sidebar-row">
+              <strong>Established</strong>
+              <p>{listing.established_year}</p>
+            </div>
+          )}
+
+          {listing.is_verified && (
+            <div class="verified-badge">Verified Listing</div>
+          )}
+
+          {listing.website_url && (
+            <a href={listing.website_url} target="_blank" rel="noopener noreferrer" class="website-btn">
+              Visit Website →
+            </a>
+          )}
+        </div>
+
+        {hours && (
+          <div class="sidebar-card hours-card">
+            <strong>Hours</strong>
+            <dl class="hours-list">
+              {Object.entries(dayNames).map(([key, label]) => (
+                <div class="hours-row">
+                  <dt>{label}</dt>
+                  <dd>{hours[key] ?? 'Closed'}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
+
+        {listing.latitude && listing.longitude && (
+          <div style="margin-top:1rem">
+            <MapView
+              markers={[{ lat: Number(listing.latitude), lng: Number(listing.longitude), label: listing.name, href: '#' }]}
+              centerLat={Number(listing.latitude)}
+              centerLng={Number(listing.longitude)}
+              zoom={15}
+              height="260px"
+            />
+          </div>
+        )}
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .listing-container { padding-top: 1rem; padding-bottom: 3rem; }
+  .listing-hero { margin: 1rem 0; border-radius: 12px; overflow: hidden; max-height: 420px; }
+  .listing-hero img { width: 100%; height: 420px; object-fit: cover; }
+
+  .listing-layout { display: grid; grid-template-columns: 1fr 340px; gap: 2.5rem; margin-top: 1.5rem; }
+
+  .listing-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 1.5rem; }
+  .type-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  .tier-label { margin-left: 0.5rem; background: var(--turquoise); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 3px; text-transform: uppercase; }
+  h1 { font-size: 1.8rem; font-weight: 800; line-height: 1.2; margin-top: 0.25rem; }
+  .neighborhood { color: var(--muted); margin-top: 0.25rem; font-size: 0.9rem; }
+  .logo { width: 80px; height: 80px; object-fit: contain; flex-shrink: 0; }
+
+  .description { line-height: 1.7; color: #333; margin-bottom: 2rem; }
+
+  .image-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  .image-gallery figure { margin: 0; }
+  .image-gallery img { width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 6px; }
+  .image-gallery figcaption { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
+
+  .art-styles h2 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .style-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .style-tag { padding: 0.3rem 0.8rem; border: 1px solid var(--border); border-radius: 20px; font-size: 0.8rem; color: var(--ink); text-decoration: none; }
+  .style-tag:hover { background: var(--sand); border-color: var(--turquoise); text-decoration: none; }
+
+  .sidebar-card { background: var(--sand); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .sidebar-row { margin-bottom: 1rem; }
+  .sidebar-row:last-child { margin-bottom: 0; }
+  .sidebar-row strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.2rem; }
+  .sidebar-row p, .sidebar-row a { font-size: 0.9rem; line-height: 1.5; }
+
+  .verified-badge { background: #e8f5e8; color: #2a7a2a; font-size: 0.8rem; font-weight: 600; padding: 0.35rem 0.75rem; border-radius: 4px; display: inline-block; margin-bottom: 0.75rem; }
+
+  .website-btn { display: block; text-align: center; background: var(--clay); color: #fff; padding: 0.65rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; text-decoration: none; margin-top: 0.5rem; }
+  .website-btn:hover { background: #a8521f; text-decoration: none; }
+
+  .hours-card strong { display: block; margin-bottom: 0.75rem; }
+  .hours-list { display: flex; flex-direction: column; gap: 0.3rem; }
+  .hours-row { display: flex; justify-content: space-between; font-size: 0.85rem; }
+  .hours-row dt { color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .listing-layout { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,110 @@
+---
+export const prerender = true;
+import Base from '../../../layouts/Base.astro';
+import BreadcrumbNav from '../../../components/BreadcrumbNav.astro';
+import ListingCard from '../../../components/ListingCard.astro';
+import MapView from '../../../components/MapView.astro';
+import { getStates, getState, getCitiesByState, getCity, getListingsByCity } from '../../../lib/queries';
+
+export async function getStaticPaths() {
+  const states = await getStates();
+  const paths = [];
+  for (const s of states) {
+    const cities = await getCitiesByState(s.code);
+    for (const c of cities) {
+      paths.push({ params: { state: s.slug, city: c.slug } });
+    }
+  }
+  return paths;
+}
+
+const { state: stateSlug, city: citySlug } = Astro.params;
+const stateData = await getState(stateSlug!);
+if (!stateData) return Astro.redirect('/galleries/');
+const cityData = await getCity(stateData.code, citySlug!);
+if (!cityData) return Astro.redirect(`/galleries/${stateSlug}/`);
+
+const listings = await getListingsByCity(cityData.id);
+
+const mapMarkers = listings
+  .filter((l) => l.latitude && l.longitude)
+  .map((l) => ({
+    lat: Number(l.latitude),
+    lng: Number(l.longitude),
+    label: l.name,
+    href: `/listing/${l.slug}/`,
+  }));
+
+const title = cityData.meta_title ?? `Art Galleries in ${cityData.name}, ${stateData.name} | Southwest Galleries`;
+const description = cityData.meta_description ?? `Find the best art galleries and cultural venues in ${cityData.name}, ${stateData.name}. ${listings.length > 0 ? `${listings.length} listings.` : ''}`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description,
+  url: new URL(`/galleries/${stateSlug}/${citySlug}/`, Astro.site).toString(),
+};
+---
+
+<Base {title} {description} schema={schema}>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[
+        { label: 'Home', href: '/' },
+        { label: 'Galleries', href: '/galleries/' },
+        { label: stateData.name, href: `/galleries/${stateSlug}/` },
+        { label: cityData.name },
+      ]} />
+      <h1>Art Galleries in {cityData.name}</h1>
+      {cityData.description
+        ? <p>{cityData.description}</p>
+        : <p>{listings.length} {listings.length === 1 ? 'listing' : 'listings'} in {cityData.name}, {stateData.name}.</p>
+      }
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    {mapMarkers.length > 0 && (
+      <div style="margin-bottom:2rem">
+        <MapView
+          markers={mapMarkers}
+          centerLat={cityData.latitude ? Number(cityData.latitude) : mapMarkers[0].lat}
+          centerLng={cityData.longitude ? Number(cityData.longitude) : mapMarkers[0].lng}
+          zoom={13}
+          height="380px"
+        />
+      </div>
+    )}
+
+    {listings.length > 0 ? (
+      <div class="listings-grid">
+        {listings.map((l) => (
+          <ListingCard
+            slug={l.slug}
+            name={l.name}
+            listing_type={l.listing_type}
+            tier={l.tier}
+            short_description={l.short_description}
+            hero_image_url={l.hero_image_url}
+            neighborhood={l.neighborhood}
+            city_name={cityData.name}
+            address_line1={l.address_line1}
+          />
+        ))}
+      </div>
+    ) : (
+      <p style="color:var(--muted);text-align:center;padding:3rem">
+        No listings yet for {cityData.name}. <a href="/submit/">Submit one →</a>
+      </p>
+    )}
+  </div>
+</Base>
+
+<style>
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>

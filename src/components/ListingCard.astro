@@ -1,0 +1,90 @@
+---
+export interface Props {
+  slug: string;
+  name: string;
+  listing_type: string;
+  tier: string;
+  short_description?: string;
+  hero_image_url?: string;
+  neighborhood?: string;
+  city_name?: string;
+  city_slug?: string;
+  state_slug?: string;
+  address_line1?: string;
+}
+
+const {
+  slug, name, listing_type, tier, short_description,
+  hero_image_url, neighborhood, city_name, city_slug,
+  state_slug, address_line1,
+} = Astro.props;
+
+const typeLabel: Record<string, string> = {
+  gallery: 'Gallery', museum: 'Museum', cultural_center: 'Cultural Center',
+  artist_studio: 'Artist Studio', art_fair: 'Art Fair',
+  sculpture_park: 'Sculpture Park', auction_house: 'Auction House', art_school: 'Art School',
+};
+---
+
+<article class={`listing-card tier-${tier}`}>
+  <a href={`/listing/${slug}/`} class="card-link">
+    <div class="card-image">
+      {hero_image_url
+        ? <img src={hero_image_url} alt={`${name}${city_name ? `, ${city_name}` : ''}`} loading="lazy" />
+        : <div class="placeholder-image" aria-hidden="true"></div>
+      }
+      <span class="type-badge">{typeLabel[listing_type] ?? listing_type}</span>
+      {(tier === 'featured' || tier === 'premium') && (
+        <span class="tier-badge">{tier === 'premium' ? 'Premium' : 'Featured'}</span>
+      )}
+    </div>
+    <div class="card-body">
+      <h3>{name}</h3>
+      {(neighborhood || city_name) && (
+        <p class="location">
+          {neighborhood ? `${neighborhood}` : ''}
+          {neighborhood && city_name ? ' · ' : ''}
+          {city_name ?? ''}
+        </p>
+      )}
+      {short_description && <p class="description">{short_description}</p>}
+    </div>
+  </a>
+</article>
+
+<style>
+  .listing-card {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    background: #fff;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .listing-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .tier-featured, .tier-premium { border-color: var(--turquoise); }
+
+  .card-link { display: block; color: inherit; text-decoration: none; }
+
+  .card-image { position: relative; aspect-ratio: 16/9; overflow: hidden; background: var(--sand); }
+  .card-image img { width: 100%; height: 100%; object-fit: cover; }
+  .placeholder-image { width: 100%; height: 100%; background: linear-gradient(135deg, var(--sand) 0%, var(--border) 100%); }
+
+  .type-badge {
+    position: absolute; bottom: 0.5rem; left: 0.5rem;
+    background: rgba(0,0,0,0.65); color: #fff;
+    font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.5rem;
+    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .tier-badge {
+    position: absolute; top: 0.5rem; right: 0.5rem;
+    background: var(--turquoise); color: #fff;
+    font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem;
+    border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em;
+  }
+
+  .card-body { padding: 1rem; }
+  h3 { font-size: 1rem; font-weight: 700; line-height: 1.3; margin-bottom: 0.25rem; }
+  .location { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .description { font-size: 0.875rem; color: var(--muted); line-height: 1.5;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+</style>

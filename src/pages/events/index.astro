@@ -1,0 +1,84 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import sql from '../../lib/db';
+
+const events = await sql`
+  SELECT e.id, e.slug, e.title, e.description, e.event_date, e.start_time, e.end_time,
+         e.is_free, e.ticket_url, e.website_url, e.image_url,
+         c.name AS city_name, s.name AS state_name
+  FROM events e
+  LEFT JOIN cities c ON c.id = e.city_id
+  LEFT JOIN states s ON s.code = e.state_code
+  WHERE e.event_date >= CURRENT_DATE
+  ORDER BY e.event_date ASC
+  LIMIT 60
+`;
+---
+
+<Base
+  title="Art Events in the Southwest | Southwest Galleries"
+  description="Upcoming art walks, gallery openings, art fairs, and cultural events across the American Southwest."
+>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[{ label: 'Home', href: '/' }, { label: 'Events' }]} />
+      <h1>Upcoming Art Events</h1>
+      <p>Art walks, gallery openings, fairs, and cultural events across the Southwest.</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    {events.length > 0 ? (
+      <div class="events-list">
+        {events.map((e) => (
+          <div class="event-card">
+            {e.image_url && <img src={e.image_url} alt={e.title} loading="lazy" />}
+            <div class="event-body">
+              <div class="event-date">
+                {new Date(e.event_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                {e.start_time && ` · ${e.start_time}`}
+              </div>
+              <h2>{e.title}</h2>
+              {(e.city_name || e.state_name) && (
+                <p class="event-location">{[e.city_name, e.state_name].filter(Boolean).join(', ')}</p>
+              )}
+              {e.description && <p class="event-desc">{e.description}</p>}
+              <div class="event-actions">
+                {e.is_free !== null && (
+                  <span class={`free-badge ${e.is_free ? 'is-free' : 'paid'}`}>
+                    {e.is_free ? 'Free' : 'Ticketed'}
+                  </span>
+                )}
+                {e.ticket_url && <a href={e.ticket_url} target="_blank" rel="noopener noreferrer" class="ticket-link">Get Tickets</a>}
+                {e.website_url && <a href={e.website_url} target="_blank" rel="noopener noreferrer" class="more-link">More Info</a>}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <p style="color:var(--muted);text-align:center;padding:3rem">No upcoming events listed yet.</p>
+    )}
+  </div>
+</Base>
+
+<style>
+  .events-list { display: flex; flex-direction: column; gap: 1rem; }
+  .event-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; gap: 0; background: #fff; }
+  .event-card img { width: 180px; object-fit: cover; flex-shrink: 0; }
+  .event-body { padding: 1.25rem; flex: 1; }
+  .event-date { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--clay); margin-bottom: 0.35rem; }
+  .event-body h2 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .event-location { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .event-desc { font-size: 0.875rem; color: #444; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 0.75rem; }
+  .event-actions { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+  .free-badge { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 3px; }
+  .free-badge.is-free { background: #e8f5e8; color: #2a7a2a; }
+  .free-badge.paid { background: #f5eee8; color: var(--clay); }
+  .ticket-link, .more-link { font-size: 0.85rem; font-weight: 600; }
+  .ticket-link { color: var(--clay); }
+  .more-link { color: var(--turquoise); }
+  @media (max-width: 600px) { .event-card img { display: none; } }
+</style>

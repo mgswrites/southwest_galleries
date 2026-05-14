@@ -1,0 +1,193 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  schema?: object | object[];
+}
+
+const {
+  title,
+  description = 'The definitive art and cultural directory for the American Southwest. Find galleries, museums, and cultural centers across Arizona, New Mexico, Colorado, and beyond.',
+  canonical = new URL(Astro.url.pathname, Astro.site).toString(),
+  ogImage = '/og-default.jpg',
+  schema,
+} = Astro.props;
+
+const schemaBlocks = schema
+  ? (Array.isArray(schema) ? schema : [schema])
+  : [];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Southwest Galleries" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL(ogImage, Astro.site).toString()} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- JSON-LD -->
+    {schemaBlocks.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+
+    <slot name="head" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="/" class="logo">Southwest Galleries</a>
+        <ul>
+          <li><a href="/galleries/">Galleries</a></li>
+          <li><a href="/museums/arizona/">Museums</a></li>
+          <li><a href="/art-styles/">Art Styles</a></li>
+          <li><a href="/guides/">Guides</a></li>
+          <li><a href="/events/">Events</a></li>
+          <li><a href="/submit/" class="cta">Submit Listing</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          <strong>Southwest Galleries</strong>
+          <p>The definitive art directory for the American Southwest.</p>
+        </div>
+        <div>
+          <strong>Browse</strong>
+          <ul>
+            <li><a href="/galleries/arizona/">Arizona</a></li>
+            <li><a href="/galleries/new-mexico/">New Mexico</a></li>
+            <li><a href="/galleries/colorado/">Colorado</a></li>
+            <li><a href="/galleries/nevada/">Nevada</a></li>
+            <li><a href="/galleries/utah/">Utah</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>Discover</strong>
+          <ul>
+            <li><a href="/art-styles/">Art Styles</a></li>
+            <li><a href="/guides/">Guides</a></li>
+            <li><a href="/events/">Events</a></li>
+          </ul>
+        </div>
+        <div>
+          <strong>List Your Venue</strong>
+          <ul>
+            <li><a href="/submit/">Submit a Listing</a></li>
+          </ul>
+        </div>
+      </div>
+      <p class="footer-copy">&copy; {new Date().getFullYear()} SouthwestGalleries.com. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --sand: #f5f0e8;
+    --clay: #c0622b;
+    --turquoise: #2a8c8c;
+    --ink: #1a1410;
+    --muted: #6b6056;
+    --border: #e0d8cc;
+    --max-w: 1200px;
+    --font-sans: system-ui, -apple-system, sans-serif;
+  }
+
+  html { font-family: var(--font-sans); color: var(--ink); background: #fff; }
+  body { min-height: 100vh; display: flex; flex-direction: column; }
+  main { flex: 1; }
+  a { color: var(--turquoise); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  header {
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  header nav {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .logo { font-weight: 700; font-size: 1.1rem; color: var(--ink); }
+  header nav ul { list-style: none; display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
+  header nav a { color: var(--ink); font-size: 0.9rem; }
+  header nav a.cta {
+    background: var(--clay);
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  header nav a.cta:hover { background: #a8521f; text-decoration: none; }
+
+  footer {
+    background: var(--ink);
+    color: #ccc;
+    padding: 3rem 1.5rem 1.5rem;
+    margin-top: 4rem;
+  }
+  .footer-inner {
+    max-width: var(--max-w);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #333;
+  }
+  footer strong { color: #fff; display: block; margin-bottom: 0.75rem; }
+  footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  footer a { color: #aaa; font-size: 0.875rem; }
+  footer a:hover { color: #fff; }
+  footer p { font-size: 0.875rem; color: #888; line-height: 1.5; }
+  .footer-copy { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #555; max-width: var(--max-w); margin-left: auto; margin-right: auto; }
+
+  .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
+  .page-header { background: var(--sand); padding: 3rem 1.5rem; }
+  .page-header h1 { font-size: 2rem; font-weight: 700; }
+  .page-header p { color: var(--muted); margin-top: 0.5rem; max-width: 600px; }
+
+  @media (max-width: 768px) {
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    header nav ul { display: none; }
+  }
+</style>

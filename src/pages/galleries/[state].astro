@@ -1,0 +1,124 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import { getStates, getState, getCitiesByState, getListingsByState } from '../../lib/queries';
+
+export async function getStaticPaths() {
+  const states = await getStates();
+  return states.map((s) => ({ params: { state: s.slug } }));
+}
+
+const { state: stateSlug } = Astro.params;
+const stateData = await getState(stateSlug!);
+if (!stateData) return Astro.redirect('/galleries/');
+
+const cities = await getCitiesByState(stateData.code);
+const listings = await getListingsByState(stateData.code);
+const featured = listings.filter((l) => l.tier === 'featured' || l.tier === 'premium').slice(0, 6);
+
+const title = stateData.meta_title ?? `Art Galleries in ${stateData.name} | Southwest Galleries`;
+const description = stateData.meta_description ?? `Find the best art galleries in ${stateData.name}. Browse galleries in ${cities.map((c) => c.name).slice(0, 4).join(', ')}, and more.`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: title,
+  description,
+  url: new URL(`/galleries/${stateSlug}/`, Astro.site).toString(),
+};
+---
+
+<Base {title} {description} schema={schema}>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[
+        { label: 'Home', href: '/' },
+        { label: 'Galleries', href: '/galleries/' },
+        { label: stateData.name },
+      ]} />
+      <h1>Art Galleries in {stateData.name}</h1>
+      {stateData.description && <p>{stateData.description}</p>}
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    {cities.length > 0 && (
+      <section class="cities-section">
+        <h2>Browse by City</h2>
+        <div class="cities-grid">
+          {cities.map((city) => (
+            <a href={`/galleries/${stateSlug}/${city.slug}/`} class="city-pill">
+              {city.name}
+              {city.gallery_count > 0 && <span class="count">{city.gallery_count}</span>}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {featured.length > 0 && (
+      <section style="margin-top:2.5rem">
+        <h2>Featured Galleries</h2>
+        <div class="listings-grid" style="margin-top:1rem">
+          {featured.map((l) => (
+            <ListingCard
+              slug={l.slug}
+              name={l.name}
+              listing_type={l.listing_type}
+              tier={l.tier}
+              short_description={l.short_description}
+              hero_image_url={l.hero_image_url}
+              neighborhood={l.neighborhood}
+              city_name={l.city_name}
+              city_slug={l.city_slug}
+              state_slug={stateSlug}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
+    {listings.length > 0 && (
+      <section style="margin-top:2.5rem">
+        <h2>All Listings in {stateData.name}</h2>
+        <div class="listings-grid" style="margin-top:1rem">
+          {listings.map((l) => (
+            <ListingCard
+              slug={l.slug}
+              name={l.name}
+              listing_type={l.listing_type}
+              tier={l.tier}
+              short_description={l.short_description}
+              hero_image_url={l.hero_image_url}
+              neighborhood={l.neighborhood}
+              city_name={l.city_name}
+              city_slug={l.city_slug}
+              state_slug={stateSlug}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+  </div>
+</Base>
+
+<style>
+  .cities-section h2, section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .cities-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .city-pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.4rem 0.9rem; border: 1px solid var(--border);
+    border-radius: 20px; font-size: 0.875rem; color: var(--ink);
+    text-decoration: none; transition: background 0.15s, border-color 0.15s;
+  }
+  .city-pill:hover { background: var(--sand); border-color: var(--turquoise); text-decoration: none; }
+  .count { background: var(--turquoise); color: #fff; font-size: 0.7rem; font-weight: 700;
+    padding: 0.1rem 0.4rem; border-radius: 10px; }
+  .listings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+</style>
