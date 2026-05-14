@@ -1,0 +1,236 @@
+---
+export const prerender = false;
+import Base from '../../layouts/Base.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import { searchListings, getStates, getArtStyles } from '../../lib/queries';
+
+const url = Astro.url;
+const q = url.searchParams.get('q') ?? '';
+const typeFilter = url.searchParams.get('type') ?? '';
+const stateFilter = url.searchParams.get('state') ?? '';
+const styleFilter = url.searchParams.get('style') ?? '';
+const tierFilter = url.searchParams.get('tier') ?? '';
+
+const hasQuery = q.trim().length > 0 || typeFilter || stateFilter || styleFilter || tierFilter;
+
+const [results, states, artStyles] = await Promise.all([
+  hasQuery
+    ? searchListings(q, {
+        type: typeFilter || undefined,
+        state: stateFilter || undefined,
+        style: styleFilter || undefined,
+        tier: tierFilter || undefined,
+      })
+    : Promise.resolve([]),
+  getStates(),
+  getArtStyles(),
+]);
+
+const LISTING_TYPES = [
+  { value: 'gallery', label: 'Gallery' },
+  { value: 'museum', label: 'Museum' },
+  { value: 'cultural_center', label: 'Cultural Center' },
+  { value: 'artist_studio', label: 'Artist Studio' },
+  { value: 'art_school', label: 'Art School' },
+  { value: 'art_fair', label: 'Art Fair' },
+];
+
+const TIERS = [
+  { value: 'premium', label: 'Premium' },
+  { value: 'featured', label: 'Featured' },
+  { value: 'basic', label: 'Basic' },
+  { value: 'free', label: 'Free' },
+];
+
+const title = q ? `Search results for "${q}" | Southwest Galleries` : 'Search Art Galleries | Southwest Galleries';
+const description = 'Search for art galleries, museums, and cultural venues across the American Southwest.';
+---
+
+<Base {title} {description}>
+  <div class="page-header">
+    <div class="container">
+      <h1>Search Galleries</h1>
+      <p>Find art galleries, museums, and cultural venues across the Southwest.</p>
+    </div>
+  </div>
+
+  <div class="container search-container">
+    <form method="get" action="/search/" class="search-form">
+      <div class="search-bar">
+        <input
+          type="search"
+          name="q"
+          value={q}
+          placeholder="Search by name, city, or keyword…"
+          class="search-input"
+          autofocus={!q}
+        />
+        <button type="submit" class="search-btn">Search</button>
+      </div>
+
+      <div class="filters">
+        <div class="filter-group">
+          <label for="type">Type</label>
+          <select name="type" id="type">
+            <option value="">All Types</option>
+            {LISTING_TYPES.map((t) => (
+              <option value={t.value} selected={typeFilter === t.value}>{t.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="state">State</label>
+          <select name="state" id="state">
+            <option value="">All States</option>
+            {states.map((s) => (
+              <option value={s.code} selected={stateFilter === s.code}>{s.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="style">Art Style</label>
+          <select name="style" id="style">
+            <option value="">All Styles</option>
+            {artStyles.map((a) => (
+              <option value={a.slug} selected={styleFilter === a.slug}>{a.name}</option>
+            ))}
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="tier">Tier</label>
+          <select name="tier" id="tier">
+            <option value="">All Tiers</option>
+            {TIERS.map((t) => (
+              <option value={t.value} selected={tierFilter === t.value}>{t.label}</option>
+            ))}
+          </select>
+        </div>
+
+        {(typeFilter || stateFilter || styleFilter || tierFilter) && (
+          <a href={`/search/${q ? `?q=${encodeURIComponent(q)}` : ''}`} class="clear-filters">
+            Clear filters
+          </a>
+        )}
+      </div>
+    </form>
+
+    {hasQuery && (
+      <div class="results-header">
+        <span class="results-count">
+          {results.length === 0
+            ? 'No results found'
+            : `${results.length} result${results.length === 1 ? '' : 's'}${q ? ` for "${q}"` : ''}`}
+        </span>
+      </div>
+    )}
+
+    {hasQuery && results.length > 0 && (
+      <div class="results-grid">
+        {results.map((l) => (
+          <ListingCard
+            slug={l.slug}
+            name={l.name}
+            listing_type={l.listing_type}
+            tier={l.tier}
+            short_description={l.short_description}
+            hero_image_url={l.hero_image_url}
+            neighborhood={l.neighborhood}
+            city_name={l.city_name}
+            city_slug={l.city_slug}
+            state_slug={l.state_slug}
+          />
+        ))}
+      </div>
+    )}
+
+    {hasQuery && results.length === 0 && (
+      <div class="no-results">
+        <p>No galleries found matching your search. Try:</p>
+        <ul>
+          <li>Broader search terms (e.g., "Santa Fe" instead of a specific gallery name)</li>
+          <li>Removing one or more filters</li>
+          <li>Checking for spelling variations</li>
+        </ul>
+        <p><a href="/galleries/">Browse all galleries by state →</a></p>
+      </div>
+    )}
+
+    {!hasQuery && (
+      <div class="search-prompt">
+        <p>Enter a search term above or use the filters to find galleries.</p>
+        <div class="browse-links">
+          <h2>Browse by State</h2>
+          <div class="state-links">
+            {states.map((s) => (
+              <a href={`/galleries/${s.slug}/`} class="state-link">
+                {s.name}
+                {s.gallery_count > 0 && <span>({s.gallery_count})</span>}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</Base>
+
+<style>
+  .search-container { padding-top: 2rem; padding-bottom: 4rem; max-width: 1100px; }
+  .search-form { background: var(--sand); border-radius: 12px; padding: 1.5rem; margin-bottom: 2rem; }
+  .search-bar { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .search-input {
+    flex: 1; padding: 0.75rem 1rem; border: 1.5px solid var(--border);
+    border-radius: 8px; font-size: 1rem; font-family: inherit;
+    background: #fff;
+  }
+  .search-input:focus { outline: none; border-color: var(--turquoise); }
+  .search-btn {
+    padding: 0.75rem 1.5rem; background: var(--turquoise); color: #fff;
+    border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600;
+    cursor: pointer; white-space: nowrap;
+  }
+  .search-btn:hover { opacity: 0.9; }
+  .filters { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-end; }
+  .filter-group { display: flex; flex-direction: column; gap: 0.25rem; }
+  .filter-group label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+  .filter-group select {
+    padding: 0.45rem 0.75rem; border: 1.5px solid var(--border); border-radius: 6px;
+    font-size: 0.875rem; background: #fff; cursor: pointer;
+  }
+  .filter-group select:focus { outline: none; border-color: var(--turquoise); }
+  .clear-filters {
+    align-self: flex-end; padding: 0.45rem 0.75rem;
+    font-size: 0.8rem; color: var(--muted); text-decoration: underline;
+  }
+  .results-header { margin-bottom: 1.25rem; }
+  .results-count { font-size: 0.9rem; color: var(--muted); }
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .no-results { padding: 2rem; background: var(--sand); border-radius: 10px; }
+  .no-results p { margin-bottom: 0.75rem; }
+  .no-results ul { margin: 0 0 1rem 1.25rem; }
+  .no-results li { margin-bottom: 0.35rem; font-size: 0.9rem; }
+  .search-prompt { padding: 1rem 0; }
+  .browse-links { margin-top: 2rem; }
+  .browse-links h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .state-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .state-link {
+    padding: 0.4rem 0.9rem; border: 1px solid var(--border); border-radius: 20px;
+    font-size: 0.875rem; color: var(--ink); text-decoration: none;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .state-link:hover { background: var(--sand); border-color: var(--turquoise); }
+  .state-link span { color: var(--muted); font-size: 0.8rem; margin-left: 0.2rem; }
+  @media (max-width: 640px) {
+    .search-bar { flex-direction: column; }
+    .search-btn { width: 100%; }
+    .filters { flex-direction: column; }
+    .filter-group select { width: 100%; }
+  }
+</style>

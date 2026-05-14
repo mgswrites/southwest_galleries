@@ -21,13 +21,59 @@ const featured = listings.filter((l) => l.tier === 'featured' || l.tier === 'pre
 const title = stateData.meta_title ?? `Art Galleries in ${stateData.name} | Southwest Galleries`;
 const description = stateData.meta_description ?? `Find the best art galleries in ${stateData.name}. Browse galleries in ${cities.map((c) => c.name).slice(0, 4).join(', ')}, and more.`;
 
-const schema = {
+const cityNames = cities.map((c) => c.name);
+const topCities = cityNames.slice(0, 4).join(', ');
+const stateName = stateData.name;
+
+const faqSchema = {
   '@context': 'https://schema.org',
-  '@type': 'CollectionPage',
-  name: title,
-  description,
-  url: new URL(`/galleries/${stateSlug}/`, Astro.site).toString(),
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: `What cities have art galleries in ${stateName}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `${stateName} has art galleries in ${topCities}${cityNames.length > 4 ? `, and ${cityNames.length - 4} more cities` : ''}. The most active gallery scenes are concentrated in ${cityNames.slice(0, 2).join(' and ')}.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: `How many art galleries are in ${stateName}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `There are ${stateData.gallery_count || listings.length} art galleries, museums, and cultural venues listed for ${stateName} on Southwest Galleries.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: `What types of art venues can I find in ${stateName}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `${stateName} has a variety of art venues including commercial galleries, museums, artist studios, cultural centers, and art schools — with particular strength in Western American art, Native American art, and contemporary art.`,
+      },
+    },
+    {
+      '@type': 'Question',
+      name: `When is the best time to visit art galleries in ${stateName}?`,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: `Most galleries in ${stateName} are active year-round, with peak programming during fall (September–November) and spring (March–May). Many cities host annual gallery walks and art festivals during these seasons.`,
+      },
+    },
+  ],
 };
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: title,
+    description,
+    url: new URL(`/galleries/${stateSlug}/`, Astro.site).toString(),
+  },
+  faqSchema,
+];
 ---
 
 <Base {title} {description} schema={schema}>
