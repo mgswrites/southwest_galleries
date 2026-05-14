@@ -124,24 +124,24 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 - [x] Build guides hub (`src/pages/guides/index.astro`)
 - [x] Build guide detail page (`src/pages/guides/[slug].astro`) — renders post content + embedded listing cards
 - [x] Inject `Article` JSON-LD on guide pages
-- [ ] Write and publish first 20+ editorial guides targeting priority keywords (see `Spec.md → Keyword Targets`)
+- [x] Write and publish first 20+ editorial guides targeting priority keywords (see `Spec.md → Keyword Targets`)
 
 ### 2.3 Structured Data Completion
 
-- [ ] Add `FAQPage` JSON-LD to all city and state hub pages
+- [x] Add `FAQPage` JSON-LD to all city and state hub pages
 - [ ] Add `Event` JSON-LD to event pages
 - [ ] Verify all structured data with Google's Rich Results Test
 
 ### 2.4 Search & Filtering (SSR)
 
-- [ ] Build `/search/` SSR page with query input
-- [ ] Implement full-text search using `plainto_tsquery` on `listings.search_vector`
-- [ ] Add filter controls: listing type, state, city, art style, tier
-- [ ] Add `ts_rank` ordering for relevance
+- [x] Build `/search/` SSR page with query input
+- [x] Implement full-text search using `plainto_tsquery` on `listings.search_vector`
+- [x] Add filter controls: listing type, state, city, art style, tier
+- [x] Add `ts_rank` ordering for relevance
 
 ### 2.5 Listing View Tracking
 
-- [ ] On each listing page request (SSR) or via API route, upsert `listing_views` using `ON CONFLICT DO UPDATE SET view_count = view_count + 1`
+- [x] On each listing page request (SSR) or via API route, upsert `listing_views` using `ON CONFLICT DO UPDATE SET view_count = view_count + 1`
 - [ ] Build basic view count display on listing pages for Premium tier owners
 
 ### 2.6 Stripe Billing for Paid Tiers
