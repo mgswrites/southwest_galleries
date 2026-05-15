@@ -146,17 +146,17 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 
 ### 2.6 Stripe Billing for Paid Tiers
 
-- [ ] Create Stripe products and prices for Basic ($99/yr), Featured ($199/yr), Premium ($349/yr)
-- [ ] Build upgrade flow: listing owner initiates from their claimed listing page
-- [ ] Implement Stripe Checkout session creation (API route)
-- [ ] Implement Stripe webhook handler: update `listing_owners` and `listings.tier` on subscription events
-- [ ] Handle subscription cancellation and expiry (downgrade tier back to free)
+- [x] Create Stripe products and prices for Basic ($99/yr), Featured ($199/yr), Premium ($349/yr)
+- [x] Build upgrade flow: listing owner initiates from their claimed listing page
+- [x] Implement Stripe Checkout session creation (API route)
+- [x] Implement Stripe webhook handler: update `listing_owners` and `listings.tier` on subscription events
+- [x] Handle subscription cancellation and expiry (downgrade tier back to free)
 
 ### 2.7 Internal Linking Audit
 
-- [ ] Confirm listing pages link to city page, state page, 2–3 art style pages, 1–2 guides
-- [ ] Confirm guide pages link to featured listings and city index
-- [ ] Confirm city pages link to top 5 featured/premium listings + upcoming events + 1–2 guides
+- [x] Confirm listing pages link to city page, state page, 2–3 art style pages, 1–2 guides
+- [x] Confirm guide pages link to featured listings and city index
+- [x] Confirm city pages link to top 5 featured/premium listings + upcoming events + 1–2 guides
 
 ### 2.8 Link Outreach — Phase 1 Targets
 
