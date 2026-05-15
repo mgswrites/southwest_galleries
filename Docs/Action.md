@@ -129,7 +129,7 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 ### 2.3 Structured Data Completion
 
 - [x] Add `FAQPage` JSON-LD to all city and state hub pages
-- [ ] Add `Event` JSON-LD to event pages
+- [x] Add `Event` JSON-LD to event pages
 - [ ] Verify all structured data with Google's Rich Results Test
 
 ### 2.4 Search & Filtering (SSR)
@@ -173,14 +173,16 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 
 ### 3.1 Events Section
 
-- [ ] Build events index page (`src/pages/events/index.astro`) — filterable by state/city/date
-- [ ] Build event detail pages (`src/pages/events/[slug].astro`)
-- [ ] Inject `Event` JSON-LD on all event pages
-- [ ] Add events submission flow (via `/submit/` or separate `/submit-event/` form)
+- [x] Build events index page (`src/pages/events/index.astro`) — filterable by state/city/date
+- [x] Build event detail pages (`src/pages/events/[slug].astro`)
+- [x] Inject `Event` JSON-LD on all event pages
+- [x] Add events submission flow (`/submit-event/` form — SSR, inserts to events table pending review)
+- [x] Seed 26 events (recurring monthly walks + annual festivals)
 
 ### 3.2 Gallery Outreach for Paid Tiers
 
-- [ ] Build "Claim Your Listing" flow: form where gallery owners claim an existing listing
+- [x] Build "Claim Your Listing" flow: `src/pages/claim/[slug].astro` — SSR form, inserts to `listing_claims` table
+- [x] "Claim this listing" link visible on all free-tier listing pages
 - [ ] Email outreach to 300+ listed galleries with upgrade offer
 - [ ] Target: 5% conversion = 15 paying customers at average $175/yr
 
@@ -197,7 +199,7 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 ### 3.4 Email Newsletter
 
 - [ ] Set up Resend or ConvertKit account
-- [ ] Add email capture widget to homepage, city pages, and guide footers
+- [x] Add email capture widget to footer (all pages via Base.astro) — placeholder form action, wire up when Kit account ready
 - [ ] Create welcome sequence (3 emails): intro to the directory, top galleries by region, collecting guide teaser
 - [ ] Send first monthly newsletter once list hits 500 subscribers
 
@@ -215,10 +217,11 @@ Tasks are marked `[x]` when complete. Work through phases in order; items within
 
 ### 3.7 Artist Profiles (Phase 3 Feature)
 
-- [ ] Design `artists` table schema (name, slug, bio, state, associated listings, art styles)
-- [ ] Build artist profile pages (`/artists/[slug]/`)
-- [ ] Build artist index (`/artists/`)
-- [ ] Link artists to their associated gallery listings
+- [x] Design `artists` table schema (name, slug, bio, state, associated listings, art styles)
+- [x] Build artist profile pages (`/artists/[slug]/`) — with Person JSON-LD
+- [x] Build artist index (`/artists/`) — grouped by state
+- [x] Link artists to their associated gallery listings (artist_listings junction table)
+- [x] Seed 8 notable Southwest artists (R.C. Gorman, O'Keeffe, Fritz Scholder, Allan Houser, Ed Mell, et al)
 
 ### 3.8 Authority Building
 

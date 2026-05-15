@@ -271,6 +271,133 @@ export async function createListing(data: Record<string, unknown>) {
   return rows[0];
 }
 
+// ── Events ────────────────────────────────────────────────────────────────
+
+export async function getUpcomingEvents(limit = 60) {
+  return sql`
+    SELECT e.id, e.slug, e.title, e.description, e.event_date, e.event_end_date,
+           e.start_time, e.end_time, e.is_recurring, e.is_free, e.ticket_url,
+           e.website_url, e.image_url, e.meta_title, e.meta_description,
+           c.name AS city_name, c.slug AS city_slug,
+           s.name AS state_name, s.slug AS state_slug
+    FROM events e
+    LEFT JOIN cities c ON c.id = e.city_id
+    LEFT JOIN states s ON s.code = e.state_code
+    WHERE e.event_date >= CURRENT_DATE
+    ORDER BY e.event_date ASC
+    LIMIT ${limit}
+  `;
+}
+
+export async function getAllEventSlugs() {
+  return sql`SELECT slug FROM events`;
+}
+
+export async function getEvent(slug: string) {
+  const rows = await sql`
+    SELECT e.*,
+           c.name AS city_name, c.slug AS city_slug,
+           s.name AS state_name, s.slug AS state_slug,
+           l.name AS venue_name, l.slug AS venue_slug
+    FROM events e
+    LEFT JOIN cities c ON c.id = e.city_id
+    LEFT JOIN states s ON s.code = e.state_code
+    LEFT JOIN listings l ON l.id = e.listing_id
+    WHERE e.slug = ${slug}
+  `;
+  return rows[0] ?? null;
+}
+
+export async function getEventsByCity(cityId: number) {
+  return sql`
+    SELECT e.id, e.slug, e.title, e.event_date, e.start_time, e.is_free, e.is_recurring
+    FROM events e
+    WHERE e.city_id = ${cityId} AND e.event_date >= CURRENT_DATE
+    ORDER BY e.event_date ASC
+    LIMIT 5
+  `;
+}
+
+// ── Artists ───────────────────────────────────────────────────────────────
+
+export async function getArtists() {
+  return sql`
+    SELECT a.id, a.slug, a.name, a.bio, a.hero_image_url, a.state_code,
+           c.name AS city_name, c.slug AS city_slug,
+           s.name AS state_name, s.slug AS state_slug
+    FROM artists a
+    LEFT JOIN cities c ON c.id = a.city_id
+    LEFT JOIN states s ON s.code = a.state_code
+    ORDER BY a.name
+  `;
+}
+
+export async function getArtist(slug: string) {
+  const rows = await sql`
+    SELECT a.*,
+           c.name AS city_name, c.slug AS city_slug,
+           s.name AS state_name, s.slug AS state_slug
+    FROM artists a
+    LEFT JOIN cities c ON c.id = a.city_id
+    LEFT JOIN states s ON s.code = a.state_code
+    WHERE a.slug = ${slug}
+  `;
+  return rows[0] ?? null;
+}
+
+export async function getArtistListings(artistId: number) {
+  return sql`
+    SELECT l.id, l.slug, l.name, l.listing_type, l.tier, l.short_description,
+           l.hero_image_url, c.name AS city_name, c.slug AS city_slug,
+           s.name AS state_name, s.slug AS state_slug
+    FROM listings l
+    JOIN artist_listings al ON al.listing_id = l.id
+    LEFT JOIN cities c ON c.id = l.city_id
+    LEFT JOIN states s ON s.code = l.state_code
+    WHERE al.artist_id = ${artistId}
+      AND l.status = 'approved'
+      AND l.deleted_at IS NULL
+    ORDER BY l.name
+  `;
+}
+
+export async function getAllArtistSlugs() {
+  return sql`SELECT slug FROM artists`;
+}
+
+// ── Claims ────────────────────────────────────────────────────────────────
+
+export async function createClaim(data: {
+  listing_id: number;
+  claimant_name: string;
+  claimant_email: string;
+  claimant_title?: string;
+  claimant_phone?: string;
+  claimant_note?: string;
+}) {
+  await sql`
+    INSERT INTO listing_claims (listing_id, claimant_name, claimant_email, claimant_title, claimant_phone, claimant_note)
+    VALUES (
+      ${data.listing_id}, ${data.claimant_name}, ${data.claimant_email},
+      ${data.claimant_title ?? null}, ${data.claimant_phone ?? null}, ${data.claimant_note ?? null}
+    )
+  `;
+}
+
+export async function getPendingClaims() {
+  return sql`
+    SELECT lc.*, l.name AS listing_name, l.slug AS listing_slug
+    FROM listing_claims lc
+    JOIN listings l ON l.id = lc.listing_id
+    WHERE lc.status = 'pending'
+    ORDER BY lc.created_at DESC
+  `;
+}
+
+export async function updateClaimStatus(id: number, status: string) {
+  await sql`UPDATE listing_claims SET status = ${status}, reviewed_at = now() WHERE id = ${id}`;
+}
+
 export async function createSubmission(data: Record<string, unknown>) {
   await sql`
     INSERT INTO listing_submissions (

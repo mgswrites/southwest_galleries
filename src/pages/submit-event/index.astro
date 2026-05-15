@@ -1,0 +1,212 @@
+---
+export const prerender = false;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import sql from '../../lib/db';
+
+let success = false;
+let errors: Record<string, string> = {};
+let formData: Record<string, string> = {};
+
+const STATES = [
+  { value: 'AZ', label: 'Arizona' }, { value: 'CO', label: 'Colorado' },
+  { value: 'NM', label: 'New Mexico' }, { value: 'NV', label: 'Nevada' },
+  { value: 'TX', label: 'Texas' }, { value: 'UT', label: 'Utah' },
+  { value: 'CA', label: 'California' },
+];
+
+if (Astro.request.method === 'POST') {
+  const raw = await Astro.request.formData();
+  formData = Object.fromEntries(raw.entries()) as Record<string, string>;
+
+  const required = ['title', 'event_date', 'state_code', 'city_name', 'submitter_email'];
+  for (const f of required) {
+    if (!formData[f]?.trim()) errors[f] = 'Required';
+  }
+
+  if (formData.submitter_email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.submitter_email)) {
+    errors.submitter_email = 'Invalid email address';
+  }
+
+  if (Object.keys(errors).length === 0) {
+    await sql`
+      INSERT INTO events (
+        title, slug, description, event_date, event_end_date, start_time, end_time,
+        city_id, state_code, website_url, ticket_url, is_free, is_recurring,
+        meta_title, meta_description
+      ) VALUES (
+        ${formData.title.trim()},
+        ${formData.title.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+          + '-' + formData.event_date},
+        ${formData.description?.trim() || null},
+        ${formData.event_date},
+        ${formData.event_end_date?.trim() || null},
+        ${formData.start_time?.trim() || null},
+        ${formData.end_time?.trim() || null},
+        ${null},
+        ${formData.state_code as any},
+        ${formData.website_url?.trim() || null},
+        ${formData.ticket_url?.trim() || null},
+        ${formData.is_free === 'yes' ? true : formData.is_free === 'no' ? false : null},
+        ${false},
+        ${formData.title.trim() + ' | Southwest Galleries'},
+        ${formData.description?.trim().slice(0, 160) || null}
+      )
+    `;
+    success = true;
+  }
+}
+---
+
+<Base
+  title="Submit an Art Event | Southwest Galleries"
+  description="List your gallery opening, art walk, art fair, or cultural event on Southwest Galleries — reaching collectors, artists, and art lovers across the American Southwest."
+>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav
+        crumbs={[{ label: 'Home', href: '/' }, { label: 'Events', href: '/events/' }, { label: 'Submit Event' }]}
+      />
+      <h1>Submit an Art Event</h1>
+      <p>List your gallery opening, art walk, fair, or cultural event. Free to submit — we review within 3 business days.</p>
+    </div>
+  </div>
+
+  <div class="container form-container">
+    {success ? (
+      <div class="success-box">
+        <h2>Event Submitted!</h2>
+        <p>Thank you — we'll review your event and publish it within 3 business days. If we have questions, we'll reach out to you by email.</p>
+        <a href="/events/">Back to Events</a>
+      </div>
+    ) : (
+      <form method="POST" class="submit-form">
+        <section>
+          <h2>Event Information</h2>
+
+          <div class="field">
+            <label for="title">Event Name <span class="req">*</span></label>
+            <input type="text" id="title" name="title" value={formData.title ?? ''} required />
+            {errors.title && <span class="error">{errors.title}</span>}
+          </div>
+
+          <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows={5}>{formData.description ?? ''}</textarea>
+            <span class="hint">Tell visitors what makes this event special — artists in attendance, opening reception details, etc.</span>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="event_date">Start Date <span class="req">*</span></label>
+              <input type="date" id="event_date" name="event_date" value={formData.event_date ?? ''} required />
+              {errors.event_date && <span class="error">{errors.event_date}</span>}
+            </div>
+            <div class="field">
+              <label for="event_end_date">End Date</label>
+              <input type="date" id="event_end_date" name="event_end_date" value={formData.event_end_date ?? ''} />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="start_time">Start Time</label>
+              <input type="time" id="start_time" name="start_time" value={formData.start_time ?? ''} />
+            </div>
+            <div class="field">
+              <label for="end_time">End Time</label>
+              <input type="time" id="end_time" name="end_time" value={formData.end_time ?? ''} />
+            </div>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="state_code">State <span class="req">*</span></label>
+              <select id="state_code" name="state_code" required>
+                <option value="">Select a state</option>
+                {STATES.map((s) => (
+                  <option value={s.value} selected={formData.state_code === s.value}>{s.label}</option>
+                ))}
+              </select>
+              {errors.state_code && <span class="error">{errors.state_code}</span>}
+            </div>
+            <div class="field">
+              <label for="city_name">City <span class="req">*</span></label>
+              <input type="text" id="city_name" name="city_name" value={formData.city_name ?? ''} required />
+              {errors.city_name && <span class="error">{errors.city_name}</span>}
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="is_free">Admission</label>
+            <select id="is_free" name="is_free">
+              <option value="">Not specified</option>
+              <option value="yes" selected={formData.is_free === 'yes'}>Free</option>
+              <option value="no" selected={formData.is_free === 'no'}>Ticketed / Paid</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="website_url">Event Website</label>
+            <input type="url" id="website_url" name="website_url" value={formData.website_url ?? ''} placeholder="https://" />
+          </div>
+
+          <div class="field">
+            <label for="ticket_url">Ticket URL</label>
+            <input type="url" id="ticket_url" name="ticket_url" value={formData.ticket_url ?? ''} placeholder="https://" />
+          </div>
+        </section>
+
+        <section>
+          <h2>Your Contact Information</h2>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="submitter_name">Your Name</label>
+              <input type="text" id="submitter_name" name="submitter_name" value={formData.submitter_name ?? ''} />
+            </div>
+            <div class="field">
+              <label for="submitter_email">Your Email <span class="req">*</span></label>
+              <input type="email" id="submitter_email" name="submitter_email" value={formData.submitter_email ?? ''} required />
+              {errors.submitter_email && <span class="error">{errors.submitter_email}</span>}
+            </div>
+          </div>
+        </section>
+
+        <div class="form-footer">
+          <button type="submit">Submit Event</button>
+          <p class="disclaimer">Events are reviewed before publishing. We do not publish events unrelated to visual arts or galleries.</p>
+        </div>
+      </form>
+    )}
+  </div>
+</Base>
+
+<style>
+  .form-container { padding-top: 2rem; padding-bottom: 3rem; max-width: 760px; }
+  .submit-form section { margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+  .submit-form section h2 { font-size: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1.25rem; }
+  .field { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; }
+  .field label { font-size: 0.875rem; font-weight: 600; }
+  .req { color: var(--clay); }
+  .field input, .field select, .field textarea {
+    padding: 0.55rem 0.75rem; border: 1px solid var(--border); border-radius: 5px;
+    font-size: 0.9rem; font-family: inherit; background: #fff;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--turquoise); border-color: transparent; }
+  .hint { font-size: 0.78rem; color: var(--muted); }
+  .error { font-size: 0.78rem; color: var(--clay); font-weight: 600; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-footer { display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+  .form-footer button {
+    background: var(--clay); color: #fff; border: none; padding: 0.75rem 2rem;
+    border-radius: 6px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+  }
+  .form-footer button:hover { background: #a8521f; }
+  .disclaimer { font-size: 0.78rem; color: var(--muted); max-width: 400px; }
+  .success-box { background: var(--sand); border-radius: 8px; padding: 2.5rem; max-width: 560px; margin: 2rem auto; text-align: center; }
+  .success-box h2 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+  .success-box p { color: var(--muted); margin-bottom: 1.5rem; line-height: 1.6; }
+  .success-box a { color: var(--clay); font-weight: 600; }
+  @media (max-width: 600px) { .field-row { grid-template-columns: 1fr; } }
+</style>

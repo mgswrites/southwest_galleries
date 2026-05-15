@@ -1,0 +1,219 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import { getAllEventSlugs, getEvent } from '../../lib/queries';
+
+export async function getStaticPaths() {
+  const slugs = await getAllEventSlugs();
+  return slugs.map((e) => ({ params: { slug: e.slug } }));
+}
+
+const { slug } = Astro.params;
+const event = await getEvent(slug!);
+if (!event) return Astro.redirect('/events/');
+
+const title = event.meta_title ?? `${event.title} | Southwest Galleries`;
+const description = event.meta_description ?? event.description?.slice(0, 160) ?? '';
+
+function formatDate(d: string) {
+  return new Date(d).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+function formatTime(t: string | null) {
+  if (!t) return null;
+  const [h, m] = t.split(':').map(Number);
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  return `${h % 12 || 12}:${String(m).padStart(2, '0')} ${ampm}`;
+}
+
+const startDatetime = event.start_time
+  ? `${event.event_date}T${event.start_time}`
+  : event.event_date;
+const endDatetime = event.end_time
+  ? `${event.event_date}T${event.end_time}`
+  : event.event_end_date ?? event.event_date;
+
+const eventSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: event.title,
+  description: event.description ?? undefined,
+  startDate: startDatetime,
+  endDate: endDatetime,
+  image: event.image_url ?? undefined,
+  isAccessibleForFree: event.is_free ?? undefined,
+  url: event.website_url ?? undefined,
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  ...(event.city_name
+    ? {
+        location: {
+          '@type': 'Place',
+          name: event.venue_name ?? event.city_name,
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: event.city_name,
+            addressRegion: event.state_name,
+            addressCountry: 'US',
+          },
+        },
+      }
+    : {}),
+  organizer: {
+    '@type': 'Organization',
+    name: 'Southwest Galleries',
+    url: 'https://southwestgalleries.com',
+  },
+};
+---
+
+<Base {title} {description} schema={eventSchema}>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav
+        crumbs={[
+          { label: 'Home', href: '/' },
+          { label: 'Events', href: '/events/' },
+          { label: event.title },
+        ]}
+      />
+      <div class="event-meta-top">
+        {event.is_recurring && <span class="recurring-badge">Recurring</span>}
+        {event.is_free !== null && (
+          <span class={`cost-badge ${event.is_free ? 'free' : 'paid'}`}>
+            {event.is_free ? 'Free' : 'Ticketed'}
+          </span>
+        )}
+      </div>
+      <h1>{event.title}</h1>
+      <p class="event-location-line">
+        {[event.city_name, event.state_name].filter(Boolean).join(', ')}
+      </p>
+    </div>
+  </div>
+
+  <div class="container event-layout">
+    <div class="event-main">
+      {event.image_url && (
+        <img src={event.image_url} alt={event.title} class="event-hero" />
+      )}
+
+      <div class="event-body">
+        <h2>About This Event</h2>
+        <p>{event.description}</p>
+      </div>
+
+      {event.venue_name && event.venue_slug && (
+        <div class="venue-link-block">
+          <strong>Venue:</strong>{' '}
+          <a href={`/listing/${event.venue_slug}/`}>{event.venue_name}</a>
+        </div>
+      )}
+    </div>
+
+    <aside class="event-sidebar">
+      <div class="sidebar-card">
+        <h3>Event Details</h3>
+
+        <div class="detail-row">
+          <span class="detail-label">Date</span>
+          <span>{formatDate(event.event_date)}</span>
+        </div>
+
+        {event.event_end_date && event.event_end_date !== event.event_date && (
+          <div class="detail-row">
+            <span class="detail-label">End Date</span>
+            <span>{formatDate(event.event_end_date)}</span>
+          </div>
+        )}
+
+        {(event.start_time || event.end_time) && (
+          <div class="detail-row">
+            <span class="detail-label">Time</span>
+            <span>
+              {formatTime(event.start_time)}
+              {event.end_time && ` – ${formatTime(event.end_time)}`}
+            </span>
+          </div>
+        )}
+
+        {event.is_free !== null && (
+          <div class="detail-row">
+            <span class="detail-label">Admission</span>
+            <span>{event.is_free ? 'Free' : 'Ticketed'}</span>
+          </div>
+        )}
+
+        {event.city_name && (
+          <div class="detail-row">
+            <span class="detail-label">Location</span>
+            <span>{[event.city_name, event.state_name].filter(Boolean).join(', ')}</span>
+          </div>
+        )}
+
+        {event.is_recurring && event.recurrence_rule && (
+          <div class="detail-row">
+            <span class="detail-label">Schedule</span>
+            <span>Recurring event</span>
+          </div>
+        )}
+      </div>
+
+      <div class="sidebar-actions">
+        {event.ticket_url && (
+          <a href={event.ticket_url} target="_blank" rel="noopener noreferrer" class="btn-primary">
+            Get Tickets
+          </a>
+        )}
+        {event.website_url && (
+          <a href={event.website_url} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            Official Website
+          </a>
+        )}
+        {event.city_slug && event.state_slug && (
+          <a href={`/galleries/${event.state_slug}/${event.city_slug}/`} class="btn-secondary">
+            Galleries in {event.city_name}
+          </a>
+        )}
+      </div>
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .event-meta-top { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .recurring-badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.2rem 0.6rem; border-radius: 3px; background: #e8f0fa; color: #2a5a9c; }
+  .cost-badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 3px; }
+  .cost-badge.free { background: #e8f5e8; color: #2a7a2a; }
+  .cost-badge.paid { background: #f5eee8; color: var(--clay); }
+  .event-location-line { color: var(--muted); margin-top: 0.4rem; }
+
+  .event-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 2.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+    align-items: start;
+  }
+  .event-hero { width: 100%; border-radius: 8px; margin-bottom: 1.5rem; max-height: 400px; object-fit: cover; }
+  .event-body h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .event-body p { line-height: 1.7; color: #444; }
+  .venue-link-block { margin-top: 1.5rem; padding: 1rem; background: var(--sand); border-radius: 6px; font-size: 0.9rem; }
+  .venue-link-block a { color: var(--clay); font-weight: 600; }
+
+  .sidebar-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .sidebar-card h3 { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; }
+  .detail-row { display: flex; gap: 0.75rem; font-size: 0.875rem; margin-bottom: 0.65rem; }
+  .detail-label { font-weight: 600; min-width: 80px; color: var(--ink); }
+
+  .sidebar-actions { display: flex; flex-direction: column; gap: 0.5rem; }
+  .btn-primary { display: block; text-align: center; background: var(--clay); color: #fff; padding: 0.7rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; }
+  .btn-primary:hover { background: #a8521f; text-decoration: none; }
+  .btn-secondary { display: block; text-align: center; border: 1px solid var(--border); color: var(--ink); padding: 0.65rem 1rem; border-radius: 6px; font-size: 0.875rem; font-weight: 600; }
+  .btn-secondary:hover { border-color: var(--turquoise); color: var(--turquoise); text-decoration: none; }
+
+  @media (max-width: 768px) {
+    .event-layout { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,97 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import { getArtists } from '../../lib/queries';
+
+const artists = await getArtists();
+
+const byState: Record<string, typeof artists> = {};
+for (const artist of artists) {
+  const key = (artist.state_name as string) ?? 'Other';
+  if (!byState[key]) byState[key] = [];
+  byState[key].push(artist);
+}
+const stateKeys = Object.keys(byState).sort();
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Southwest Artists | Southwest Galleries',
+  description: 'Profiles of notable artists working in the American Southwest — painters, sculptors, ceramicists, and jewelers from Arizona, New Mexico, Colorado, and beyond.',
+  url: 'https://southwestgalleries.com/artists/',
+};
+---
+
+<Base
+  title="Southwest Artists | Southwest Galleries"
+  description="Profiles of notable artists working in the American Southwest — painters, sculptors, ceramicists, and jewelers from Arizona, New Mexico, Colorado, and beyond."
+  schema={schema}
+>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[{ label: 'Home', href: '/' }, { label: 'Artists' }]} />
+      <h1>Southwest Artists</h1>
+      <p>Painters, sculptors, ceramicists, and jewelers shaping the art of the American Southwest.</p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    {artists.length === 0 ? (
+      <p style="color:var(--muted);text-align:center;padding:3rem">Artist profiles coming soon.</p>
+    ) : stateKeys.map((stateName) => (
+      <section class="state-section">
+        <h2>{stateName}</h2>
+        <div class="artist-grid">
+          {byState[stateName].map((artist) => (
+            <a href={`/artists/${artist.slug}/`} class="artist-card">
+              {artist.hero_image_url ? (
+                <img src={artist.hero_image_url} alt={artist.name as string} loading="lazy" />
+              ) : (
+                <div class="artist-placeholder">
+                  <span>{(artist.name as string).charAt(0)}</span>
+                </div>
+              )}
+              <div class="artist-info">
+                <strong>{artist.name}</strong>
+                {(artist.city_name || artist.state_name) && (
+                  <span>{[artist.city_name, artist.state_name].filter(Boolean).join(', ')}</span>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</Base>
+
+<style>
+  .state-section { margin-bottom: 2.5rem; }
+  .state-section h2 { font-size: 1.1rem; font-weight: 700; border-bottom: 2px solid var(--sand); padding-bottom: 0.5rem; margin-bottom: 1.25rem; }
+  .artist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+  .artist-card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--ink);
+    transition: box-shadow 0.15s;
+  }
+  .artist-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-decoration: none; }
+  .artist-card img { width: 100%; height: 180px; object-fit: cover; }
+  .artist-placeholder {
+    width: 100%; height: 180px; background: var(--sand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem; font-weight: 700; color: var(--clay);
+  }
+  .artist-info { padding: 0.85rem; }
+  .artist-info strong { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .artist-info span { font-size: 0.78rem; color: var(--muted); }
+</style>

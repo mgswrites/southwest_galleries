@@ -102,9 +102,25 @@ const schemaBlocks = schema
           <strong>List Your Venue</strong>
           <ul>
             <li><a href="/submit/">Submit a Listing</a></li>
+            <li><a href="/submit-event/">Submit an Event</a></li>
+            <li><a href="/artists/">Southwest Artists</a></li>
           </ul>
         </div>
       </div>
+
+      <div class="email-capture">
+        <div class="email-capture-inner">
+          <div class="email-capture-text">
+            <strong>Stay in the Loop</strong>
+            <p>New galleries, upcoming events, and Southwest art stories — delivered monthly.</p>
+          </div>
+          <form class="email-form" action="https://app.kit.com/forms/YOUR_FORM_ID/subscriptions" method="POST" data-sv-form="YOUR_FORM_ID" data-uid="YOUR_FORM_UID" target="_blank">
+            <input type="email" name="email_address" placeholder="your@email.com" required aria-label="Email address" />
+            <button type="submit">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
       <p class="footer-copy">&copy; {new Date().getFullYear()} SouthwestGalleries.com. All rights reserved.</p>
     </footer>
   </body>
@@ -179,6 +195,16 @@ const schemaBlocks = schema
   footer a { color: #aaa; font-size: 0.875rem; }
   footer a:hover { color: #fff; }
   footer p { font-size: 0.875rem; color: #888; line-height: 1.5; }
+  .email-capture { border-top: 1px solid #333; padding: 2rem 0; }
+  .email-capture-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .email-capture-text strong { color: #fff; display: block; margin-bottom: 0.3rem; }
+  .email-capture-text p { font-size: 0.85rem; color: #888; margin: 0; }
+  .email-form { display: flex; gap: 0.5rem; flex-shrink: 0; }
+  .email-form input[type="email"] { padding: 0.55rem 0.85rem; border-radius: 5px; border: 1px solid #444; background: #2a2018; color: #fff; font-size: 0.875rem; min-width: 220px; }
+  .email-form input[type="email"]::placeholder { color: #666; }
+  .email-form input[type="email"]:focus { outline: 2px solid var(--turquoise); border-color: transparent; }
+  .email-form button { padding: 0.55rem 1.25rem; background: var(--turquoise); color: #fff; border: none; border-radius: 5px; font-size: 0.875rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+  .email-form button:hover { background: #237676; }
   .footer-copy { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #555; max-width: var(--max-w); margin-left: auto; margin-right: auto; }
 
   .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }

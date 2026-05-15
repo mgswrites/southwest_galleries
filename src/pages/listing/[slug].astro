@@ -205,6 +205,7 @@ const localBusinessSchema = {
           <div class="upgrade-cta">
             <p>Own this gallery? Upgrade for more visibility.</p>
             <a href={`/upgrade/${listing.slug}/`} class="upgrade-btn">Upgrade this listing →</a>
+            <a href={`/claim/${listing.slug}/`} class="claim-link">Claim this listing</a>
           </div>
         )}
       </aside>
@@ -269,6 +270,8 @@ const localBusinessSchema = {
   .upgrade-cta p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
   .upgrade-btn { display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--turquoise); text-decoration: none; }
   .upgrade-btn:hover { text-decoration: underline; }
+  .claim-link { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; }
+  .claim-link:hover { color: var(--ink); }
 
   .hours-card strong { display: block; margin-bottom: 0.75rem; }
   .hours-list { display: flex; flex-direction: column; gap: 0.3rem; }

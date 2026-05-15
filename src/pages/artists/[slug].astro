@@ -1,0 +1,165 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+import ListingCard from '../../components/ListingCard.astro';
+import { getAllArtistSlugs, getArtist, getArtistListings } from '../../lib/queries';
+
+export async function getStaticPaths() {
+  const slugs = await getAllArtistSlugs();
+  return slugs.map((a) => ({ params: { slug: a.slug } }));
+}
+
+const { slug } = Astro.params;
+const artist = await getArtist(slug!);
+if (!artist) return Astro.redirect('/artists/');
+
+const listings = await getArtistListings(artist.id);
+
+const title = (artist.meta_title as string) ?? `${artist.name} | Southwest Artist | Southwest Galleries`;
+const description = (artist.meta_description as string) ?? (artist.bio as string)?.slice(0, 160) ?? '';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: artist.name,
+  description: artist.bio ?? undefined,
+  image: artist.hero_image_url ?? undefined,
+  url: artist.website_url ?? undefined,
+  ...(artist.city_name
+    ? {
+        homeLocation: {
+          '@type': 'Place',
+          address: {
+            '@type': 'PostalAddress',
+            addressLocality: artist.city_name,
+            addressRegion: artist.state_name,
+            addressCountry: 'US',
+          },
+        },
+      }
+    : {}),
+  sameAs: artist.website_url ? [artist.website_url] : [],
+};
+---
+
+<Base {title} {description} ogImage={(artist.hero_image_url as string) ?? undefined} schema={personSchema}>
+  <div class="artist-hero" style={artist.hero_image_url ? `background-image:url(${artist.hero_image_url})` : undefined}>
+    <div class="hero-overlay">
+      <div class="container">
+        <BreadcrumbNav
+          crumbs={[
+            { label: 'Home', href: '/' },
+            { label: 'Artists', href: '/artists/' },
+            { label: artist.name as string },
+          ]}
+        />
+        <h1>{artist.name}</h1>
+        {(artist.city_name || artist.state_name) && (
+          <p class="hero-location">{[artist.city_name, artist.state_name].filter(Boolean).join(', ')}</p>
+        )}
+      </div>
+    </div>
+  </div>
+
+  <div class="container artist-layout">
+    <div class="artist-main">
+      {artist.bio && (
+        <section class="bio-section">
+          <h2>About {artist.name}</h2>
+          <div class="bio-text">{artist.bio}</div>
+        </section>
+      )}
+
+      {listings.length > 0 && (
+        <section class="galleries-section">
+          <h2>Associated Galleries</h2>
+          <div class="listings-grid">
+            {listings.map((l) => <ListingCard listing={l} />)}
+          </div>
+        </section>
+      )}
+    </div>
+
+    <aside class="artist-sidebar">
+      {artist.hero_image_url && !artist.bio && (
+        <img src={artist.hero_image_url as string} alt={artist.name as string} class="sidebar-portrait" />
+      )}
+
+      <div class="sidebar-card">
+        <h3>Artist Info</h3>
+        {(artist.city_name || artist.state_name) && (
+          <div class="info-row">
+            <span class="info-label">Based in</span>
+            <span>{[artist.city_name, artist.state_name].filter(Boolean).join(', ')}</span>
+          </div>
+        )}
+        {artist.website_url && (
+          <div class="info-row">
+            <span class="info-label">Website</span>
+            <a href={artist.website_url as string} target="_blank" rel="noopener noreferrer">
+              {(artist.website_url as string).replace(/^https?:\/\//, '').replace(/\/$/, '')}
+            </a>
+          </div>
+        )}
+      </div>
+
+      {artist.city_slug && artist.state_slug && (
+        <div class="sidebar-links">
+          <a href={`/galleries/${artist.state_slug}/${artist.city_slug}/`} class="nav-link">
+            Galleries in {artist.city_name} →
+          </a>
+          <a href="/artists/" class="nav-link">
+            All Southwest Artists →
+          </a>
+        </div>
+      )}
+    </aside>
+  </div>
+</Base>
+
+<style>
+  .artist-hero {
+    min-height: 300px;
+    background: var(--ink) center/cover no-repeat;
+    position: relative;
+  }
+  .hero-overlay {
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+    padding: 2rem 0;
+    color: #fff;
+  }
+  .hero-overlay :global(.breadcrumb) { color: rgba(255,255,255,0.75); }
+  .hero-overlay :global(.breadcrumb a) { color: rgba(255,255,255,0.75); }
+  .hero-overlay h1 { font-size: 2.25rem; font-weight: 700; margin-top: 0.5rem; }
+  .hero-location { color: rgba(255,255,255,0.8); margin-top: 0.35rem; }
+
+  .artist-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 2.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+    align-items: start;
+  }
+  .bio-section { margin-bottom: 2rem; }
+  .bio-section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .bio-text { line-height: 1.75; color: #444; white-space: pre-line; }
+  .galleries-section h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+  .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1rem; }
+
+  .sidebar-portrait { width: 100%; border-radius: 8px; margin-bottom: 1rem; }
+  .sidebar-card { border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
+  .sidebar-card h3 { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 1rem; }
+  .info-row { display: flex; gap: 0.75rem; font-size: 0.875rem; margin-bottom: 0.65rem; flex-wrap: wrap; }
+  .info-label { font-weight: 600; min-width: 70px; color: var(--ink); }
+  .info-row a { color: var(--turquoise); }
+  .sidebar-links { display: flex; flex-direction: column; gap: 0.5rem; }
+  .nav-link { font-size: 0.875rem; font-weight: 600; color: var(--clay); }
+
+  @media (max-width: 768px) { .artist-layout { grid-template-columns: 1fr; } }
+</style>
