@@ -16,6 +16,16 @@ if (!post) return Astro.redirect('/guides/');
 
 const listings = await getPostListings(post.id);
 
+type PostListing = { city_name: string; city_slug: string; state_slug: string; [k: string]: unknown };
+const typedListings = listings as PostListing[];
+const linkedCities = [
+  ...new Map(
+    typedListings
+      .filter((l) => l.city_slug && l.state_slug)
+      .map((l) => [l.city_slug, { city_name: l.city_name, city_slug: l.city_slug, state_slug: l.state_slug }])
+  ).values(),
+];
+
 const title = post.meta_title ?? `${post.title} | Southwest Galleries`;
 const description = post.meta_description ?? post.excerpt ?? '';
 
@@ -72,6 +82,19 @@ const articleSchema = {
         </div>
       </section>
     )}
+
+    {linkedCities.length > 0 && (
+      <section class="explore-cities">
+        <h2>Explore by City</h2>
+        <div class="city-links">
+          {linkedCities.map((c) => (
+            <a href={`/galleries/${c.state_slug}/${c.city_slug}/`} class="city-link">
+              {c.city_name}
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 </Base>
 
@@ -90,4 +113,9 @@ const articleSchema = {
   .featured-listings { margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem; max-width: 100%; }
   .featured-listings h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
   .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem; }
+  .explore-cities { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .explore-cities h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .city-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .city-link { padding: 0.35rem 0.85rem; border: 1px solid var(--border); border-radius: 20px; font-size: 0.875rem; color: var(--ink); text-decoration: none; }
+  .city-link:hover { background: var(--sand); border-color: var(--turquoise); }
 </style>

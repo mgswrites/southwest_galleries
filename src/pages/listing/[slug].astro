@@ -3,7 +3,7 @@ export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import MapView from '../../components/MapView.astro';
-import { getAllApprovedListingSlugs, getListing, getListingArtStyles, getListingImages } from '../../lib/queries';
+import { getAllApprovedListingSlugs, getListing, getListingArtStyles, getListingImages, getGuidesByListing } from '../../lib/queries';
 
 export async function getStaticPaths() {
   const rows = await getAllApprovedListingSlugs();
@@ -14,9 +14,10 @@ const { slug } = Astro.params;
 const listing = await getListing(slug!);
 if (!listing) return Astro.redirect('/galleries/');
 
-const [artStyles, images] = await Promise.all([
+const [artStyles, images, relatedGuides] = await Promise.all([
   getListingArtStyles(listing.id),
   getListingImages(listing.id),
+  getGuidesByListing(listing.id),
 ]);
 
 const typeLabel: Record<string, string> = {
@@ -117,6 +118,17 @@ const localBusinessSchema = {
             </div>
           </div>
         )}
+
+        {relatedGuides.length > 0 && (
+          <div class="related-guides">
+            <h2>Related Guides</h2>
+            <ul class="guide-list">
+              {relatedGuides.map((g) => (
+                <li><a href={`/guides/${g.slug}/`}>{g.title}</a></li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
 
       <aside class="listing-sidebar">
@@ -188,6 +200,13 @@ const localBusinessSchema = {
             />
           </div>
         )}
+
+        {(listing.tier === 'free' || !listing.tier) && (
+          <div class="upgrade-cta">
+            <p>Own this gallery? Upgrade for more visibility.</p>
+            <a href={`/upgrade/${listing.slug}/`} class="upgrade-btn">Upgrade this listing →</a>
+          </div>
+        )}
       </aside>
     </div>
   </div>
@@ -228,6 +247,13 @@ const localBusinessSchema = {
   .style-tag { padding: 0.3rem 0.8rem; border: 1px solid var(--border); border-radius: 20px; font-size: 0.8rem; color: var(--ink); text-decoration: none; }
   .style-tag:hover { background: var(--sand); border-color: var(--turquoise); text-decoration: none; }
 
+  .related-guides { margin-top: 2rem; }
+  .related-guides h2 { font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .guide-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .guide-list li { border-left: 3px solid var(--turquoise); padding-left: 0.75rem; }
+  .guide-list a { font-size: 0.9rem; color: var(--turquoise); font-weight: 500; }
+  .guide-list a:hover { text-decoration: underline; }
+
   .sidebar-card { background: var(--sand); border: 1px solid var(--border); border-radius: 8px; padding: 1.25rem; margin-bottom: 1rem; }
   .sidebar-row { margin-bottom: 1rem; }
   .sidebar-row:last-child { margin-bottom: 0; }
@@ -238,6 +264,11 @@ const localBusinessSchema = {
 
   .website-btn { display: block; text-align: center; background: var(--clay); color: #fff; padding: 0.65rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; text-decoration: none; margin-top: 0.5rem; }
   .website-btn:hover { background: #a8521f; text-decoration: none; }
+
+  .upgrade-cta { margin-top: 1rem; padding: 1rem; background: var(--sand); border: 1px dashed var(--border); border-radius: 8px; text-align: center; }
+  .upgrade-cta p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .upgrade-btn { display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--turquoise); text-decoration: none; }
+  .upgrade-btn:hover { text-decoration: underline; }
 
   .hours-card strong { display: block; margin-bottom: 0.75rem; }
   .hours-list { display: flex; flex-direction: column; gap: 0.3rem; }

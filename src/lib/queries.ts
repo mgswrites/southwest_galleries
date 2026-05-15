@@ -129,6 +129,31 @@ export async function getListingsByArtStyle(styleId: number) {
   `;
 }
 
+export async function getGuidesByListing(listingId: number) {
+  return sql`
+    SELECT p.id, p.slug, p.title
+    FROM posts p
+    JOIN post_listings pl ON pl.post_id = p.id
+    WHERE pl.listing_id = ${listingId}
+      AND p.is_published = true
+    ORDER BY p.published_at DESC
+    LIMIT 3
+  `;
+}
+
+export async function getGuidesByCity(cityId: number) {
+  return sql`
+    SELECT DISTINCT p.id, p.slug, p.title, p.published_at
+    FROM posts p
+    JOIN post_listings pl ON pl.post_id = p.id
+    JOIN listings l ON l.id = pl.listing_id
+    WHERE l.city_id = ${cityId}
+      AND p.is_published = true
+    ORDER BY p.published_at DESC
+    LIMIT 3
+  `;
+}
+
 export async function getPublishedPosts() {
   return sql`
     SELECT id, slug, title, excerpt, hero_image_url, author_name, published_at, state_code

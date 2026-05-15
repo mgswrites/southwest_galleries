@@ -1,0 +1,231 @@
+---
+export const prerender = false;
+import Base from '../../layouts/Base.astro';
+import { getListing } from '../../lib/queries';
+
+const { slug } = Astro.params;
+const listing = await getListing(slug!);
+if (!listing) return Astro.redirect('/galleries/');
+
+const TIERS = [
+  {
+    id: 'basic',
+    name: 'Basic',
+    price: '$99',
+    period: '/year',
+    features: [
+      'Name and contact info listed',
+      'Category and art style tags',
+      'Link to your website',
+      'Listed on city and state pages',
+    ],
+    cta: 'Get Basic',
+    highlight: false,
+  },
+  {
+    id: 'featured',
+    name: 'Featured',
+    price: '$199',
+    period: '/year',
+    features: [
+      'Everything in Basic',
+      'Featured badge on listing card',
+      'Priority placement on city pages',
+      'Featured on state hub pages',
+      'Homepage featured rotation',
+    ],
+    cta: 'Get Featured',
+    highlight: true,
+  },
+  {
+    id: 'premium',
+    name: 'Premium',
+    price: '$349',
+    period: '/year',
+    features: [
+      'Everything in Featured',
+      'Premium badge on listing card',
+      'Top placement across all pages',
+      'Annual view count analytics',
+      'Logo displayed on listing page',
+      'Priority review in editorial guides',
+    ],
+    cta: 'Get Premium',
+    highlight: false,
+  },
+];
+
+const upgraded = Astro.url.searchParams.get('upgraded') === '1';
+---
+
+<Base
+  title={`Upgrade ${listing.name} | Southwest Galleries`}
+  description={`Upgrade your Southwest Galleries listing for ${listing.name} to gain more visibility, placement, and collector reach.`}
+>
+  <div class="page-header">
+    <div class="container">
+      <h1>Upgrade <span class="listing-name">{listing.name}</span></h1>
+      <p>Choose a plan to increase visibility and reach more collectors across the Southwest.</p>
+    </div>
+  </div>
+
+  <div class="container upgrade-container">
+    <div class="tiers-grid">
+      {TIERS.map((tier) => (
+        <div class={`tier-card${tier.highlight ? ' highlight' : ''}`}>
+          {tier.highlight && <div class="popular-badge">Most Popular</div>}
+          <div class="tier-header">
+            <h2>{tier.name}</h2>
+            <div class="price-row">
+              <span class="price">{tier.price}</span>
+              <span class="period">{tier.period}</span>
+            </div>
+          </div>
+          <ul class="feature-list">
+            {tier.features.map((f) => (
+              <li>
+                <span class="check" aria-hidden="true">✓</span>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <form class="checkout-form" data-tier={tier.id}>
+            <div class="form-field">
+              <label for={`email-${tier.id}`}>Your email</label>
+              <input
+                type="email"
+                id={`email-${tier.id}`}
+                name="email"
+                required
+                placeholder="you@yourgallery.com"
+              />
+            </div>
+            <div class="form-field">
+              <label for={`name-${tier.id}`}>Your name</label>
+              <input
+                type="text"
+                id={`name-${tier.id}`}
+                name="name"
+                required
+                placeholder="Gallery owner name"
+              />
+            </div>
+            <input type="hidden" name="listing_id" value={String(listing.id)} />
+            <input type="hidden" name="listing_slug" value={listing.slug} />
+            <input type="hidden" name="tier" value={tier.id} />
+            <button type="submit" class={`cta-btn${tier.highlight ? ' primary' : ''}`}>
+              {tier.cta} →
+            </button>
+          </form>
+        </div>
+      ))}
+    </div>
+
+    <div class="guarantee">
+      <p>All plans are billed annually. Cancel anytime before renewal. Payments are processed securely by Stripe. Questions? Email <a href="mailto:hello@southwestgalleries.com">hello@southwestgalleries.com</a>.</p>
+    </div>
+
+    <div class="back-link">
+      <a href={`/listing/${listing.slug}/`}>← Back to {listing.name}</a>
+    </div>
+  </div>
+</Base>
+
+<script is:inline>
+  document.querySelectorAll('.checkout-form').forEach((form) => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = form.querySelector('button[type=submit]');
+      btn.disabled = true;
+      btn.textContent = 'Redirecting to checkout…';
+      const data = Object.fromEntries(new FormData(form).entries());
+      try {
+        const res = await fetch('/api/checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json();
+        if (json.url) {
+          window.location.href = json.url;
+        } else {
+          alert('Something went wrong. Please try again.');
+          btn.disabled = false;
+          btn.textContent = btn.dataset.label || 'Upgrade';
+        }
+      } catch {
+        alert('Network error. Please try again.');
+        btn.disabled = false;
+      }
+    });
+  });
+</script>
+
+<style>
+  .page-header { background: var(--sand); }
+  .listing-name { color: var(--turquoise); }
+  .upgrade-container { padding-top: 2.5rem; padding-bottom: 4rem; }
+
+  .tiers-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .tiers-grid { grid-template-columns: 1fr; max-width: 480px; } }
+
+  .tier-card {
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    position: relative;
+    background: #fff;
+  }
+  .tier-card.highlight {
+    border-color: var(--turquoise);
+    box-shadow: 0 4px 24px rgba(0, 150, 150, 0.12);
+  }
+
+  .popular-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--turquoise); color: #fff;
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; padding: 0.25rem 0.75rem; border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .tier-header { margin-bottom: 1.5rem; }
+  .tier-header h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .price-row { display: flex; align-items: baseline; gap: 0.2rem; }
+  .price { font-size: 2.25rem; font-weight: 800; color: var(--ink); }
+  .period { font-size: 0.875rem; color: var(--muted); }
+
+  .feature-list { list-style: none; padding: 0; margin: 0 0 1.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .feature-list li { display: flex; gap: 0.6rem; font-size: 0.9rem; }
+  .check { color: var(--turquoise); font-weight: 700; flex-shrink: 0; }
+
+  .form-field { margin-bottom: 0.75rem; }
+  .form-field label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+  .form-field input {
+    width: 100%; padding: 0.55rem 0.75rem;
+    border: 1.5px solid var(--border); border-radius: 6px;
+    font-size: 0.9rem; font-family: inherit; box-sizing: border-box;
+  }
+  .form-field input:focus { outline: none; border-color: var(--turquoise); }
+
+  .cta-btn {
+    display: block; width: 100%; padding: 0.75rem 1rem;
+    background: var(--sand); border: 1.5px solid var(--border);
+    border-radius: 8px; font-size: 1rem; font-weight: 700;
+    cursor: pointer; transition: all 0.15s; margin-top: 0.5rem;
+    color: var(--ink); font-family: inherit;
+  }
+  .cta-btn.primary { background: var(--turquoise); border-color: var(--turquoise); color: #fff; }
+  .cta-btn:hover:not(:disabled) { opacity: 0.88; }
+  .cta-btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+  .guarantee { margin-top: 2.5rem; text-align: center; color: var(--muted); font-size: 0.85rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+  .guarantee a { color: var(--turquoise); }
+  .back-link { margin-top: 1.5rem; text-align: center; }
+  .back-link a { color: var(--muted); font-size: 0.9rem; }
+</style>

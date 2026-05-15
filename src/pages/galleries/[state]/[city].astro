@@ -4,7 +4,7 @@ import Base from '../../../layouts/Base.astro';
 import BreadcrumbNav from '../../../components/BreadcrumbNav.astro';
 import ListingCard from '../../../components/ListingCard.astro';
 import MapView from '../../../components/MapView.astro';
-import { getStates, getState, getCitiesByState, getCity, getListingsByCity } from '../../../lib/queries';
+import { getStates, getState, getCitiesByState, getCity, getListingsByCity, getGuidesByCity } from '../../../lib/queries';
 
 export async function getStaticPaths() {
   const states = await getStates();
@@ -24,7 +24,12 @@ if (!stateData) return Astro.redirect('/galleries/');
 const cityData = await getCity(stateData.code, citySlug!);
 if (!cityData) return Astro.redirect(`/galleries/${stateSlug}/`);
 
-const listings = await getListingsByCity(cityData.id);
+const [listings, cityGuides] = await Promise.all([
+  getListingsByCity(cityData.id),
+  getGuidesByCity(cityData.id),
+]);
+
+const featuredListings = listings.filter((l) => l.tier === 'featured' || l.tier === 'premium').slice(0, 5);
 
 const mapMarkers = listings
   .filter((l) => l.latitude && l.longitude)
@@ -114,26 +119,61 @@ const schema = [
       </div>
     )}
 
+    {featuredListings.length > 0 && (
+      <section style="margin-bottom:2.5rem">
+        <h2>Featured Galleries</h2>
+        <div class="listings-grid" style="margin-top:1rem">
+          {featuredListings.map((l) => (
+            <ListingCard
+              slug={l.slug}
+              name={l.name}
+              listing_type={l.listing_type}
+              tier={l.tier}
+              short_description={l.short_description}
+              hero_image_url={l.hero_image_url}
+              neighborhood={l.neighborhood}
+              city_name={cityData.name}
+              address_line1={l.address_line1}
+            />
+          ))}
+        </div>
+      </section>
+    )}
+
     {listings.length > 0 ? (
-      <div class="listings-grid">
-        {listings.map((l) => (
-          <ListingCard
-            slug={l.slug}
-            name={l.name}
-            listing_type={l.listing_type}
-            tier={l.tier}
-            short_description={l.short_description}
-            hero_image_url={l.hero_image_url}
-            neighborhood={l.neighborhood}
-            city_name={cityData.name}
-            address_line1={l.address_line1}
-          />
-        ))}
-      </div>
+      <section>
+        {featuredListings.length > 0 && <h2>All Listings</h2>}
+        <div class="listings-grid" style="margin-top:1rem">
+          {listings.map((l) => (
+            <ListingCard
+              slug={l.slug}
+              name={l.name}
+              listing_type={l.listing_type}
+              tier={l.tier}
+              short_description={l.short_description}
+              hero_image_url={l.hero_image_url}
+              neighborhood={l.neighborhood}
+              city_name={cityData.name}
+              address_line1={l.address_line1}
+            />
+          ))}
+        </div>
+      </section>
     ) : (
       <p style="color:var(--muted);text-align:center;padding:3rem">
         No listings yet for {cityData.name}. <a href="/submit/">Submit one →</a>
       </p>
+    )}
+
+    {cityGuides.length > 0 && (
+      <section class="city-guides">
+        <h2>Guides for {cityData.name}</h2>
+        <ul class="guide-list">
+          {cityGuides.map((g) => (
+            <li><a href={`/guides/${g.slug}/`}>{g.title}</a></li>
+          ))}
+        </ul>
+      </section>
     )}
   </div>
 </Base>
@@ -144,4 +184,11 @@ const schema = [
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
   }
+  section h2 { font-size: 1.2rem; font-weight: 700; }
+  .city-guides { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .city-guides h2 { margin-bottom: 0.75rem; }
+  .guide-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+  .guide-list li { border-left: 3px solid var(--turquoise); padding-left: 0.75rem; }
+  .guide-list a { font-size: 0.9rem; color: var(--turquoise); font-weight: 500; }
+  .guide-list a:hover { text-decoration: underline; }
 </style>
