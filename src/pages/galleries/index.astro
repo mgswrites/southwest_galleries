@@ -23,9 +23,9 @@ const description = 'Browse art galleries across Arizona, New Mexico, Colorado, 
     <div class="states-grid">
       {states.map((state) => (
         <a href={`/galleries/${state.slug}/`} class="state-card">
-          {state.hero_image_url && (
-            <img src={state.hero_image_url} alt={`Art galleries in ${state.name}`} loading="lazy" />
-          )}
+          <div class="state-img" style={`background-image: url('/states/${state.slug}.jpg')`}>
+            <div class="state-img-overlay"></div>
+          </div>
           <div class="state-info">
             <h2>{state.name}</h2>
             <p>{state.gallery_count > 0 ? `${state.gallery_count} listings` : 'Listings coming soon'}</p>
@@ -50,8 +50,9 @@ const description = 'Browse art galleries across Arizona, New Mexico, Colorado, 
     text-decoration: none;
     transition: box-shadow 0.2s, transform 0.2s;
   }
-  .state-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
-  .state-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .state-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.12); transform: translateY(-2px); text-decoration: none; }
+  .state-img { position: relative; width: 100%; aspect-ratio: 16/9; background-size: cover; background-position: center; background-color: var(--sand); }
+  .state-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.25) 100%); }
   .state-info { padding: 1rem; }
   .state-info h2 { font-size: 1.1rem; font-weight: 700; }
   .state-info p { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
