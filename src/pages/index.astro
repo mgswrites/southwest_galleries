@@ -65,11 +65,14 @@ const websiteSchema = {
   <section class="browse-states">
     <div class="container">
       <h2>Browse by State</h2>
-      <div class="states-row">
+      <div class="states-grid">
         {states.map((s) => (
-          <a href={`/galleries/${s.slug}/`} class="state-link">
-            <span class="state-name">{s.name}</span>
-            {s.gallery_count > 0 && <span class="state-count">{s.gallery_count}</span>}
+          <a href={`/galleries/${s.slug}/`} class="state-card" style={`background-image: url('/states/${s.slug}.jpg')`}>
+            <div class="state-card-overlay"></div>
+            <div class="state-card-body">
+              <span class="state-name">{s.name}</span>
+              {s.gallery_count > 0 && <span class="state-count">{s.gallery_count} venues</span>}
+            </div>
           </a>
         ))}
       </div>
@@ -159,12 +162,41 @@ const websiteSchema = {
   .btn-secondary { background: rgba(255,255,255,0.12); color: #fff; padding: 0.75rem 1.75rem; border-radius: 6px; font-weight: 600; font-size: 1rem; text-decoration: none; border: 1px solid rgba(255,255,255,0.35); backdrop-filter: blur(4px); }
   .btn-secondary:hover { background: rgba(255,255,255,0.22); text-decoration: none; }
 
-  .browse-states { background: var(--sand); padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
-  .browse-states h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
-  .states-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .state-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1.1rem; background: #fff; border: 1px solid var(--border); border-radius: 20px; color: var(--ink); font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: border-color 0.15s, background 0.15s; }
-  .state-link:hover { border-color: var(--turquoise); background: #f0fafa; text-decoration: none; }
-  .state-count { background: var(--turquoise); color: #fff; font-size: 0.7rem; padding: 0.1rem 0.4rem; border-radius: 10px; font-weight: 700; }
+  .browse-states { background: var(--sand); padding: 3rem 0; border-bottom: 1px solid var(--border); }
+  .browse-states h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .states-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; }
+  .state-card {
+    position: relative;
+    display: block;
+    height: 160px;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .state-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); text-decoration: none; }
+  .state-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 60%, rgba(0,0,0,0.05) 100%);
+  }
+  .state-card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .state-name { color: #fff; font-size: 0.9rem; font-weight: 700; line-height: 1.2; }
+  .state-count { color: rgba(255,255,255,0.75); font-size: 0.72rem; font-weight: 500; }
+
+  @media (max-width: 900px) { .states-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 560px) { .states-grid { grid-template-columns: repeat(2, 1fr); } }
 
   .featured-section { padding: 3rem 0; }
   .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; }
