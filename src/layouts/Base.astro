@@ -1,4 +1,5 @@
 ---
+import Analytics from '@vercel/analytics/astro';
 export interface Props {
   title: string;
   description?: string;
@@ -123,6 +124,7 @@ const schemaBlocks = schema
 
       <p class="footer-copy">&copy; {new Date().getFullYear()} SouthwestGalleries.com. All rights reserved.</p>
     </footer>
+    <Analytics />
   </body>
 </html>
 
