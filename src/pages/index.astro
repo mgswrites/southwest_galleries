@@ -2,10 +2,11 @@
 export const prerender = true;
 import Base from '../layouts/Base.astro';
 import ListingCard from '../components/ListingCard.astro';
-import { getStates } from '../lib/queries';
+import { getStates, getArtStyles } from '../lib/queries';
 import sql from '../lib/db';
 
 const states = await getStates();
+const artStyles = await getArtStyles();
 const featuredListings = await sql`
   SELECT l.id, l.slug, l.name, l.listing_type, l.tier, l.short_description,
          l.hero_image_url, l.neighborhood,
@@ -110,18 +111,18 @@ const websiteSchema = {
     </div>
   </section>
 
-  <section class="art-styles-promo">
+  <section class="browse-styles">
     <div class="container">
-      <h2>Explore by Art Style</h2>
-      <div class="style-links">
-        <a href="/art-styles/native-american/">Native American</a>
-        <a href="/art-styles/contemporary/">Contemporary</a>
-        <a href="/art-styles/western-cowboy/">Western & Cowboy</a>
-        <a href="/art-styles/landscape-plein-air/">Plein Air</a>
-        <a href="/art-styles/ceramics-pottery/">Ceramics & Pottery</a>
-        <a href="/art-styles/sculpture/">Sculpture</a>
-        <a href="/art-styles/photography/">Photography</a>
-        <a href="/art-styles/jewelry/">Jewelry</a>
+      <h2>Browse by Art Style</h2>
+      <div class="styles-grid">
+        {artStyles.map((s) => (
+          <a href={`/art-styles/${s.slug}/`} class="style-card" style={`background-image: url('/art-styles/${s.slug}.jpg')`}>
+            <div class="style-card-overlay"></div>
+            <div class="style-card-body">
+              <span class="style-name">{s.name}</span>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   </section>
@@ -209,9 +210,35 @@ const websiteSchema = {
   .cta-inner h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.35rem; }
   .cta-inner p { color: #aaa; font-size: 0.95rem; }
 
-  .art-styles-promo { padding: 3rem 0; background: var(--sand); }
-  .art-styles-promo h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; }
-  .style-links { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-  .style-links a { padding: 0.45rem 1rem; background: #fff; border: 1px solid var(--border); border-radius: 20px; font-size: 0.875rem; color: var(--ink); text-decoration: none; }
-  .style-links a:hover { border-color: var(--turquoise); background: #f0fafa; text-decoration: none; }
+  .browse-styles { background: var(--sand); padding: 3rem 0; border-top: 1px solid var(--border); }
+  .browse-styles h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .styles-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
+  .style-card {
+    position: relative;
+    display: block;
+    height: 160px;
+    border-radius: 10px;
+    overflow: hidden;
+    text-decoration: none;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .style-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); text-decoration: none; }
+  .style-card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.18) 60%, rgba(0,0,0,0.05) 100%);
+  }
+  .style-card-body {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem;
+  }
+  .style-name { color: #fff; font-size: 0.85rem; font-weight: 700; line-height: 1.2; }
+
+  @media (max-width: 900px) { .styles-grid { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 560px) { .styles-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
