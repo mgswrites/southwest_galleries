@@ -70,6 +70,9 @@ const description = styleData.meta_description ?? styleData.description ?? `Find
                   />
                 ))}
               </div>
+              <div class="section-footer">
+                <a href="#" class="back-top-btn" aria-label="Back to top">↑ Back to top</a>
+              </div>
             </section>
           );
         })}
@@ -93,4 +96,11 @@ const description = styleData.meta_description ?? styleData.description ?? `Find
   .state-section { margin-bottom: 2.5rem; scroll-margin-top: 5rem; }
   .state-heading { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); color: var(--ink); }
   .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .section-footer { display: flex; justify-content: flex-end; margin-top: 1rem; }
+  .back-top-btn {
+    font-size: 0.8rem; font-weight: 600; color: var(--muted); text-decoration: none;
+    padding: 0.3rem 0.75rem; border: 1px solid var(--border); border-radius: 999px;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .back-top-btn:hover { color: var(--turquoise); border-color: var(--turquoise); }
 </style>
