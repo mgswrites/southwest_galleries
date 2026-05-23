@@ -154,7 +154,7 @@ const TYPES = [
               {ART_STYLES.map((s) => (
                 <label class="checkbox-label">
                   <input type="checkbox" name="art_styles" value={s.value} />
-                  {s.label}
+                  <span>{s.label}</span>
                 </label>
               ))}
             </div>
@@ -195,16 +195,19 @@ const TYPES = [
   .field { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
   label { font-size: 0.875rem; font-weight: 600; color: var(--ink); }
-  input, select, textarea {
+  input:not([type="checkbox"]), select, textarea {
     border: 1px solid var(--border); border-radius: 5px; padding: 0.55rem 0.75rem;
     font-size: 0.9rem; font-family: inherit; width: 100%;
     transition: border-color 0.15s;
   }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--turquoise); }
+  input:not([type="checkbox"]):focus, select:focus, textarea:focus { outline: none; border-color: var(--turquoise); }
+  input[type="checkbox"] { width: 1rem; height: 1rem; flex-shrink: 0; margin: 0; cursor: pointer; accent-color: var(--turquoise); vertical-align: middle; }
   .error { font-size: 0.8rem; color: #c0392b; }
   .hint { font-size: 0.75rem; color: var(--muted); }
-  .checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.4rem; margin-top: 0.25rem; }
-  .checkbox-label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: normal; cursor: pointer; }
+  .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 2rem; margin-top: 0.5rem; }
+  .checkbox-label { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.9rem; font-weight: normal; cursor: pointer; }
+  .checkbox-label input[type="checkbox"] { margin-top: 0.15rem; }
+  .checkbox-label span { line-height: 1.4; }
   .submit-btn { background: var(--turquoise); color: #fff; border: none; padding: 0.75rem 2rem; font-size: 1rem; font-weight: 700; border-radius: 6px; cursor: pointer; }
   .submit-btn:hover { background: #0a7070; }
   .success-box { text-align: center; padding: 3rem; background: var(--sand); border-radius: 8px; }
