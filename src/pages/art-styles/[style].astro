@@ -44,21 +44,36 @@ const description = styleData.meta_description ?? styleData.description ?? `Find
 
   <div class="container" style="padding-top:2rem;padding-bottom:3rem">
     {listings.length > 0 ? (
-      stateGroups.map(([stateName, items]) => (
-        <section class="state-section">
-          <h2 class="state-heading">{stateName}</h2>
-          <div class="listings-grid">
-            {items.map((l: (typeof listings)[number]) => (
-              <ListingCard
-                slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
-                short_description={l.short_description} hero_image_url={l.hero_image_url}
-                neighborhood={l.neighborhood} city_name={l.city_name} city_slug={l.city_slug}
-                state_slug={l.state_slug}
-              />
-            ))}
-          </div>
-        </section>
-      ))
+      <>
+        {stateGroups.length > 1 && (
+          <nav class="state-jumps" aria-label="Jump to state">
+            {stateGroups.map(([stateName]) => {
+              const anchor = stateName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+              return (
+                <a href={`#${anchor}`} class="jump-btn">{stateName}</a>
+              );
+            })}
+          </nav>
+        )}
+        {stateGroups.map(([stateName, items]) => {
+          const anchor = stateName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+          return (
+            <section class="state-section" id={anchor}>
+              <h2 class="state-heading">{stateName}</h2>
+              <div class="listings-grid">
+                {items.map((l: (typeof listings)[number]) => (
+                  <ListingCard
+                    slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
+                    short_description={l.short_description} hero_image_url={l.hero_image_url}
+                    neighborhood={l.neighborhood} city_name={l.city_name} city_slug={l.city_slug}
+                    state_slug={l.state_slug}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </>
     ) : (
       <p style="color:var(--muted);text-align:center;padding:3rem">
         No listings yet for this style. <a href="/submit/">Submit one →</a>
@@ -68,7 +83,14 @@ const description = styleData.meta_description ?? styleData.description ?? `Find
 </Base>
 
 <style>
-  .state-section { margin-bottom: 2.5rem; }
+  .state-jumps { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+  .jump-btn {
+    display: inline-block; padding: 0.4rem 1rem; border: 1.5px solid var(--turquoise);
+    border-radius: 999px; font-size: 0.85rem; font-weight: 600; color: var(--turquoise);
+    text-decoration: none; transition: background 0.15s, color 0.15s;
+  }
+  .jump-btn:hover { background: var(--turquoise); color: #fff; }
+  .state-section { margin-bottom: 2.5rem; scroll-margin-top: 5rem; }
   .state-heading { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); color: var(--ink); }
   .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 </style>
