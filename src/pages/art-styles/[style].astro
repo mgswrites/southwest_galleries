@@ -16,6 +16,15 @@ if (!styleData) return Astro.redirect('/art-styles/');
 
 const listings = await getListingsByArtStyle(styleData.id);
 
+// Group by state, preserving tier-then-name sort within each group
+const byState = listings.reduce((acc, l) => {
+  const key = l.state_name ?? 'Other';
+  if (!acc.has(key)) acc.set(key, []);
+  acc.get(key)!.push(l);
+  return acc;
+}, new Map<string, typeof listings>());
+const stateGroups = [...byState.entries()].sort(([a], [b]) => a.localeCompare(b));
+
 const title = styleData.meta_title ?? `${styleData.name} Art Galleries in the Southwest | Southwest Galleries`;
 const description = styleData.meta_description ?? styleData.description ?? `Find galleries specializing in ${styleData.name} art across the American Southwest.`;
 ---
@@ -35,16 +44,21 @@ const description = styleData.meta_description ?? styleData.description ?? `Find
 
   <div class="container" style="padding-top:2rem;padding-bottom:3rem">
     {listings.length > 0 ? (
-      <div class="listings-grid">
-        {listings.map((l) => (
-          <ListingCard
-            slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
-            short_description={l.short_description} hero_image_url={l.hero_image_url}
-            neighborhood={l.neighborhood} city_name={l.city_name} city_slug={l.city_slug}
-            state_slug={l.state_slug}
-          />
-        ))}
-      </div>
+      stateGroups.map(([stateName, items]) => (
+        <section class="state-section">
+          <h2 class="state-heading">{stateName}</h2>
+          <div class="listings-grid">
+            {items.map((l: (typeof listings)[number]) => (
+              <ListingCard
+                slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
+                short_description={l.short_description} hero_image_url={l.hero_image_url}
+                neighborhood={l.neighborhood} city_name={l.city_name} city_slug={l.city_slug}
+                state_slug={l.state_slug}
+              />
+            ))}
+          </div>
+        </section>
+      ))
     ) : (
       <p style="color:var(--muted);text-align:center;padding:3rem">
         No listings yet for this style. <a href="/submit/">Submit one →</a>
@@ -54,5 +68,7 @@ const description = styleData.meta_description ?? styleData.description ?? `Find
 </Base>
 
 <style>
+  .state-section { margin-bottom: 2.5rem; }
+  .state-heading { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.4rem; border-bottom: 2px solid var(--border); color: var(--ink); }
   .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 </style>
