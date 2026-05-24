@@ -20,6 +20,42 @@ if (Astro.request.method === 'POST') {
 
   if (result.success) {
     await createSubmission(result.data);
+
+    const resendKey = import.meta.env.RESEND_API_KEY;
+    if (resendKey) {
+      try {
+        const d = result.data;
+        const stylesList = Array.isArray(d.art_styles) && d.art_styles.length
+          ? d.art_styles.join(', ')
+          : '(none selected)';
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${resendKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'Southwest Galleries <noreply@southwestgalleries.com>',
+            to: ['mgswrites@gmail.com'],
+            subject: `New listing submission: ${d.name}`,
+            html: `
+              <h2>New Listing Submission</h2>
+              <table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">
+                <tr><td style="padding:4px 12px 4px 0;font-weight:600">Venue</td><td>${d.name}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;font-weight:600">Type</td><td>${d.listing_type}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;font-weight:600">Location</td><td>${d.city_name}, ${d.state_code}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;font-weight:600">Website</td><td>${d.website_url ?? '—'}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;font-weight:600">Art styles</td><td>${stylesList}</td></tr>
+                <tr><td style="padding:4px 12px 4px 0;font-weight:600">Submitter</td><td>${d.submitter_name ?? '—'} &lt;${d.submitter_email}&gt;</td></tr>
+                ${d.submitter_note ? `<tr><td style="padding:4px 12px 4px 0;font-weight:600">Note</td><td>${d.submitter_note}</td></tr>` : ''}
+              </table>
+              <p style="margin-top:16px"><a href="https://southwestgalleries.com/admin/">Review in Admin →</a></p>
+            `,
+          }),
+        });
+      } catch (_) { /* email failure should not block submission */ }
+    }
+
     success = true;
   } else {
     for (const [field, issues] of Object.entries(result.error.flatten().fieldErrors)) {

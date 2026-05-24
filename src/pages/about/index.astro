@@ -1,0 +1,200 @@
+---
+export const prerender = true;
+import Base from '../../layouts/Base.astro';
+import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
+---
+
+<Base
+  title="About Southwest Galleries | Our Mission"
+  description="Southwest Galleries is the definitive directory of art galleries, museums, and cultural venues across the American Southwest — built to connect art lovers with the region's extraordinary creative communities."
+>
+  <div class="page-header">
+    <div class="container">
+      <BreadcrumbNav crumbs={[{ label: 'Home', href: '/' }, { label: 'About' }]} />
+      <h1>About Southwest Galleries</h1>
+      <p>Connecting art lovers with the extraordinary creative culture of the American Southwest.</p>
+    </div>
+  </div>
+
+  <div class="container content-container">
+
+    <section class="about-section">
+      <h2>Our Mission</h2>
+      <p>
+        Southwest Galleries was built on a simple belief: the American Southwest is home to one of the
+        world's most vibrant and underappreciated art scenes — and it deserves a directory worthy of it.
+      </p>
+      <p>
+        From the Indigenous ceramic traditions of New Mexico and Arizona to the contemporary galleries of
+        Houston and Los Angeles, from plein air painters working in the Sangre de Cristo Mountains to
+        glass artists firing kilns in the back roads of Colorado, the Southwest is alive with creative energy.
+        We're here to make it discoverable.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>What We Cover</h2>
+      <div class="what-grid">
+        <div class="what-card">
+          <h3>Art Galleries</h3>
+          <p>Commercial galleries, artist-run spaces, and cooperative galleries across all seven states.</p>
+        </div>
+        <div class="what-card">
+          <h3>Museums</h3>
+          <p>Art museums, cultural history museums, and specialized collections from major cities to remote towns.</p>
+        </div>
+        <div class="what-card">
+          <h3>Cultural Centers</h3>
+          <p>Community arts organizations, tribal cultural centers, and nonprofit arts institutions.</p>
+        </div>
+        <div class="what-card">
+          <h3>Artist Studios</h3>
+          <p>Working studios open to the public, studio tours, and artist residency programs.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Our Region</h2>
+      <p>
+        We cover the seven states that define the American Southwest: <strong>Arizona</strong>, <strong>New Mexico</strong>,
+        <strong>Colorado</strong>, <strong>Nevada</strong>, <strong>Utah</strong>, <strong>Texas</strong>, and <strong>California</strong>.
+        From Taos to Tucson, Marfa to Moab, Sedona to San Francisco — if it's art and it's in the Southwest, it belongs here.
+      </p>
+      <p>
+        We give particular depth to the region's most storied art communities: Santa Fe and Taos, the oldest art
+        markets in the country; Phoenix and Scottsdale, with their world-class museum infrastructure; the canyon
+        country of Utah and Colorado, which has inspired landscape painters for over a century; and the Indigenous
+        art traditions of the Navajo Nation, Pueblo communities, and beyond.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>For Venues</h2>
+      <p>
+        Southwest Galleries is free to join. Basic listings are reviewed within 2–3 business days and published
+        at no cost. Featured and Premium tiers are available for venues that want enhanced visibility, priority
+        placement, and direct access to collectors and visitors.
+      </p>
+      <p>
+        We believe the directory should reflect the full range of the Southwest's art scene — not just those who
+        can afford to advertise. Every legitimate gallery, museum, and cultural center is welcome.
+      </p>
+      <div class="cta-row">
+        <a href="/submit/" class="btn-primary">Submit Your Listing</a>
+        <a href="/upgrade/" class="btn-secondary">View Premium Options</a>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Contact</h2>
+      <p>
+        Questions, corrections, or partnership inquiries? Reach us at
+        <a href="mailto:hello@southwestgalleries.com">hello@southwestgalleries.com</a>.
+        We read every message.
+      </p>
+    </section>
+
+  </div>
+</Base>
+
+<style>
+  .page-header {
+    background: var(--sand);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 0 2rem;
+  }
+  .page-header h1 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    margin-bottom: 0.4rem;
+  }
+  .page-header p {
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  .content-container {
+    max-width: 760px;
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+  }
+
+  .about-section {
+    margin-bottom: 3rem;
+  }
+  .about-section h2 {
+    font-size: 1.35rem;
+    font-weight: 800;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+    color: var(--ink);
+  }
+  .about-section p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #333;
+    margin-bottom: 0.9rem;
+  }
+  .about-section p:last-child {
+    margin-bottom: 0;
+  }
+
+  .what-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 0.5rem;
+  }
+  .what-card {
+    background: var(--sand);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+  }
+  .what-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    color: var(--ink);
+  }
+  .what-card p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .btn-primary {
+    background: var(--turquoise);
+    color: #fff;
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background: #0a7070; text-decoration: none; }
+  .btn-secondary {
+    background: transparent;
+    color: var(--turquoise);
+    padding: 0.7rem 1.5rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    border: 2px solid var(--turquoise);
+  }
+  .btn-secondary:hover { background: var(--turquoise); color: #fff; text-decoration: none; }
+
+  @media (max-width: 600px) {
+    .what-grid { grid-template-columns: 1fr; }
+  }
+</style>
