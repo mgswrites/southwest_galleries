@@ -35,9 +35,9 @@ if (Astro.request.method === 'POST') {
           row('Venue', d.name),
           row('Type', d.listing_type),
           row('Location', d.city_name + ', ' + d.state_code),
-          row('Website', d.website_url ?? '—'),
+          row('Website', d.website_url ?? '(none)'),
           row('Art styles', stylesList),
-          row('Submitter', (d.submitter_name ?? '—') + ' <' + d.submitter_email + '>'),
+          row('Submitter', (d.submitter_name ?? '(none)') + ' <' + d.submitter_email + '>'),
           ...(d.submitter_note ? [row('Note', d.submitter_note)] : []),
         ].join('');
         const emailHtml =

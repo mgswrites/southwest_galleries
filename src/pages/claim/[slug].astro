@@ -62,7 +62,7 @@ if (Astro.request.method === 'POST') {
         <div class="success-box">
           <h2>Claim Submitted!</h2>
           <p>
-            Thank you — we'll verify your connection to <strong>{listing.name}</strong> and reach out to you within 2–3 business days.
+            Thank you. We'll verify your connection to <strong>{listing.name}</strong> and reach out to you within 2–3 business days.
             Once approved, you'll be able to update your listing information and choose a plan to unlock premium features.
           </p>
           <a href={`/listing/${slug}/`}>Return to Listing</a>
@@ -102,7 +102,7 @@ if (Astro.request.method === 'POST') {
               <label for="claimant_email">Your Email <span class="req">*</span></label>
               <input type="email" id="claimant_email" name="claimant_email" value={formData.claimant_email ?? ''} required />
               {errors.claimant_email && <span class="error">{errors.claimant_email}</span>}
-              <span class="hint">Use your gallery's email domain if possible — it speeds up verification.</span>
+              <span class="hint">Use your gallery's email domain if possible. It speeds up verification.</span>
             </div>
           </div>
 

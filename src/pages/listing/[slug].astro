@@ -214,7 +214,7 @@ const localBusinessSchema = {
 </Base>
 
 <script is:inline define:vars={{ listingId: listing.id }}>
-  // Fire-and-forget view tracking — does not affect page render
+  // Fire-and-forget view tracking; does not affect page render
   fetch('/api/view', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

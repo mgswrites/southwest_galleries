@@ -60,7 +60,7 @@ if (Astro.request.method === 'POST') {
 
 <Base
   title="Submit an Art Event | Southwest Galleries"
-  description="List your gallery opening, art walk, art fair, or cultural event on Southwest Galleries — reaching collectors, artists, and art lovers across the American Southwest."
+  description="List your gallery opening, art walk, art fair, or cultural event on Southwest Galleries, reaching collectors, artists, and art lovers across the American Southwest."
 >
   <div class="page-header">
     <div class="container">
@@ -68,7 +68,7 @@ if (Astro.request.method === 'POST') {
         crumbs={[{ label: 'Home', href: '/' }, { label: 'Events', href: '/events/' }, { label: 'Submit Event' }]}
       />
       <h1>Submit an Art Event</h1>
-      <p>List your gallery opening, art walk, fair, or cultural event. Free to submit — we review within 3 business days.</p>
+      <p>List your gallery opening, art walk, fair, or cultural event. Free to submit. We review within 3 business days.</p>
     </div>
   </div>
 
@@ -76,7 +76,7 @@ if (Astro.request.method === 'POST') {
     {success ? (
       <div class="success-box">
         <h2>Event Submitted!</h2>
-        <p>Thank you — we'll review your event and publish it within 3 business days. If we have questions, we'll reach out to you by email.</p>
+        <p>Thank you. We'll review your event and publish it within 3 business days. If we have questions, we'll reach out to you by email.</p>
         <a href="/events/">Back to Events</a>
       </div>
     ) : (
@@ -93,7 +93,7 @@ if (Astro.request.method === 'POST') {
           <div class="field">
             <label for="description">Description</label>
             <textarea id="description" name="description" rows={5}>{formData.description ?? ''}</textarea>
-            <span class="hint">Tell visitors what makes this event special — artists in attendance, opening reception details, etc.</span>
+            <span class="hint">Tell visitors what makes this event special: artists in attendance, opening reception details, etc.</span>
           </div>
 
           <div class="field-row">
