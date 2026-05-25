@@ -1,0 +1,22 @@
+[
+  {"id": 245, "address_line1": "449 W King St", "zip_code": "89703", "phone": "(775) 882-6411"},
+  {"id": 243, "address_line1": "449 W King St", "zip_code": "89703", "phone": "(775) 883-1976"},
+  {"id": 244, "address_line1": "600 N Carson St", "zip_code": "89701", "phone": "(775) 687-4810"},
+  {"id": 247, "address_line1": "1515 Idaho St", "zip_code": "89801", "phone": "(775) 738-3418"},
+  {"id": 246, "address_line1": "501 Railroad St", "zip_code": "89801", "phone": "(775) 738-7508"},
+  {"id": 241, "address_line1": "3 E Army St", "zip_code": "89015", "phone": "(702) 260-0300"},
+  {"id": 93, "address_line1": "5720 S Arville St Ste 119", "zip_code": "89118", "phone": "(702) 227-0220"},
+  {"id": 232, "address_line1": "1025 S 1st St", "zip_code": "89101", "phone": "(702) 818-3422"},
+  {"id": 91, "address_line1": "3600 Las Vegas Blvd S", "zip_code": "89109", "phone": "(702) 693-7871"},
+  {"id": 234, "address_line1": "4505 S Maryland Pkwy", "zip_code": "89154", "phone": "(702) 895-3893"},
+  {"id": 229, "address_line1": "4505 S Maryland Pkwy", "zip_code": "89154", "phone": "(702) 895-3011"},
+  {"id": 233, "address_line1": "309 S Valley View Blvd", "zip_code": "89107", "phone": "(702) 486-5205"},
+  {"id": 92, "address_line1": "770 Las Vegas Blvd N", "zip_code": "89101", "phone": "(702) 387-6366"},
+  {"id": 240, "address_line1": "528 W 1st St", "zip_code": "89503", "phone": "(775) 322-1538"},
+  {"id": 235, "address_line1": "160 W Liberty St", "zip_code": "89501", "phone": "(775) 329-3333"},
+  {"id": 239, "address_line1": "1664 N Virginia St", "zip_code": "89557", "phone": "(775) 784-6658"},
+  {"id": 237, "address_line1": "17 S Virginia St", "zip_code": "89501", "phone": "(775) 329-2787"},
+  {"id": 236, "address_line1": "1400 S Virginia St", "zip_code": "89502", "phone": "(775) 786-0558"},
+  {"id": 238, "address_line1": "140 Vesta St", "zip_code": "89502", "phone": "(775) 448-6500"},
+  {"id": 248, "address_line1": "113 C St", "zip_code": "89440", "phone": "(775) 847-0766"}
+]

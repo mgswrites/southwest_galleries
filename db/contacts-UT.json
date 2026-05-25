@@ -1,0 +1,22 @@
+[
+  {"id": 330, "address_line1": "390 W 100 S", "zip_code": "84720", "phone": "(435) 586-5432"},
+  {"id": 104, "address_line1": "59 S Main St", "zip_code": "84532", "phone": "(435) 355-0024"},
+  {"id": 103, "address_line1": "111 E 100 N", "zip_code": "84532", "phone": "(435) 259-6272"},
+  {"id": 326, "address_line1": "2580 Jefferson Ave", "zip_code": "84401", "phone": "(801) 392-6935"},
+  {"id": 320, "address_line1": "804 Main St", "zip_code": "84060", "phone": "(435) 655-3803"},
+  {"id": 318, "address_line1": "1251 Kearns Blvd", "zip_code": "84060", "phone": "(435) 649-8882"},
+  {"id": 319, "address_line1": "305 Main St", "zip_code": "84060", "phone": "(435) 649-8160"},
+  {"id": 323, "address_line1": "N Campus Dr", "zip_code": "84602", "phone": "(801) 422-8287"},
+  {"id": 324, "address_line1": "425 W Center St", "zip_code": "84601", "phone": "(801) 852-7007"},
+  {"id": 317, "address_line1": "230 S 500 W Ste 125", "zip_code": "84101", "phone": "(801) 328-0703"},
+  {"id": 97, "address_line1": "54 Finch Ln", "zip_code": "84102", "phone": "(801) 596-5000"},
+  {"id": 314, "address_line1": "749 E 500 S", "zip_code": "84102", "phone": "(801) 972-7800"},
+  {"id": 316, "address_line1": "86 N Main St", "zip_code": "84627", "phone": "(435) 283-3456"},
+  {"id": 96, "address_line1": "444 E 200 S", "zip_code": "84111", "phone": "(801) 364-8284"},
+  {"id": 315, "address_line1": "300 S Rio Grande St", "zip_code": "84101", "phone": "(801) 245-7202"},
+  {"id": 313, "address_line1": "20 S West Temple", "zip_code": "84101", "phone": "(801) 328-4201"},
+  {"id": 95, "address_line1": "410 Campus Center Dr", "zip_code": "84112", "phone": "(801) 581-7332"},
+  {"id": 325, "address_line1": "126 E 400 S", "zip_code": "84663", "phone": "(801) 489-2727"},
+  {"id": 329, "address_line1": "155 S University Ave", "zip_code": "84770", "phone": "(435) 652-7909"},
+  {"id": 328, "address_line1": "47 E 200 N", "zip_code": "84770", "phone": "(435) 627-4525"}
+]
