@@ -125,15 +125,52 @@ const schemaBlocks = schema
             <strong>Stay in the Loop</strong>
             <p>New galleries, upcoming events, and Southwest art stories, delivered monthly.</p>
           </div>
-          <form class="email-form" action="https://app.kit.com/forms/YOUR_FORM_ID/subscriptions" method="POST" data-sv-form="YOUR_FORM_ID" data-uid="YOUR_FORM_UID" target="_blank">
-            <input type="email" name="email_address" placeholder="your@email.com" required aria-label="Email address" />
+          <form class="email-form" id="subscribe-form">
+            <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address" />
             <button type="submit">Subscribe</button>
           </form>
+          <p class="subscribe-msg" id="subscribe-msg" aria-live="polite"></p>
         </div>
       </div>
 
       <p class="footer-copy">&copy; {new Date().getFullYear()} SouthwestGalleries.com. All rights reserved.</p>
     </footer>
+    <script is:inline>
+      const form = document.getElementById('subscribe-form');
+      const msg = document.getElementById('subscribe-msg');
+      if (form && msg) {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const btn = form.querySelector('button');
+          const email = form.querySelector('input[name="email"]').value;
+          btn.disabled = true;
+          btn.textContent = 'Subscribing…';
+          try {
+            const res = await fetch('/api/subscribe', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email }),
+            });
+            const data = await res.json();
+            if (data.ok) {
+              form.style.display = 'none';
+              msg.textContent = 'You\'re in! We\'ll be in touch.';
+              msg.style.color = '#7dffcd';
+            } else {
+              msg.textContent = data.error || 'Something went wrong.';
+              msg.style.color = '#ff8a80';
+              btn.disabled = false;
+              btn.textContent = 'Subscribe';
+            }
+          } catch {
+            msg.textContent = 'Network error. Please try again.';
+            msg.style.color = '#ff8a80';
+            btn.disabled = false;
+            btn.textContent = 'Subscribe';
+          }
+        });
+      }
+    </script>
     <Analytics />
   </body>
 </html>
@@ -218,6 +255,7 @@ const schemaBlocks = schema
   .email-form input[type="email"]:focus { outline: 2px solid var(--turquoise); border-color: transparent; }
   .email-form button { padding: 0.55rem 1.25rem; background: var(--turquoise); color: #fff; border: none; border-radius: 5px; font-size: 0.875rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
   .email-form button:hover { background: #0a7070; }
+  .subscribe-msg { font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2em; }
   .footer-copy { text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: #555; max-width: var(--max-w); margin-left: auto; margin-right: auto; }
 
   .container { max-width: var(--max-w); margin: 0 auto; padding: 0 1.5rem; }
