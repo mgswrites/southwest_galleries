@@ -51,7 +51,7 @@ const schemaBlocks = schema
 
     <!-- JSON-LD -->
     {schemaBlocks.map((s) => (
-      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(s)} />
     ))}
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -111,6 +111,7 @@ const schemaBlocks = schema
           <strong>List Your Venue</strong>
           <ul>
             <li><a href="/submit/">Submit a Listing</a></li>
+            <li><a href="/upgrade/">Premium Options</a></li>
             <li><a href="/submit-event/">Submit an Event</a></li>
             <li><a href="/artists/">Southwest Artists</a></li>
             <li><a href="/submit/">Contact Us</a></li>
