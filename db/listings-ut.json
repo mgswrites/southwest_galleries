@@ -1,0 +1,202 @@
+[
+  {
+    "id": 330,
+    "name": "Braithwaite Fine Arts Gallery",
+    "slug": "braithwaite-fine-arts-gallery",
+    "state_code": "UT",
+    "city_name": "Cedar City",
+    "website_url": "https://www.suu.edu/pva/artgallery"
+  },
+  {
+    "id": 105,
+    "name": "Desert Thread Gallery",
+    "slug": "desert-thread-gallery-moab",
+    "state_code": "UT",
+    "city_name": "Moab",
+    "website_url": null
+  },
+  {
+    "id": 104,
+    "name": "Gallery Moab",
+    "slug": "gallery-moab-moab",
+    "state_code": "UT",
+    "city_name": "Moab",
+    "website_url": null
+  },
+  {
+    "id": 103,
+    "name": "Moab Arts and Recreation Center",
+    "slug": "moab-arts-and-recreation-center-moab",
+    "state_code": "UT",
+    "city_name": "Moab",
+    "website_url": null
+  },
+  {
+    "id": 326,
+    "name": "Eccles Community Art Center",
+    "slug": "eccles-community-art-center",
+    "state_code": "UT",
+    "city_name": "Ogden",
+    "website_url": "https://www.ogdenarts.org"
+  },
+  {
+    "id": 327,
+    "name": "Weber State University Galleries",
+    "slug": "weber-state-university-galleries",
+    "state_code": "UT",
+    "city_name": "Ogden",
+    "website_url": "https://www.weber.edu/finearts/galleries"
+  },
+  {
+    "id": 320,
+    "name": "Coda Gallery",
+    "slug": "coda-gallery",
+    "state_code": "UT",
+    "city_name": "Park City",
+    "website_url": "https://codagallery.com"
+  },
+  {
+    "id": 318,
+    "name": "Kimball Art Center",
+    "slug": "kimball-art-center",
+    "state_code": "UT",
+    "city_name": "Park City",
+    "website_url": "https://kimballartcenter.org"
+  },
+  {
+    "id": 319,
+    "name": "Meyer Gallery",
+    "slug": "meyer-gallery",
+    "state_code": "UT",
+    "city_name": "Park City",
+    "website_url": "https://meyergalleryparkcity.com"
+  },
+  {
+    "id": 322,
+    "name": "Terzian Galleries",
+    "slug": "terzian-galleries",
+    "state_code": "UT",
+    "city_name": "Park City",
+    "website_url": "https://terziangalleries.com"
+  },
+  {
+    "id": 321,
+    "name": "Winn Slavin Fine Art",
+    "slug": "winn-slavin-fine-art",
+    "state_code": "UT",
+    "city_name": "Park City",
+    "website_url": "https://winnslavin.com"
+  },
+  {
+    "id": 323,
+    "name": "BYU Museum of Art",
+    "slug": "byu-museum-of-art",
+    "state_code": "UT",
+    "city_name": "Provo",
+    "website_url": "https://moa.byu.edu"
+  },
+  {
+    "id": 324,
+    "name": "Covey Center for the Arts",
+    "slug": "covey-center-for-the-arts",
+    "state_code": "UT",
+    "city_name": "Provo",
+    "website_url": "https://www.provo.org/departments/arts-culture/covey-center"
+  },
+  {
+    "id": 317,
+    "name": "Art Access Gallery",
+    "slug": "art-access-gallery",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": "https://accessarts.org"
+  },
+  {
+    "id": 98,
+    "name": "CUAC Contemporary Utah Art Center",
+    "slug": "cuac-contemporary-utah-art-center-salt-lake-city",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": "https://www.cuacutah.org"
+  },
+  {
+    "id": 97,
+    "name": "Finch Lane Gallery",
+    "slug": "finch-lane-gallery-salt-lake-city",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": null
+  },
+  {
+    "id": 314,
+    "name": "Gilgal Sculpture Garden",
+    "slug": "gilgal-sculpture-garden",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": "https://gilgalgarden.org"
+  },
+  {
+    "id": 316,
+    "name": "Granary Arts",
+    "slug": "granary-arts",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": "https://granaryarts.org"
+  },
+  {
+    "id": 96,
+    "name": "Phillips Gallery",
+    "slug": "phillips-gallery-salt-lake-city",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": null
+  },
+  {
+    "id": 315,
+    "name": "Rio Gallery",
+    "slug": "rio-gallery",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": "https://arts.utah.gov/gallery"
+  },
+  {
+    "id": 313,
+    "name": "Utah Museum of Contemporary Art",
+    "slug": "utah-museum-of-contemporary-art",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": "https://utahmoca.org"
+  },
+  {
+    "id": 95,
+    "name": "Utah Museum of Fine Arts",
+    "slug": "utah-museum-of-fine-arts-salt-lake-city",
+    "state_code": "UT",
+    "city_name": "Salt Lake City",
+    "website_url": "https://www.umfa.utah.edu"
+  },
+  {
+    "id": 325,
+    "name": "Springville Museum of Art",
+    "slug": "springville-museum-of-art",
+    "state_code": "UT",
+    "city_name": "Springville",
+    "website_url": "https://www.smofa.org"
+  },
+  {
+    "id": 329,
+    "name": "Sears Art Museum",
+    "slug": "sears-art-museum",
+    "state_code": "UT",
+    "city_name": "St. George",
+    "website_url": "https://www.utahtech.edu/searsartmuseum"
+  },
+  {
+    "id": 328,
+    "name": "St. George Art Museum",
+    "slug": "st-george-art-museum",
+    "state_code": "UT",
+    "city_name": "St. George",
+    "website_url": "https://www.sgcity.org/artmuseum"
+  }
+]

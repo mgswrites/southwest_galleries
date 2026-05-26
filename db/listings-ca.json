@@ -1,0 +1,266 @@
+[
+  {
+    "id": 169,
+    "name": "University of California Berkeley Art Museum & Pacific Film Archive (BAMPFA)",
+    "slug": "university-of-california-berkeley-art-museum-pacific-film-archive-bampfa",
+    "state_code": "CA",
+    "city_name": "Berkeley",
+    "website_url": "https://bampfa.org"
+  },
+  {
+    "id": 163,
+    "name": "Carmel Art Association",
+    "slug": "carmel-art-association",
+    "state_code": "CA",
+    "city_name": "Carmel",
+    "website_url": "https://carmelart.org"
+  },
+  {
+    "id": 164,
+    "name": "Dolby Chadwick Gallery",
+    "slug": "dolby-chadwick-gallery",
+    "state_code": "CA",
+    "city_name": "Carmel",
+    "website_url": "https://www.dolbychadwickgallery.com"
+  },
+  {
+    "id": 162,
+    "name": "Weston Gallery",
+    "slug": "weston-gallery",
+    "state_code": "CA",
+    "city_name": "Carmel",
+    "website_url": "https://www.westongallery.com"
+  },
+  {
+    "id": 165,
+    "name": "Laguna Art Museum",
+    "slug": "laguna-art-museum",
+    "state_code": "CA",
+    "city_name": "Laguna Beach",
+    "website_url": "https://www.lagunaartmuseum.org"
+  },
+  {
+    "id": 166,
+    "name": "Redfern Gallery",
+    "slug": "redfern-gallery",
+    "state_code": "CA",
+    "city_name": "Laguna Beach",
+    "website_url": null
+  },
+  {
+    "id": 146,
+    "name": "Blum & Poe",
+    "slug": "blum-poe",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://blumandpoe.com"
+  },
+  {
+    "id": 108,
+    "name": "Cal State LA Fine Arts Gallery",
+    "slug": "cal-state-la-fine-arts-gallery-los-angeles",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": null
+  },
+  {
+    "id": 107,
+    "name": "Craft Contemporary",
+    "slug": "craft-contemporary-los-angeles",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.craftcontemporary.org"
+  },
+  {
+    "id": 145,
+    "name": "David Kordansky Gallery",
+    "slug": "david-kordansky-gallery",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.davidkordanskygallery.com"
+  },
+  {
+    "id": 143,
+    "name": "Gagosian Los Angeles",
+    "slug": "gagosian-los-angeles",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://gagosian.com"
+  },
+  {
+    "id": 142,
+    "name": "Hammer Museum",
+    "slug": "hammer-museum",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://hammer.ucla.edu"
+  },
+  {
+    "id": 144,
+    "name": "Hauser & Wirth Los Angeles",
+    "slug": "hauser-wirth-los-angeles",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.hauserwirth.com"
+  },
+  {
+    "id": 106,
+    "name": "LA Louver Gallery",
+    "slug": "la-louver-gallery-los-angeles",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.lalouver.com"
+  },
+  {
+    "id": 139,
+    "name": "Los Angeles County Museum of Art (LACMA)",
+    "slug": "los-angeles-county-museum-of-art-lacma",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.lacma.org"
+  },
+  {
+    "id": 148,
+    "name": "Regen Projects",
+    "slug": "regen-projects",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.regenprojects.com"
+  },
+  {
+    "id": 140,
+    "name": "The Broad",
+    "slug": "the-broad",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.thebroad.org"
+  },
+  {
+    "id": 138,
+    "name": "The Getty Center",
+    "slug": "the-getty-center",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.getty.edu"
+  },
+  {
+    "id": 141,
+    "name": "The Museum of Contemporary Art, Los Angeles (MOCA)",
+    "slug": "the-museum-of-contemporary-art-los-angeles-moca",
+    "state_code": "CA",
+    "city_name": "Los Angeles",
+    "website_url": "https://www.moca.org"
+  },
+  {
+    "id": 161,
+    "name": "Melissa Morgan Fine Art",
+    "slug": "melissa-morgan-fine-art",
+    "state_code": "CA",
+    "city_name": "Palm Springs",
+    "website_url": null
+  },
+  {
+    "id": 160,
+    "name": "Palm Springs Art Museum",
+    "slug": "palm-springs-art-museum",
+    "state_code": "CA",
+    "city_name": "Palm Springs",
+    "website_url": "https://www.psmuseum.org"
+  },
+  {
+    "id": 159,
+    "name": "David Zapf Gallery",
+    "slug": "david-zapf-gallery",
+    "state_code": "CA",
+    "city_name": "San Diego",
+    "website_url": null
+  },
+  {
+    "id": 158,
+    "name": "Museum of Contemporary Art San Diego (MCASD)",
+    "slug": "museum-of-contemporary-art-san-diego-mcasd",
+    "state_code": "CA",
+    "city_name": "San Diego",
+    "website_url": "https://www.mcasd.org"
+  },
+  {
+    "id": 157,
+    "name": "San Diego Museum of Art",
+    "slug": "san-diego-museum-of-art",
+    "state_code": "CA",
+    "city_name": "San Diego",
+    "website_url": "https://www.sdmart.org"
+  },
+  {
+    "id": 153,
+    "name": "Asian Art Museum of San Francisco",
+    "slug": "asian-art-museum-of-san-francisco",
+    "state_code": "CA",
+    "city_name": "San Francisco",
+    "website_url": "https://www.asianart.org"
+  },
+  {
+    "id": 154,
+    "name": "Fraenkel Gallery",
+    "slug": "fraenkel-gallery",
+    "state_code": "CA",
+    "city_name": "San Francisco",
+    "website_url": "https://www.fraenkelgallery.com"
+  },
+  {
+    "id": 156,
+    "name": "Gallery Wendi Norris",
+    "slug": "gallery-wendi-norris",
+    "state_code": "CA",
+    "city_name": "San Francisco",
+    "website_url": "https://www.gallerywendinorris.com"
+  },
+  {
+    "id": 152,
+    "name": "Legion of Honor",
+    "slug": "legion-of-honor",
+    "state_code": "CA",
+    "city_name": "San Francisco",
+    "website_url": "https://legionofhonor.famsf.org"
+  },
+  {
+    "id": 155,
+    "name": "Ratio 3",
+    "slug": "ratio-3",
+    "state_code": "CA",
+    "city_name": "San Francisco",
+    "website_url": "https://www.ratio3.org"
+  },
+  {
+    "id": 150,
+    "name": "San Francisco Museum of Modern Art (SFMOMA)",
+    "slug": "san-francisco-museum-of-modern-art-sfmoma",
+    "state_code": "CA",
+    "city_name": "San Francisco",
+    "website_url": "https://www.sfmoma.org"
+  },
+  {
+    "id": 151,
+    "name": "de Young Museum",
+    "slug": "de-young-museum",
+    "state_code": "CA",
+    "city_name": "San Francisco",
+    "website_url": "https://deyoung.famsf.org"
+  },
+  {
+    "id": 167,
+    "name": "Santa Barbara Museum of Art",
+    "slug": "santa-barbara-museum-of-art",
+    "state_code": "CA",
+    "city_name": "Santa Barbara",
+    "website_url": "https://www.sbma.net"
+  },
+  {
+    "id": 168,
+    "name": "Sullivan Goss — An American Gallery",
+    "slug": "sullivan-goss-an-american-gallery",
+    "state_code": "CA",
+    "city_name": "Santa Barbara",
+    "website_url": "https://www.sullivangoss.com"
+  }
+]

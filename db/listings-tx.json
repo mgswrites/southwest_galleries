@@ -1,0 +1,378 @@
+[
+  {
+    "id": 295,
+    "name": "Blanton Museum of Art",
+    "slug": "blanton-museum-of-art",
+    "state_code": "TX",
+    "city_name": "Austin",
+    "website_url": "https://blantonmuseum.org"
+  },
+  {
+    "id": 296,
+    "name": "Contemporary Austin Jones Center",
+    "slug": "contemporary-austin-jones-center",
+    "state_code": "TX",
+    "city_name": "Austin",
+    "website_url": "https://www.thecontemporaryaustin.org"
+  },
+  {
+    "id": 297,
+    "name": "Laguna Gloria",
+    "slug": "laguna-gloria",
+    "state_code": "TX",
+    "city_name": "Austin",
+    "website_url": "https://www.thecontemporaryaustin.org/laguna-gloria"
+  },
+  {
+    "id": 302,
+    "name": "MASS Gallery",
+    "slug": "mass-gallery",
+    "state_code": "TX",
+    "city_name": "Austin",
+    "website_url": "https://massgallery.org"
+  },
+  {
+    "id": 298,
+    "name": "Mexic-Arte Museum",
+    "slug": "mexic-arte-museum",
+    "state_code": "TX",
+    "city_name": "Austin",
+    "website_url": "https://www.mexic-artemuseum.org"
+  },
+  {
+    "id": 299,
+    "name": "Umlauf Sculpture Garden & Museum",
+    "slug": "umlauf-sculpture-garden-museum",
+    "state_code": "TX",
+    "city_name": "Austin",
+    "website_url": "https://umlaufsculpture.org"
+  },
+  {
+    "id": 301,
+    "name": "Wally Workman Gallery",
+    "slug": "wally-workman-gallery",
+    "state_code": "TX",
+    "city_name": "Austin",
+    "website_url": "https://wallyworkmangallery.com"
+  },
+  {
+    "id": 300,
+    "name": "Women & Their Work",
+    "slug": "women-their-work",
+    "state_code": "TX",
+    "city_name": "Austin",
+    "website_url": "https://www.womenandtheirwork.org"
+  },
+  {
+    "id": 286,
+    "name": "Barry Whistler Gallery",
+    "slug": "barry-whistler-gallery",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://barrywhistlergallery.com"
+  },
+  {
+    "id": 287,
+    "name": "Conduit Gallery",
+    "slug": "conduit-gallery",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://conduitgallery.com"
+  },
+  {
+    "id": 282,
+    "name": "Crow Museum of Asian Art",
+    "slug": "crow-museum-of-asian-art",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://www.crowmuseum.org"
+  },
+  {
+    "id": 283,
+    "name": "Dallas Contemporary",
+    "slug": "dallas-contemporary",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://dallascontemporary.org"
+  },
+  {
+    "id": 280,
+    "name": "Dallas Museum of Art",
+    "slug": "dallas-museum-of-art",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://dma.org"
+  },
+  {
+    "id": 289,
+    "name": "Erin Cluley Gallery",
+    "slug": "erin-cluley-gallery",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://erincluley.com"
+  },
+  {
+    "id": 284,
+    "name": "McKinney Avenue Contemporary",
+    "slug": "mckinney-avenue-contemporary",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://www.the-mac.org"
+  },
+  {
+    "id": 281,
+    "name": "Nasher Sculpture Center",
+    "slug": "nasher-sculpture-center",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://www.nashersculpturecenter.org"
+  },
+  {
+    "id": 288,
+    "name": "Photographs Do Not Bend Gallery",
+    "slug": "photographs-do-not-bend-gallery",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://pdnbgallery.com"
+  },
+  {
+    "id": 285,
+    "name": "Ro2 Art",
+    "slug": "ro2-art",
+    "state_code": "TX",
+    "city_name": "Dallas",
+    "website_url": "https://ro2art.com"
+  },
+  {
+    "id": 312,
+    "name": "El Paso Art Association Gallery",
+    "slug": "el-paso-art-association-gallery",
+    "state_code": "TX",
+    "city_name": "El Paso",
+    "website_url": "https://www.elpaso-art-association.com"
+  },
+  {
+    "id": 310,
+    "name": "El Paso Museum of Art",
+    "slug": "el-paso-museum-of-art",
+    "state_code": "TX",
+    "city_name": "El Paso",
+    "website_url": "https://epma.art"
+  },
+  {
+    "id": 311,
+    "name": "Rubin Center for the Visual Arts",
+    "slug": "rubin-center-for-the-visual-arts",
+    "state_code": "TX",
+    "city_name": "El Paso",
+    "website_url": "https://rubincenter.org"
+  },
+  {
+    "id": 291,
+    "name": "Amon Carter Museum of American Art",
+    "slug": "amon-carter-museum-of-american-art",
+    "state_code": "TX",
+    "city_name": "Fort Worth",
+    "website_url": "https://www.cartermuseum.org"
+  },
+  {
+    "id": 294,
+    "name": "Fort Worth Community Arts Center",
+    "slug": "fort-worth-community-arts-center",
+    "state_code": "TX",
+    "city_name": "Fort Worth",
+    "website_url": "https://artscouncilfw.org/fwcac"
+  },
+  {
+    "id": 290,
+    "name": "Kimbell Art Museum",
+    "slug": "kimbell-art-museum",
+    "state_code": "TX",
+    "city_name": "Fort Worth",
+    "website_url": "https://www.kimbellart.org"
+  },
+  {
+    "id": 292,
+    "name": "Modern Art Museum of Fort Worth",
+    "slug": "modern-art-museum-of-fort-worth",
+    "state_code": "TX",
+    "city_name": "Fort Worth",
+    "website_url": "https://themodern.org"
+  },
+  {
+    "id": 293,
+    "name": "Sid Richardson Museum",
+    "slug": "sid-richardson-museum",
+    "state_code": "TX",
+    "city_name": "Fort Worth",
+    "website_url": "https://www.sidrichardsonmuseum.org"
+  },
+  {
+    "id": 277,
+    "name": "Art League Houston",
+    "slug": "art-league-houston",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://artleaguehouston.org"
+  },
+  {
+    "id": 274,
+    "name": "Blaffer Art Museum",
+    "slug": "blaffer-art-museum",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://blafferartmuseum.org"
+  },
+  {
+    "id": 272,
+    "name": "Contemporary Arts Museum Houston",
+    "slug": "contemporary-arts-museum-houston",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://camh.org"
+  },
+  {
+    "id": 279,
+    "name": "DiverseWorks",
+    "slug": "diverseworks",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://diverseworks.org"
+  },
+  {
+    "id": 278,
+    "name": "Houston Center for Contemporary Craft",
+    "slug": "houston-center-for-contemporary-craft",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://crafthouston.org"
+  },
+  {
+    "id": 275,
+    "name": "Lawndale Art Center",
+    "slug": "lawndale-art-center",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://lawndaleartcenter.org"
+  },
+  {
+    "id": 270,
+    "name": "Menil Collection",
+    "slug": "menil-collection",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://www.menil.org"
+  },
+  {
+    "id": 271,
+    "name": "Museum of Fine Arts, Houston",
+    "slug": "museum-of-fine-arts-houston",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://www.mfah.org"
+  },
+  {
+    "id": 273,
+    "name": "Rothko Chapel",
+    "slug": "rothko-chapel",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://www.rothkochapel.org"
+  },
+  {
+    "id": 276,
+    "name": "Station Museum of Contemporary Art",
+    "slug": "station-museum-of-contemporary-art",
+    "state_code": "TX",
+    "city_name": "Houston",
+    "website_url": "https://stationmuseum.com"
+  },
+  {
+    "id": 100,
+    "name": "Ballroom Marfa",
+    "slug": "ballroom-marfa-marfa",
+    "state_code": "TX",
+    "city_name": "Marfa",
+    "website_url": "https://www.ballroommarfa.org"
+  },
+  {
+    "id": 99,
+    "name": "Chinati Foundation",
+    "slug": "chinati-foundation-marfa",
+    "state_code": "TX",
+    "city_name": "Marfa",
+    "website_url": "https://www.chinati.org"
+  },
+  {
+    "id": 102,
+    "name": "Judd Foundation",
+    "slug": "judd-foundation-marfa",
+    "state_code": "TX",
+    "city_name": "Marfa",
+    "website_url": "https://www.juddfoundation.org"
+  },
+  {
+    "id": 101,
+    "name": "Marfa Book Company",
+    "slug": "marfa-book-company-marfa",
+    "state_code": "TX",
+    "city_name": "Marfa",
+    "website_url": null
+  },
+  {
+    "id": 306,
+    "name": "Artpace San Antonio",
+    "slug": "artpace-san-antonio",
+    "state_code": "TX",
+    "city_name": "San Antonio",
+    "website_url": "https://www.artpace.org"
+  },
+  {
+    "id": 305,
+    "name": "Blue Star Contemporary",
+    "slug": "blue-star-contemporary",
+    "state_code": "TX",
+    "city_name": "San Antonio",
+    "website_url": "https://www.bluestarcontemporary.org"
+  },
+  {
+    "id": 304,
+    "name": "McNay Art Museum",
+    "slug": "mcnay-art-museum",
+    "state_code": "TX",
+    "city_name": "San Antonio",
+    "website_url": "https://www.mcnayart.org"
+  },
+  {
+    "id": 309,
+    "name": "Ruiz Healy Art",
+    "slug": "ruiz-healy-art",
+    "state_code": "TX",
+    "city_name": "San Antonio",
+    "website_url": "https://ruizhealyart.com"
+  },
+  {
+    "id": 308,
+    "name": "Sala Diaz",
+    "slug": "sala-diaz",
+    "state_code": "TX",
+    "city_name": "San Antonio",
+    "website_url": "https://saladiaz.com"
+  },
+  {
+    "id": 303,
+    "name": "San Antonio Museum of Art",
+    "slug": "san-antonio-museum-of-art",
+    "state_code": "TX",
+    "city_name": "San Antonio",
+    "website_url": "https://samuseum.org"
+  },
+  {
+    "id": 307,
+    "name": "Southwest School of Art",
+    "slug": "southwest-school-of-art",
+    "state_code": "TX",
+    "city_name": "San Antonio",
+    "website_url": "https://www.swschool.org"
+  }
+]

@@ -1,0 +1,610 @@
+[
+  {
+    "id": 174,
+    "name": "Belleza Fine Art",
+    "slug": "belleza-fine-art",
+    "state_code": "AZ",
+    "city_name": "Bisbee",
+    "website_url": null
+  },
+  {
+    "id": 175,
+    "name": "Bisbee Arts & Social Club",
+    "slug": "bisbee-arts-social-club",
+    "state_code": "AZ",
+    "city_name": "Bisbee",
+    "website_url": null
+  },
+  {
+    "id": 177,
+    "name": "Copper Queen Hotel Art Gallery",
+    "slug": "copper-queen-hotel-art-gallery",
+    "state_code": "AZ",
+    "city_name": "Bisbee",
+    "website_url": null
+  },
+  {
+    "id": 176,
+    "name": "Gallery Bisbee",
+    "slug": "gallery-bisbee",
+    "state_code": "AZ",
+    "city_name": "Bisbee",
+    "website_url": null
+  },
+  {
+    "id": 190,
+    "name": "Buffalo Chip Gallery",
+    "slug": "buffalo-chip-gallery",
+    "state_code": "AZ",
+    "city_name": "Cave Creek",
+    "website_url": null
+  },
+  {
+    "id": 188,
+    "name": "Desert Foothills Art Center",
+    "slug": "desert-foothills-art-center",
+    "state_code": "AZ",
+    "city_name": "Cave Creek",
+    "website_url": "https://www.dfac.org"
+  },
+  {
+    "id": 189,
+    "name": "Horton Gallery",
+    "slug": "horton-gallery",
+    "state_code": "AZ",
+    "city_name": "Cave Creek",
+    "website_url": null
+  },
+  {
+    "id": 115,
+    "name": "Coconino Center for the Arts",
+    "slug": "coconino-center-for-the-arts-flagstaff",
+    "state_code": "AZ",
+    "city_name": "Flagstaff",
+    "website_url": "https://flagartscouncil.org/coconino-center-for-the-arts"
+  },
+  {
+    "id": 193,
+    "name": "Flagstaff Arts Council",
+    "slug": "flagstaff-arts-council",
+    "state_code": "AZ",
+    "city_name": "Flagstaff",
+    "website_url": "https://www.flagartscouncil.org"
+  },
+  {
+    "id": 114,
+    "name": "Museum of Northern Arizona",
+    "slug": "museum-of-northern-arizona-flagstaff",
+    "state_code": "AZ",
+    "city_name": "Flagstaff",
+    "website_url": "https://www.musnaz.org"
+  },
+  {
+    "id": 191,
+    "name": "Northern Arizona University Art Museum",
+    "slug": "northern-arizona-university-art-museum",
+    "state_code": "AZ",
+    "city_name": "Flagstaff",
+    "website_url": "https://nau.edu/art-museum"
+  },
+  {
+    "id": 192,
+    "name": "The Artists Gallery Flagstaff",
+    "slug": "the-artists-gallery-flagstaff",
+    "state_code": "AZ",
+    "city_name": "Flagstaff",
+    "website_url": null
+  },
+  {
+    "id": 172,
+    "name": "Jerome Art Walk",
+    "slug": "jerome-art-walk",
+    "state_code": "AZ",
+    "city_name": "Jerome",
+    "website_url": "https://www.jeromeartwalk.com"
+  },
+  {
+    "id": 170,
+    "name": "Jerome Artists' Cooperative Gallery",
+    "slug": "jerome-artists-cooperative-gallery",
+    "state_code": "AZ",
+    "city_name": "Jerome",
+    "website_url": "https://www.jeromecoop.com"
+  },
+  {
+    "id": 173,
+    "name": "Priceless Pieces Fine Art",
+    "slug": "priceless-pieces-fine-art",
+    "state_code": "AZ",
+    "city_name": "Jerome",
+    "website_url": null
+  },
+  {
+    "id": 171,
+    "name": "Raku Gallery",
+    "slug": "raku-gallery",
+    "state_code": "AZ",
+    "city_name": "Jerome",
+    "website_url": null
+  },
+  {
+    "id": 187,
+    "name": "Galeria Mesa",
+    "slug": "galeria-mesa",
+    "state_code": "AZ",
+    "city_name": "Mesa",
+    "website_url": "https://www.mesaaz.gov/residents/arts-culture/galeria-mesa"
+  },
+  {
+    "id": 185,
+    "name": "Mesa Arts Center",
+    "slug": "mesa-arts-center",
+    "state_code": "AZ",
+    "city_name": "Mesa",
+    "website_url": "https://www.mesaartscenter.com"
+  },
+  {
+    "id": 186,
+    "name": "Mesa Contemporary Arts Museum",
+    "slug": "mesa-contemporary-arts-museum",
+    "state_code": "AZ",
+    "city_name": "Mesa",
+    "website_url": "https://www.mesaartscenter.com/index.php/explore/arts-center/galleries"
+  },
+  {
+    "id": 126,
+    "name": "Arizona Latino Arts and Cultural Center",
+    "slug": "arizona-latino-arts-and-cultural-center-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://alacaz.org"
+  },
+  {
+    "id": 37,
+    "name": "Bentley Gallery Phoenix",
+    "slug": "bentley-gallery-phoenix-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://www.bentleygallery.com"
+  },
+  {
+    "id": 39,
+    "name": "Cattle Track Artists Residency",
+    "slug": "cattle-track-artists-residency-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": null
+  },
+  {
+    "id": 125,
+    "name": "George Washington Carver Museum and Cultural Center",
+    "slug": "george-washington-carver-museum-and-cultural-center-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://www.carveraz.org"
+  },
+  {
+    "id": 34,
+    "name": "Heard Museum",
+    "slug": "heard-museum-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://heard.org"
+  },
+  {
+    "id": 194,
+    "name": "Icehouse Gallery",
+    "slug": "icehouse-gallery",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": null
+  },
+  {
+    "id": 36,
+    "name": "Modified Arts",
+    "slug": "modified-arts-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": null
+  },
+  {
+    "id": 38,
+    "name": "Perihelion Arts",
+    "slug": "perihelion-arts-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": null
+  },
+  {
+    "id": 33,
+    "name": "Phoenix Art Museum",
+    "slug": "phoenix-art-museum-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://www.phxart.org"
+  },
+  {
+    "id": 127,
+    "name": "Phoenix Center for the Arts",
+    "slug": "phoenix-center-for-the-arts-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://phoenixcenterforthearts.org"
+  },
+  {
+    "id": 128,
+    "name": "S'edav Va'aki Museum",
+    "slug": "s-edav-va-aki-museum-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://www.phoenix.gov/parks/arts-culture-history/pueblo-grande"
+  },
+  {
+    "id": 196,
+    "name": "Unexpected Gallery",
+    "slug": "unexpected-gallery",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": null
+  },
+  {
+    "id": 35,
+    "name": "Wilde Meyer Gallery Phoenix",
+    "slug": "wilde-meyer-gallery-phoenix-phoenix",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://www.wildemeyer.com"
+  },
+  {
+    "id": 195,
+    "name": "monOrchid",
+    "slug": "monorchid",
+    "state_code": "AZ",
+    "city_name": "Phoenix",
+    "website_url": "https://www.monorchid.com"
+  },
+  {
+    "id": 179,
+    "name": "Mountain Artists Guild Gallery",
+    "slug": "mountain-artists-guild-gallery",
+    "state_code": "AZ",
+    "city_name": "Prescott",
+    "website_url": "https://www.mountainartistsguild.org"
+  },
+  {
+    "id": 178,
+    "name": "Phippen Museum of Western Art",
+    "slug": "phippen-museum-of-western-art",
+    "state_code": "AZ",
+    "city_name": "Prescott",
+    "website_url": "https://phippenartmuseum.org"
+  },
+  {
+    "id": 181,
+    "name": "Prescott Fine Arts Association",
+    "slug": "prescott-fine-arts-association",
+    "state_code": "AZ",
+    "city_name": "Prescott",
+    "website_url": "https://pfaa.net"
+  },
+  {
+    "id": 180,
+    "name": "Smoki Museum",
+    "slug": "smoki-museum",
+    "state_code": "AZ",
+    "city_name": "Prescott",
+    "website_url": "https://www.smokimuseum.org"
+  },
+  {
+    "id": 6,
+    "name": "Bentley Gallery",
+    "slug": "bentley-gallery-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.bentleygallery.com"
+  },
+  {
+    "id": 14,
+    "name": "Cattle Track Arts Compound",
+    "slug": "cattle-track-arts-compound-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": null
+  },
+  {
+    "id": 11,
+    "name": "Cosanti Foundation",
+    "slug": "cosanti-foundation-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.cosanti.com"
+  },
+  {
+    "id": 1,
+    "name": "Exposures International Gallery of Fine Art",
+    "slug": "exposures-international-gallery-of-fine-art-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.exposuresfineart.com"
+  },
+  {
+    "id": 12,
+    "name": "Eye Lounge",
+    "slug": "eye-lounge-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": null
+  },
+  {
+    "id": 13,
+    "name": "John C. Tanner Fine Art",
+    "slug": "john-c-tanner-fine-art-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": null
+  },
+  {
+    "id": 4,
+    "name": "Legacy Gallery",
+    "slug": "legacy-gallery-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.legacygallery.com"
+  },
+  {
+    "id": 5,
+    "name": "Lisa Sette Gallery",
+    "slug": "lisa-sette-gallery-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.lisasettegallery.com"
+  },
+  {
+    "id": 8,
+    "name": "Medicine Man Gallery",
+    "slug": "medicine-man-gallery-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.medicinemangallery.com"
+  },
+  {
+    "id": 10,
+    "name": "Overland Gallery of Fine Art",
+    "slug": "overland-gallery-of-fine-art-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": null
+  },
+  {
+    "id": 15,
+    "name": "Scottsdale Arts",
+    "slug": "scottsdale-arts-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.scottsdalearts.org"
+  },
+  {
+    "id": 9,
+    "name": "Scottsdale Museum of Contemporary Art",
+    "slug": "scottsdale-museum-of-contemporary-art-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.smoca.org"
+  },
+  {
+    "id": 3,
+    "name": "Trailside Galleries",
+    "slug": "trailside-galleries-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": null
+  },
+  {
+    "id": 137,
+    "name": "Western Spirit: Scottsdale's Museum of the West",
+    "slug": "western-spirit-scottsdale-s-museum-of-the-west-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://scottsdalemuseumwest.org"
+  },
+  {
+    "id": 2,
+    "name": "Wilde Meyer Gallery",
+    "slug": "wilde-meyer-gallery-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.wildemeyer.com"
+  },
+  {
+    "id": 7,
+    "name": "Xanadu Gallery",
+    "slug": "xanadu-gallery-scottsdale",
+    "state_code": "AZ",
+    "city_name": "Scottsdale",
+    "website_url": "https://www.xanadugallery.com"
+  },
+  {
+    "id": 16,
+    "name": "Exposures International Gallery",
+    "slug": "exposures-international-gallery-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": "https://www.exposuresfineart.com"
+  },
+  {
+    "id": 24,
+    "name": "Gallery 527",
+    "slug": "gallery-527-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": null
+  },
+  {
+    "id": 23,
+    "name": "Goldenstein Gallery",
+    "slug": "goldenstein-gallery-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": null
+  },
+  {
+    "id": 17,
+    "name": "Lanning Gallery",
+    "slug": "lanning-gallery-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": null
+  },
+  {
+    "id": 18,
+    "name": "Mountain Trails Gallery",
+    "slug": "mountain-trails-gallery-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": null
+  },
+  {
+    "id": 21,
+    "name": "Parks Gallery",
+    "slug": "parks-gallery-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": null
+  },
+  {
+    "id": 22,
+    "name": "Renee Taylor Gallery",
+    "slug": "renee-taylor-gallery-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": null
+  },
+  {
+    "id": 19,
+    "name": "Tlaquepaque Arts & Shopping Village",
+    "slug": "tlaquepaque-arts-shopping-village-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": "https://www.tlaq.com"
+  },
+  {
+    "id": 20,
+    "name": "Turquoise Tortoise Gallery",
+    "slug": "turquoise-tortoise-gallery-sedona",
+    "state_code": "AZ",
+    "city_name": "Sedona",
+    "website_url": null
+  },
+  {
+    "id": 182,
+    "name": "Arizona State University Art Museum",
+    "slug": "arizona-state-university-art-museum",
+    "state_code": "AZ",
+    "city_name": "Tempe",
+    "website_url": "https://asuartmuseum.asu.edu"
+  },
+  {
+    "id": 184,
+    "name": "Eye Lounge Tempe",
+    "slug": "eye-lounge-tempe",
+    "state_code": "AZ",
+    "city_name": "Tempe",
+    "website_url": null
+  },
+  {
+    "id": 183,
+    "name": "Tempe Center for the Arts",
+    "slug": "tempe-center-for-the-arts",
+    "state_code": "AZ",
+    "city_name": "Tempe",
+    "website_url": "https://tempe.gov/tca"
+  },
+  {
+    "id": 122,
+    "name": "Arizona State Museum",
+    "slug": "arizona-state-museum-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": "https://statemuseum.arizona.edu"
+  },
+  {
+    "id": 26,
+    "name": "Davis Dominguez Gallery",
+    "slug": "davis-dominguez-gallery-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": null
+  },
+  {
+    "id": 30,
+    "name": "Dinnerware Artspace",
+    "slug": "dinnerware-artspace-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": null
+  },
+  {
+    "id": 32,
+    "name": "Drawing Studio",
+    "slug": "drawing-studio-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": "https://www.drawingstudio.org"
+  },
+  {
+    "id": 25,
+    "name": "Etherton Gallery",
+    "slug": "etherton-gallery-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": "https://www.ethertonGallery.com"
+  },
+  {
+    "id": 123,
+    "name": "Ignite Sign Art Museum",
+    "slug": "ignite-sign-art-museum-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": null
+  },
+  {
+    "id": 29,
+    "name": "Philabaum Contemporary Art Glass",
+    "slug": "philabaum-contemporary-art-glass-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": "https://www.philabaumglass.com"
+  },
+  {
+    "id": 31,
+    "name": "Settlers West Galleries",
+    "slug": "settlers-west-galleries-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": "https://www.settlerswest.com"
+  },
+  {
+    "id": 124,
+    "name": "Tucson Clay Co-op",
+    "slug": "tucson-clay-co-op-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": null
+  },
+  {
+    "id": 27,
+    "name": "Tucson Museum of Art",
+    "slug": "tucson-museum-of-art-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": "https://www.tucsonmuseumofart.org"
+  },
+  {
+    "id": 28,
+    "name": "University of Arizona Museum of Art",
+    "slug": "university-of-arizona-museum-of-art-tucson",
+    "state_code": "AZ",
+    "city_name": "Tucson",
+    "website_url": "https://artmuseum.arizona.edu"
+  }
+]
