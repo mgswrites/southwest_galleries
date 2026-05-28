@@ -2,11 +2,13 @@
 export const prerender = true;
 import Base from '../layouts/Base.astro';
 import ListingCard from '../components/ListingCard.astro';
-import { getStates, getArtStyles } from '../lib/queries';
+import { getStates, getArtStyles, getPublishedPosts } from '../lib/queries';
 import sql from '../lib/db';
 
 const states = await getStates();
 const artStyles = await getArtStyles();
+const allGuides = await getPublishedPosts();
+const featuredGuides = allGuides.slice(0, 4);
 
 const [featuredGalleryRow] = await sql`
   SELECT l.slug, l.name, l.short_description, l.hero_image_url,
@@ -71,9 +73,6 @@ const websiteSchema = {
   description="The definitive directory of art galleries, museums, and cultural venues across the American Southwest. Discover art in Arizona, New Mexico, Colorado, Nevada, Utah, and beyond."
   schema={[orgSchema, websiteSchema]}
 >
-  <link rel="preconnect" href="https://fonts.googleapis.com" slot="head" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin slot="head" />
-  <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet" slot="head" />
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="container hero-inner">
@@ -158,6 +157,46 @@ const websiteSchema = {
       </div>
     </section>
   )}
+
+  {featuredGuides.length > 0 && (
+    <section class="guides-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Southwest Art Guides</h2>
+          <a href="/guides/" class="see-all">All guides →</a>
+        </div>
+        <div class="guides-grid">
+          {featuredGuides.map((g) => (
+            <a href={`/guides/${g.slug}/`} class="guide-card">
+              {g.hero_image_url && (
+                <img src={g.hero_image_url} alt={g.title} loading="lazy" width="400" height="225" />
+              )}
+              <div class="guide-body">
+                <h3>{g.title}</h3>
+                {g.excerpt && <p>{g.excerpt}</p>}
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="editorial-section">
+    <div class="container editorial-inner">
+      <h2>The American Southwest: A Living Art Destination</h2>
+      <div class="editorial-cols">
+        <div>
+          <p>The American Southwest is one of the most creatively fertile regions in the world. From the ancient Pueblo traditions of New Mexico to the cutting-edge contemporary art emerging out of Phoenix and Denver, the Southwest has always attracted artists drawn to its extraordinary light, vast landscapes, and deep cultural layers. Georgia O'Keeffe famously called northern New Mexico her spiritual home. Today, her legacy lives alongside a thriving scene of Indigenous artists, modernists, ceramicists, photographers, and sculptors who continue to redefine what Southwestern art means.</p>
+          <p>Santa Fe's Canyon Road remains the most concentrated gallery district in the United States, with more than 80 galleries within a single mile. Scottsdale's arts district anchors the West's Western and contemporary fine art market. Marfa, Texas — a remote outpost in the Chihuahuan Desert — draws international visitors to the monumental installations of the Chinati Foundation and a constellation of artist-run spaces that have made the town legendary.</p>
+        </div>
+        <div>
+          <p>Colorado adds a mountain dimension: Denver's RiNo and Santa Fe Arts District neighborhoods pulse with murals and emerging galleries, while resort towns like Aspen, Telluride, and Vail maintain world-class museum and gallery programs. Utah's redrock country frames institutions ranging from the Utah Museum of Contemporary Art in Salt Lake City to intimate pottery studios in Moab. Nevada's arts scene extends far beyond the Strip — the 18b Las Vegas Arts District and Reno's thriving creative community prove that the region's artistic identity reaches every corner of the desert West.</p>
+          <p>Southwest Galleries is the definitive directory connecting art lovers, collectors, and travelers with the galleries, museums, and cultural venues that make this region extraordinary. Whether you're planning a gallery walk in Taos, a museum day in Houston, or a cross-state art road trip, start here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="cta-section">
     <div class="container cta-inner">
@@ -277,6 +316,22 @@ const websiteSchema = {
   .section-header h2 { font-size: 1.4rem; font-weight: 700; }
   .see-all { font-size: 0.875rem; color: var(--turquoise); text-decoration: none; font-weight: 600; }
   .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+  .guides-section { padding: 3rem 0; border-top: 1px solid var(--border); }
+  .guides-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+  .guide-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
+  .guide-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .guide-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  .guide-body { padding: 1rem 1.25rem 1.25rem; flex: 1; }
+  .guide-body h3 { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.4rem; }
+  .guide-body p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+  .editorial-section { background: var(--sand); padding: 3.5rem 0; border-top: 1px solid var(--border); }
+  .editorial-inner h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+  .editorial-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+  .editorial-cols p { font-size: 0.925rem; color: #444; line-height: 1.75; margin-bottom: 1rem; }
+  .editorial-cols p:last-child { margin-bottom: 0; }
+  @media (max-width: 680px) { .editorial-cols { grid-template-columns: 1fr; } }
 
   .cta-section { background: var(--ink); color: #fff; padding: 3rem 0; }
   .cta-inner { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
