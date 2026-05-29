@@ -83,9 +83,12 @@ const schemaBlocks = schema
     </main>
 
     <footer>
+      <div class="footer-logo-band">
+        <a href="/"><img src="/southwest_galleries_logo.png" alt="Southwest Galleries" class="footer-logo" /></a>
+      </div>
       <div class="footer-inner">
         <div>
-          <a href="/" class="footer-logo-wrap"><img src="/southwest_galleries_logo.png" alt="Southwest Galleries" class="footer-logo" /></a>
+          <strong>Southwest Galleries</strong>
           <p>The definitive art directory for the American Southwest.</p>
         </div>
         <div>
@@ -244,8 +247,8 @@ const schemaBlocks = schema
     padding-bottom: 2rem;
     border-bottom: 1px solid #333;
   }
-  .footer-logo-wrap { display: inline-block; background: #fff; border-radius: 8px; padding: 0.4rem 0.75rem; margin-bottom: 0.75rem; }
-  .footer-logo { height: 90px; width: auto; display: block; }
+  .footer-logo-band { background: var(--sand); padding: 1.25rem 1.5rem; text-align: center; }
+  .footer-logo { height: 120px; width: auto; display: inline-block; }
   footer strong { color: #fff; display: block; margin-bottom: 0.75rem; }
   footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
   footer a { color: #aaa; font-size: 0.875rem; }
