@@ -58,14 +58,14 @@ const schemaBlocks = schema
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Rye&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Rye&display=swap" rel="stylesheet" />
     <slot name="head" />
     <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1066539255139874" crossorigin="anonymous"></script>
   </head>
   <body>
     <header>
       <nav>
-        <a href="/" class="logo">Southwest Galleries</a>
+        <a href="/" class="logo"><img src="/southwest_galleries_logo.png" alt="Southwest Galleries" /></a>
         <ul>
           <li><a href="/galleries/">Galleries</a></li>
           <li><a href="/museums/">Museums</a></li>
@@ -216,7 +216,8 @@ const schemaBlocks = schema
     align-items: center;
     gap: 2rem;
   }
-  .logo { font-family: 'Pinyon Script', cursive; font-weight: 400; font-size: 1.75rem; color: var(--ink); line-height: 1; }
+  .logo { display: flex; align-items: center; flex-shrink: 0; }
+  .logo img { height: 48px; width: auto; display: block; }
   header nav ul { list-style: none; display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
   header nav a { color: var(--ink); font-size: 0.9rem; }
   header nav a.cta {
