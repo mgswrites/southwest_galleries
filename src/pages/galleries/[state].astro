@@ -26,6 +26,17 @@ const cityNames = cities.map((c) => c.name);
 const topCities = cityNames.slice(0, 4).join(', ');
 const stateName = stateData.name;
 
+const stateEditorials: Record<string, string> = {
+  arizona: `Arizona's gallery scene spans from Scottsdale's gallery-lined Marshall Way and Sedona's canyon-backdrop studios to Phoenix's booming Roosevelt Row arts district and the historic artist colony of Tubac. The state is a major center for both Western American fine art and a growing contemporary scene shaped by its desert landscape and deep Indigenous artistic traditions.`,
+  california: `California brings together some of the West's most dynamic gallery markets, from Los Angeles's internationally recognized contemporary art districts in Culver City and Chinatown to Palm Desert's El Paseo fine art corridor and San Diego's thriving Barrio Logan mural scene. The state's artistic output spans centuries of influence, from Spanish mission aesthetics to cutting-edge digital and conceptual art.`,
+  colorado: `Colorado's art scene stretches from Denver's RiNo and Santa Fe Arts Districts — among the most vibrant in the Mountain West — to the world-class museum and gallery programs in Aspen, Vail, and Telluride. The state's dramatic mountain landscape has long drawn Plein Air painters and photographers, while Boulder and Fort Collins anchor a lively university-driven contemporary scene.`,
+  nevada: `Nevada's art world extends well beyond the Las Vegas Strip: the 18b Las Vegas Arts District is a walkable neighborhood of galleries and studios just blocks from downtown, while Reno hosts the Nevada Museum of Art and a creative community energized by its proximity to the Burning Man ecosystem. Together they make Nevada one of the most surprising art destinations in the Southwest.`,
+  'new-mexico': `New Mexico is the cultural heart of the American Southwest, anchored by Santa Fe's Canyon Road — the most concentrated gallery district in the United States with more than 80 galleries in a single mile — and the living Indigenous art traditions of Taos Pueblo, a UNESCO World Heritage Site. From turquoise-and-silver jewelry to bold contemporary paintings and earth-pigment ceramics, the state's art scene is as diverse as its landscape.`,
+  texas: `Texas claims some of the Southwest's most dynamic art cities: San Antonio's Blue Star Arts Complex and Pearl District sit alongside world-class institutions, while Austin's East Side has become a magnet for emerging galleries and studios. Marfa, the remote outpost in the Chihuahuan Desert made famous by Donald Judd's Chinati Foundation, remains one of the most celebrated art destinations in the world.`,
+  utah: `Utah's art scene is anchored by Salt Lake City's Granary District and the Utah Museum of Contemporary Art, with a growing constellation of galleries serving the state's mountain resort communities in Park City and St. George. The state's extraordinary redrock landscape — from Moab to Bryce Canyon — has inspired generations of landscape painters, Plein Air artists, and photographers who continue to define the visual identity of the American West.`,
+};
+const stateEditorial = stateEditorials[stateSlug] ?? `${stateName} has ${listings.length} galleries, museums, and cultural venues listed on Southwest Galleries, spanning cities including ${topCities}. Browse by city or scroll down to explore all listings.`;
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -86,7 +97,7 @@ const schema = [
         { label: stateData.name },
       ]} />
       <h1>Art Galleries in {stateData.name}</h1>
-      {stateData.description && <p>{stateData.description}</p>}
+      <p>{stateData.description ?? stateEditorial}</p>
     </div>
   </div>
 
