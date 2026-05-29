@@ -3,7 +3,7 @@ export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import MapView from '../../components/MapView.astro';
-import { getAllApprovedListingSlugs, getListing, getListingArtStyles, getListingImages, getGuidesByListing } from '../../lib/queries';
+import { getAllApprovedListingSlugs, getListing, getListingArtStyles, getListingImages, getGuidesByListing, getNearbyListings } from '../../lib/queries';
 
 export async function getStaticPaths() {
   const rows = await getAllApprovedListingSlugs();
@@ -14,10 +14,11 @@ const { slug } = Astro.params;
 const listing = await getListing(slug!);
 if (!listing) return Astro.redirect('/galleries/');
 
-const [artStyles, images, relatedGuides] = await Promise.all([
+const [artStyles, images, relatedGuides, nearbyListings] = await Promise.all([
   getListingArtStyles(listing.id),
   getListingImages(listing.id),
   getGuidesByListing(listing.id),
+  getNearbyListings(listing.city_id, listing.id),
 ]);
 
 const typeLabel: Record<string, string> = {
@@ -127,6 +128,31 @@ const localBusinessSchema = {
                 <li><a href={`/guides/${g.slug}/`}>{g.title}</a></li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {nearbyListings.length > 0 && (
+          <div class="nearby-listings">
+            <h2>More in {listing.city_name}</h2>
+            <ul class="nearby-list">
+              {nearbyListings.map((l) => (
+                <li class="nearby-item">
+                  <a href={`/listing/${l.slug}/`} class="nearby-link">
+                    {l.hero_image_url && (
+                      <img src={l.hero_image_url} alt={l.name} loading="lazy" />
+                    )}
+                    <div class="nearby-body">
+                      <span class="nearby-type">{typeLabel[l.listing_type] ?? l.listing_type}</span>
+                      <strong>{l.name}</strong>
+                      {l.short_description && <p>{l.short_description}</p>}
+                    </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a href={`/galleries/${listing.state_slug}/${listing.city_slug}/`} class="see-all-link">
+              See all galleries in {listing.city_name} →
+            </a>
           </div>
         )}
       </div>
@@ -277,6 +303,20 @@ const localBusinessSchema = {
   .hours-list { display: flex; flex-direction: column; gap: 0.3rem; }
   .hours-row { display: flex; justify-content: space-between; font-size: 0.85rem; }
   .hours-row dt { color: var(--muted); }
+
+  .nearby-listings { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+  .nearby-listings h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; }
+  .nearby-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .nearby-item { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .nearby-link { display: flex; gap: 1rem; text-decoration: none; color: inherit; padding: 0.75rem; align-items: flex-start; transition: background 0.15s; }
+  .nearby-link:hover { background: var(--sand); text-decoration: none; }
+  .nearby-link img { width: 80px; height: 60px; object-fit: cover; border-radius: 5px; flex-shrink: 0; }
+  .nearby-body { display: flex; flex-direction: column; gap: 0.2rem; }
+  .nearby-type { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 600; }
+  .nearby-body strong { font-size: 0.9rem; color: var(--ink); }
+  .nearby-body p { font-size: 0.8rem; color: var(--muted); line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .see-all-link { display: inline-block; margin-top: 0.75rem; font-size: 0.875rem; color: var(--turquoise); font-weight: 600; }
+  .see-all-link:hover { text-decoration: underline; }
 
   @media (max-width: 900px) {
     .listing-layout { grid-template-columns: 1fr; }

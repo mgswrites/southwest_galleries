@@ -129,6 +129,19 @@ export async function getListingsByArtStyle(styleId: number) {
   `;
 }
 
+export async function getNearbyListings(cityId: number, excludeId: number, limit = 4) {
+  return sql`
+    SELECT l.slug, l.name, l.listing_type, l.hero_image_url, l.short_description, l.tier
+    FROM listings l
+    WHERE l.city_id = ${cityId}
+      AND l.id != ${excludeId}
+      AND l.status = 'approved'
+      AND l.deleted_at IS NULL
+    ORDER BY CASE l.tier WHEN 'premium' THEN 1 WHEN 'featured' THEN 2 ELSE 3 END, l.name
+    LIMIT ${limit}
+  `;
+}
+
 export async function getGuidesByListing(listingId: number) {
   return sql`
     SELECT p.id, p.slug, p.title

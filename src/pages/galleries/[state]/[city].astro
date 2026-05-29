@@ -101,7 +101,13 @@ const schema = [
       <h1>Art Galleries in {cityData.name}</h1>
       {cityData.description
         ? <p>{cityData.description}</p>
-        : <p>{listings.length} {listings.length === 1 ? 'listing' : 'listings'} in {cityData.name}, {stateData.name}.</p>
+        : (
+          <p>
+            {cityData.name} is home to {listings.length} {listings.length === 1 ? 'gallery, museum, or cultural venue' : 'galleries, museums, and cultural venues'} in {stateData.name}'s art scene.
+            {topListings && ` Notable destinations include ${topListings}${listings.length > 3 ? ', and more' : ''}.`}
+            {' '}Browse the listings below for addresses, hours, and directions — or use the map to plan your visit.
+          </p>
+        )
       }
     </div>
   </div>

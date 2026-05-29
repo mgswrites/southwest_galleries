@@ -35,7 +35,8 @@ const listings = await sql`
 `;
 
 const title = `Museums in ${cityData.name}, ${stateData.name} | Southwest Galleries`;
-const description = `Discover museums and cultural centers in ${cityData.name}, ${stateData.name}.`;
+const description = `Discover museums, cultural centers, and sculpture parks in ${cityData.name}, ${stateData.name}. Browse ${listings.length} venue${listings.length === 1 ? '' : 's'} with hours, locations, and details.`;
+const topNames = (listings as any[]).slice(0, 3).map((l) => l.name as string);
 ---
 
 <Base {title} {description}>
@@ -48,7 +49,11 @@ const description = `Discover museums and cultural centers in ${cityData.name}, 
         { label: cityData.name },
       ]} />
       <h1>Museums in {cityData.name}</h1>
-      <p>{description}</p>
+      <p>
+        {cityData.name} has {listings.length} {listings.length === 1 ? 'museum, cultural center, or sculpture park' : 'museums, cultural centers, and sculpture parks'} in {stateData.name}.
+        {topNames.length > 0 && ` Highlights include ${topNames.join(', ')}${listings.length > 3 ? ', and more' : ''}.`}
+        {' '}Browse below for hours, locations, and visitor information.
+      </p>
     </div>
   </div>
   <div class="container" style="padding-top:2rem;padding-bottom:3rem">
