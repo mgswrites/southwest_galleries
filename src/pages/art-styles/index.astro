@@ -9,7 +9,7 @@ const styles = await getArtStyles();
 
 <Base
   title="Art Styles in the Southwest | Southwest Galleries"
-  description="Explore galleries by art style: Native American, Western, Contemporary, Plein Air, Ceramics, and more."
+  description="Explore Southwest galleries by art style. Find venues specializing in Native American art, Western painting, Contemporary work, Plein Air landscapes, Ceramics, and more."
 >
   <div class="page-header">
     <div class="container">
@@ -20,6 +20,7 @@ const styles = await getArtStyles();
   </div>
 
   <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    <p class="styles-intro">The American Southwest has nurtured a remarkable breadth of artistic traditions. From the ancient ceramic arts of Pueblo peoples to the sweeping Plein Air landscapes painted on canyon rims, from gallery-hopping Santa Fe to the cutting-edge Contemporary scenes of Phoenix and Denver, the region rewards every kind of art lover. Browse the styles below to find galleries and venues that match your taste.</p>
     <div class="styles-grid">
       {styles.map((s) => (
         <a href={`/art-styles/${s.slug}/`} class="style-card">
@@ -37,6 +38,7 @@ const styles = await getArtStyles();
 </Base>
 
 <style>
+  .styles-intro { max-width: 720px; margin-bottom: 2rem; color: var(--muted); line-height: 1.7; font-size: 0.95rem; }
   .styles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; }
   .style-card { border-radius: 10px; overflow: hidden; text-decoration: none; display: block; transition: transform 0.2s, box-shadow 0.2s; }
   .style-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); text-decoration: none; }

@@ -9,7 +9,7 @@ const posts = await getPublishedPosts();
 
 <Base
   title="Southwest Art Guides | Southwest Galleries"
-  description="Editorial guides to art galleries, neighborhoods, and the art scene across the American Southwest."
+  description="In-depth editorial guides to galleries, museums, and the art scene across Arizona, New Mexico, Colorado, Texas, and the broader American Southwest."
 >
   <div class="page-header">
     <div class="container">
@@ -20,6 +20,7 @@ const posts = await getPublishedPosts();
   </div>
 
   <div class="container" style="padding-top:2rem;padding-bottom:3rem">
+    <p class="guides-intro">Our editorial team explores the galleries, districts, and art scenes that define the American Southwest. From the storied museum mile of Santa Fe to the booming creative quarters of Phoenix and Denver, these in-depth guides help you plan your next art adventure, discover emerging artists, and understand the cultural forces shaping the region's creative identity.</p>
     {posts.length > 0 ? (
       <div class="posts-grid">
         {posts.map((p) => (
@@ -45,6 +46,7 @@ const posts = await getPublishedPosts();
 </Base>
 
 <style>
+  .guides-intro { max-width: 720px; margin-bottom: 2rem; color: var(--muted); line-height: 1.7; font-size: 0.95rem; }
   .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
   .post-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; color: inherit; text-decoration: none; transition: box-shadow 0.2s, transform 0.2s; }
   .post-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }

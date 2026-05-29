@@ -5,6 +5,7 @@ export interface Props {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  ogType?: string;
   schema?: object | object[];
 }
 
@@ -12,7 +13,8 @@ const {
   title,
   description = 'The definitive art and cultural directory for the American Southwest. Find galleries, museums, and cultural centers across Arizona, New Mexico, Colorado, and beyond.',
   canonical = new URL(Astro.url.pathname, Astro.site).toString(),
-  ogImage = '/og-default.jpg',
+  ogImage = '/hero.jpg',
+  ogType = 'website',
   schema,
 } = Astro.props;
 
@@ -37,7 +39,7 @@ const schemaBlocks = schema
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={new URL(ogImage, Astro.site).toString()} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Southwest Galleries" />
 
     <!-- Twitter Card -->
