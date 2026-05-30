@@ -67,7 +67,7 @@ const schemaBlocks = schema
   <body>
     <header>
       <nav>
-        <a href="/" class="logo"><img src="/logo.jpg" alt="Southwest Galleries" /></a>
+        <a href="/" class="logo"><img src="/logo.svg" alt="Southwest Galleries" /></a>
         <ul>
           <li><a href="/galleries/">Galleries</a></li>
           <li><a href="/museums/">Museums</a></li>
@@ -87,7 +87,7 @@ const schemaBlocks = schema
     <footer>
       <div class="footer-inner">
         <div>
-          <a href="/" class="footer-logo-wrap"><img src="/logo.jpg" alt="Southwest Galleries" class="footer-logo" /></a>
+          <a href="/" class="footer-logo-wrap"><img src="/logo.svg" alt="Southwest Galleries" class="footer-logo" /></a>
           <p>The definitive art directory for the American Southwest.</p>
         </div>
         <div>
@@ -190,11 +190,13 @@ const schemaBlocks = schema
     --ink: #1a1a14;
     --muted: #6b6e60;
     --border: #d8d2c2;
+    --surface: #2c2418;
+    --surface-muted: #a09070;
     --max-w: 1200px;
     --font-sans: system-ui, -apple-system, sans-serif;
   }
 
-  html { font-family: var(--font-sans); color: var(--ink); background: #fff; }
+  html { font-family: var(--font-sans); color: var(--ink); background: var(--sand); font-size: 17px; }
   h1, h2, h3 { font-family: 'Rye', serif; font-weight: 400; }
   body { min-height: 100vh; display: flex; flex-direction: column; }
   main { flex: 1; }
@@ -203,7 +205,7 @@ const schemaBlocks = schema
   img { max-width: 100%; height: auto; display: block; }
 
   header {
-    background: #fff;
+    background: var(--sand);
     border-bottom: 1px solid var(--border);
     position: sticky;
     top: 0;
@@ -213,13 +215,13 @@ const schemaBlocks = schema
     max-width: var(--max-w);
     margin: 0 auto;
     padding: 0 1.5rem;
-    height: 72px;
+    height: 100px;
     display: flex;
     align-items: center;
     gap: 2rem;
   }
   .logo { display: flex; align-items: center; flex-shrink: 0; }
-  .logo img { height: 52px; width: auto; display: block; }
+  .logo img { height: 78px; width: auto; display: block; }
   header nav ul { list-style: none; display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
   header nav a { color: var(--ink); font-size: 0.9rem; }
   header nav a.cta {
@@ -235,7 +237,6 @@ const schemaBlocks = schema
     background: var(--ink);
     color: #ccc;
     padding: 3rem 1.5rem 1.5rem;
-    margin-top: 4rem;
   }
   .footer-inner {
     max-width: var(--max-w);
@@ -246,7 +247,7 @@ const schemaBlocks = schema
     padding-bottom: 2rem;
     border-bottom: 1px solid #333;
   }
-  .footer-logo-wrap { display: block; background: #fff; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
+  .footer-logo-wrap { display: block; background: var(--sand); border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
   .footer-logo { display: block; width: 100%; height: auto; }
   footer strong { color: #fff; display: block; margin-bottom: 0.75rem; }
   footer ul { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }

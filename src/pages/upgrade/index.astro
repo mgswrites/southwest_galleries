@@ -174,17 +174,18 @@ const FAQS = [
   @media (max-width: 560px)  { .tiers-grid { grid-template-columns: 1fr; max-width: 420px; } }
 
   .tier-card {
-    border: 1.5px solid var(--border);
+    border: 1.5px solid #3d3020;
     border-radius: 12px;
     padding: 1.75rem 1.5rem;
     position: relative;
-    background: #fff;
+    background: var(--surface);
+    color: var(--sand);
     display: flex;
     flex-direction: column;
   }
   .tier-card.highlight {
     border-color: var(--turquoise);
-    box-shadow: 0 4px 24px rgba(13, 140, 140, 0.13);
+    box-shadow: 0 4px 24px rgba(13, 140, 140, 0.25);
   }
 
   .badge {
@@ -197,10 +198,10 @@ const FAQS = [
 
   .tier-header { margin-bottom: 1.25rem; }
   .tier-header h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 0.25rem; }
-  .tier-desc { font-size: 0.825rem; color: var(--muted); margin-bottom: 0.75rem; }
+  .tier-desc { font-size: 0.825rem; color: var(--surface-muted); margin-bottom: 0.75rem; }
   .price-row { display: flex; align-items: baseline; gap: 0.2rem; }
-  .price { font-size: 2.1rem; font-weight: 800; color: var(--ink); }
-  .period { font-size: 0.875rem; color: var(--muted); }
+  .price { font-size: 2.1rem; font-weight: 800; color: var(--sand); }
+  .period { font-size: 0.875rem; color: var(--surface-muted); }
 
   .feature-list {
     list-style: none; padding: 0; margin: 0 0 1.5rem;
@@ -212,10 +213,10 @@ const FAQS = [
 
   .cta-btn {
     display: block; width: 100%; padding: 0.7rem 1rem;
-    background: var(--sand); border: 1.5px solid var(--border);
+    background: #3d3020; border: 1.5px solid #5a4a30;
     border-radius: 8px; font-size: 0.95rem; font-weight: 700;
     cursor: pointer; text-align: center; text-decoration: none;
-    color: var(--ink); transition: all 0.15s;
+    color: var(--sand); transition: all 0.15s;
     font-family: inherit;
   }
   .cta-btn.primary { background: var(--turquoise); border-color: var(--turquoise); color: #fff; }
@@ -231,5 +232,5 @@ const FAQS = [
   .faq-section h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem; }
   .faq-list { display: flex; flex-direction: column; gap: 1.5rem; max-width: 720px; }
   .faq-item h3 { font-size: 0.975rem; font-weight: 700; margin-bottom: 0.4rem; }
-  .faq-item p { font-size: 0.9rem; color: #444; line-height: 1.65; }
+  .faq-item p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; }
 </style>

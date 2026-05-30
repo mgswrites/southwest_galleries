@@ -57,10 +57,11 @@ const typeLabel: Record<string, string> = {
     border: 1px solid var(--border);
     border-radius: 8px;
     overflow: hidden;
-    background: #fff;
+    background: var(--sand);
+    color: var(--ink);
     transition: box-shadow 0.2s, transform 0.2s;
   }
-  .listing-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .listing-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); transform: translateY(-2px); }
   .tier-featured, .tier-premium { border-color: var(--turquoise); }
 
   .card-link { display: block; color: inherit; text-decoration: none; }

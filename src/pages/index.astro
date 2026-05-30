@@ -76,11 +76,13 @@ const websiteSchema = {
   <section class="hero">
     <div class="hero-overlay"></div>
     <div class="container hero-inner">
-      <h1>Discover Art in the<br />American Southwest</h1>
-      <p>The definitive directory of galleries, museums, and cultural venues across Arizona, New Mexico, Colorado, and beyond.</p>
-      <div class="hero-actions">
-        <a href="/galleries/" class="btn-primary">Browse Galleries</a>
-        <a href="/guides/" class="btn-secondary">Read Guides</a>
+      <div class="hero-text">
+        <h1>Discover Art in the<br />American Southwest</h1>
+        <p>The definitive directory of galleries, museums, and cultural venues across Arizona, New Mexico, Colorado, and beyond.</p>
+        <div class="hero-actions">
+          <a href="/galleries/" class="btn-primary">Browse Galleries</a>
+          <a href="/guides/" class="btn-secondary">Read Guides</a>
+        </div>
       </div>
     </div>
   </section>
@@ -251,8 +253,10 @@ const websiteSchema = {
   }
   .hero-inner {
     position: relative;
+    width: 100%;
+  }
+  .hero-text {
     max-width: 560px;
-    margin-left: 5%;
   }
   .hero h1 { font-family: 'Rye', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 400; line-height: 1.18; margin-bottom: 1.1rem; letter-spacing: 0.01em; }
   .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.88); margin-bottom: 2rem; line-height: 1.65; max-width: 460px; }
@@ -262,23 +266,23 @@ const websiteSchema = {
   .btn-secondary { background: #b8860b; color: #fff; padding: 0.75rem 1.75rem; border-radius: 6px; font-weight: 600; font-size: 1rem; text-decoration: none; border: none; }
   .btn-secondary:hover { background: #9a6f09; text-decoration: none; }
 
-  .featured-pair { padding: 3rem 0; border-bottom: 1px solid var(--border); }
+  .featured-pair { padding: 3rem 0; border-bottom: 1px solid var(--border); background: var(--sand); }
   .section-label { font-size: 1.1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 1.25rem; }
   .pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .pair-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
-  .pair-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.12); transform: translateY(-3px); text-decoration: none; }
+  .pair-card { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; text-decoration: none; color: var(--ink); background: var(--sand); transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
+  .pair-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.18); transform: translateY(-3px); text-decoration: none; }
   .pair-img { position: relative; height: 260px; background-size: cover; background-position: center; background-color: var(--sand); flex-shrink: 0; }
   .pair-badge { position: absolute; top: 1rem; left: 1rem; background: rgba(0,0,0,0.55); color: #fff; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.3rem 0.7rem; border-radius: 20px; backdrop-filter: blur(6px); }
   .pair-body { padding: 1.25rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
   .pair-body h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.3; }
   .pair-location { font-size: 0.8rem; color: var(--muted); }
-  .pair-desc { font-size: 0.875rem; color: #555; line-height: 1.6; flex: 1; }
+  .pair-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.6; flex: 1; }
   .pair-link { font-size: 0.85rem; font-weight: 700; color: var(--turquoise); margin-top: 0.25rem; }
 
   @media (max-width: 680px) { .pair-grid { grid-template-columns: 1fr; } .pair-img { height: 200px; } }
 
-  .browse-states { background: var(--sand); padding: 3rem 0; border-bottom: 1px solid var(--border); }
-  .browse-states h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .browse-states { background: var(--surface); padding: 3rem 0; }
+  .browse-states h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.06em; color: #b0a080; }
   .states-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; }
   .state-card {
     position: relative;
@@ -313,34 +317,34 @@ const websiteSchema = {
   @media (max-width: 900px) { .states-grid { grid-template-columns: repeat(4, 1fr); } }
   @media (max-width: 560px) { .states-grid { grid-template-columns: repeat(2, 1fr); } }
 
-  .featured-section { padding: 3rem 0; }
+  .featured-section { padding: 3rem 0; background: var(--sand); }
   .section-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem; }
   .section-header h2 { font-size: 1.4rem; font-weight: 700; }
   .see-all { font-size: 0.875rem; color: var(--turquoise); text-decoration: none; font-weight: 600; }
   .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 
-  .guides-section { padding: 3rem 0; border-top: 1px solid var(--border); }
+  .guides-section { padding: 3rem 0; border-top: 1px solid var(--border); background: var(--sand); }
   .guides-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
-  .guide-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
-  .guide-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-2px); }
+  .guide-card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-decoration: none; color: var(--ink); background: var(--sand); transition: box-shadow 0.2s, transform 0.2s; display: flex; flex-direction: column; }
+  .guide-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.15); transform: translateY(-2px); }
   .guide-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
   .guide-body { padding: 1rem 1.25rem 1.25rem; flex: 1; }
   .guide-body h3 { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.4rem; }
   .guide-body p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-  .editorial-section { background: var(--sand); padding: 3.5rem 0; border-top: 1px solid var(--border); }
+  .editorial-section { background: var(--sand); padding: 3.5rem 0; }
   .editorial-inner h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
   .editorial-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-  .editorial-cols p { font-size: 0.925rem; color: #444; line-height: 1.75; margin-bottom: 1rem; }
+  .editorial-cols p { font-size: 0.925rem; color: var(--muted); line-height: 1.75; margin-bottom: 1rem; }
   .editorial-cols p:last-child { margin-bottom: 0; }
   @media (max-width: 680px) { .editorial-cols { grid-template-columns: 1fr; } }
 
-  .cta-section { background: var(--ink); color: #fff; padding: 3rem 0; }
+  .cta-section { background: var(--surface); color: var(--sand); padding: 3rem 0; }
   .cta-inner { display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap; }
-  .cta-inner h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.35rem; }
-  .cta-inner p { color: #aaa; font-size: 0.95rem; }
+  .cta-inner h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.35rem; color: var(--sand); }
+  .cta-inner p { color: #b0a080; font-size: 0.95rem; }
 
-  .browse-styles { background: var(--sand); padding: 3rem 0; border-top: 1px solid var(--border); }
+  .browse-styles { background: var(--sand); padding: 3rem 0; }
   .browse-styles h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
   .styles-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
   .style-card {
