@@ -65,10 +65,10 @@ const schemaBlocks = schema
     <script is:inline async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1066539255139874" crossorigin="anonymous"></script>
   </head>
   <body>
-    <header>
+    <header id="site-header">
       <nav>
         <a href="/" class="logo"><img src="/logo.svg" alt="Southwest Galleries" /></a>
-        <ul>
+        <ul class="nav-links">
           <li><a href="/galleries/">Galleries</a></li>
           <li><a href="/museums/">Museums</a></li>
           <li><a href="/art-styles/">Art Styles</a></li>
@@ -78,7 +78,21 @@ const schemaBlocks = schema
           <li><a href="/about/">About</a></li>
           <li><a href="/submit/" class="cta">Submit Listing</a></li>
         </ul>
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
       </nav>
+      <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+        <ul>
+          <li><a href="/galleries/">Galleries</a></li>
+          <li><a href="/museums/">Museums</a></li>
+          <li><a href="/art-styles/">Art Styles</a></li>
+          <li><a href="/guides/">Guides</a></li>
+          <li><a href="/events/">Events</a></li>
+          <li><a href="/about/">About</a></li>
+        </ul>
+        <a href="/submit/" class="mobile-cta">Submit Listing</a>
+      </div>
     </header>
 
     <main>
@@ -176,6 +190,23 @@ const schemaBlocks = schema
         });
       }
     </script>
+    <script is:inline>
+      const header = document.getElementById('site-header');
+      const toggle = header.querySelector('.nav-toggle');
+      const menu = document.getElementById('mobile-menu');
+      toggle.addEventListener('click', () => {
+        const open = header.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', String(open));
+        menu.setAttribute('aria-hidden', String(!open));
+      });
+      menu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          header.classList.remove('nav-open');
+          toggle.setAttribute('aria-expanded', 'false');
+          menu.setAttribute('aria-hidden', 'true');
+        });
+      });
+    </script>
     <Analytics />
   </body>
 </html>
@@ -223,7 +254,7 @@ const schemaBlocks = schema
   }
   .logo { display: flex; align-items: center; flex-shrink: 0; }
   .logo img { height: 78px; width: auto; display: block; }
-  header nav ul { list-style: none; display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
+  .nav-links { list-style: none; display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
   header nav a { color: var(--ink); font-size: 0.9rem; }
   header nav a.cta {
     background: var(--turquoise);
@@ -233,6 +264,74 @@ const schemaBlocks = schema
     font-weight: 600;
   }
   header nav a.cta:hover { background: #0a7070; text-decoration: none; }
+
+  /* Hamburger button — hidden on desktop */
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    margin-left: auto;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+  .nav-toggle span {
+    display: block;
+    height: 2px;
+    background: var(--ink);
+    border-radius: 2px;
+    transition: transform 0.22s ease, opacity 0.22s ease;
+    transform-origin: center;
+  }
+  /* Animate to × when open */
+  header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile drawer */
+  .mobile-menu {
+    display: none;
+    background: var(--ink);
+    border-top: 2px solid var(--turquoise);
+    padding: 1.5rem;
+    overflow: hidden;
+  }
+  .mobile-menu ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 1.5rem;
+  }
+  .mobile-menu ul li a {
+    display: block;
+    padding: 0.85rem 0;
+    color: var(--sand);
+    font-size: 1.05rem;
+    font-weight: 500;
+    border-bottom: 1px solid #2e2820;
+    text-decoration: none;
+  }
+  .mobile-menu ul li a:hover { color: #fff; text-decoration: none; }
+  .mobile-cta {
+    display: block;
+    margin-top: 0.25rem;
+    background: var(--turquoise);
+    color: #fff !important;
+    text-align: center;
+    padding: 0.85rem 1rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+  }
+  .mobile-cta:hover { background: #0a7070; text-decoration: none; }
+  header.nav-open .mobile-menu { display: block; }
 
   footer {
     background: var(--ink);
@@ -273,8 +372,13 @@ const schemaBlocks = schema
   .page-header h1 { font-size: 2rem; font-weight: 700; }
   .page-header p { color: var(--muted); margin-top: 0.5rem; max-width: 600px; }
 
+  @media (max-width: 1024px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: flex; }
+    header nav { height: 68px; }
+    .logo img { height: 52px; }
+  }
   @media (max-width: 768px) {
     .footer-inner { grid-template-columns: 1fr 1fr; }
-    header nav ul { display: none; }
   }
 </style>
