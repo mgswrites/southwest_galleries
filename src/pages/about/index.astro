@@ -82,6 +82,34 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
         </p>
       </section>
 
+      <section class="about-section founder-section">
+        <h2>About the Founder</h2>
+        <div class="founder-inner">
+          <div class="founder-photo-wrap">
+            <img
+              src="/453096715_473831632262097_4434383762082902381_n_473831635595430.jpg"
+              alt="M.G. Salazar at the Tribeca Film Festival"
+              class="founder-photo"
+            />
+          </div>
+          <div class="founder-bio">
+            <h3>M.G. Salazar</h3>
+            <p>
+              M.G. Salazar is a native New Mexican, two-time Creative Arts Emmy Award winner, and
+              multiple grant-winning multi-disciplinary artist. The author of three books and founder
+              of La Resistencia Press, Salazar has spent a career amplifying voices and stories rooted
+              in the American Southwest — as a writer, filmmaker, and cultural advocate.
+            </p>
+            <p>
+              Southwest Galleries grows out of that same commitment: a belief that the artists,
+              galleries, and cultural institutions of the Southwest deserve a platform as serious and
+              passionate as the work they produce. Built by someone from here, for everyone who loves
+              this place.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section class="about-section">
         <h2>Contact</h2>
         <p>
@@ -218,6 +246,30 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
     text-align: center;
   }
   .btn-outline:hover { border-color: var(--sand); text-decoration: none; }
+
+  .founder-inner {
+    display: flex;
+    gap: 1.75rem;
+    align-items: flex-start;
+    margin-top: 0.5rem;
+  }
+  .founder-photo-wrap { flex-shrink: 0; width: 180px; }
+  .founder-photo {
+    width: 180px;
+    height: 270px;
+    object-fit: cover;
+    object-position: center 10%;
+    border-radius: 8px;
+    display: block;
+    border: 3px solid var(--border);
+  }
+  .founder-bio h3 {
+    font-family: 'Rye', serif;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--clay);
+    margin-bottom: 0.75rem;
+  }
 
   @media (max-width: 860px) {
     .content-container { grid-template-columns: 1fr; }
