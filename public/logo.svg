@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 670.18 199.26">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-2 {
+        fill: #231f20;
+        font-family: AbrilText-SemiBoldItalic, 'Abril Text';
+        font-size: 22.26px;
+        font-style: italic;
+        font-weight: 600;
+      }
+
+      .cls-3 {
+        fill: #1e150f;
+        font-family: AbrilText-Bold, 'Abril Text';
+        font-size: 87.01px;
+        font-weight: 700;
+      }
+
+      .cls-4 {
+        fill: #bf5a28;
+      }
+
+      .cls-5, .cls-6, .cls-7 {
+        fill: #ebcf6e;
+      }
+
+      .cls-6 {
+        opacity: .5;
+      }
+
+      .cls-7 {
+        opacity: .25;
+      }
+
+      .cls-8 {
+        letter-spacing: .48em;
+      }
+
+      .cls-9 {
+        letter-spacing: .5em;
+      }
+
+      .cls-10 {
+        fill: #30b6af;
+      }
+
+      .cls-11 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-12 {
+        letter-spacing: -.02em;
+      }
+
+      .cls-13 {
+        fill: #1d140e;
+      }
+
+      .cls-14 {
+        letter-spacing: -.03em;
+      }
+
+      .cls-15 {
+        fill: #7b3c1a;
+      }
+
+      .cls-16 {
+        letter-spacing: 0em;
+      }
+
+      .cls-17 {
+        letter-spacing: -.01em;
+      }
+
+      .cls-18 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <rect class="cls-1" x="4.77" y="4.55" width="199.21" height="190.16" rx="5.97" ry="5.97"/>
+    </clipPath>
+  </defs>
+  <g id="Layer_1-2" data-name="Layer 1">
+    <g>
+      <rect class="cls-13" width="208.75" height="199.26" rx="5.97" ry="5.97"/>
+      <rect class="cls-10" x="4.77" y="4.55" width="199.21" height="190.16" rx="5.97" ry="5.97"/>
+      <g class="cls-18">
+        <g>
+          <path class="cls-7" d="M64.61,49.24c88.85-23.28,171.27,31.68,191.21,113.98,19.67,81.17-29.81,164.4-109.63,185.83-84.21,22.61-168.78-25.13-191.99-108.55-22.07-79.28,22.29-168.17,110.42-191.27Z"/>
+          <path class="cls-7" d="M73.78,83.86c68.34-17.91,131.75,24.37,147.09,87.68,15.13,62.44-22.93,126.46-84.33,142.95-64.77,17.39-129.83-19.33-147.69-83.5C-28.13,170,5.99,101.62,73.78,83.86Z"/>
+          <path class="cls-5" d="M80.84,110.49c52.57-13.78,101.34,18.75,113.14,67.45,11.64,48.03-17.64,97.28-64.87,109.96-49.83,13.38-99.87-14.87-113.61-64.23-13.06-46.91,13.19-99.51,65.34-113.18Z"/>
+        </g>
+        <g>
+          <polygon class="cls-4" points="73.83 195.11 4.01 195.11 4.01 4.15 26 4.15 38.3 84.36 49.93 109.14 61.9 125.92 73.83 195.11"/>
+          <polygon class="cls-6" points="73.83 195.11 4.01 195.11 4.01 4.15 26 4.15 38.3 84.36 49.93 109.14 61.9 125.92 73.83 195.11"/>
+          <polygon class="cls-4" points="44.96 195.11 4.01 195.11 4.01 4.5 21.82 41.6 31.79 87.66 41.22 111.7 50.92 127.98 50.92 154.71 44.96 195.11"/>
+          <polygon class="cls-15" points="32.96 132.43 30.11 162.29 16.94 194.71 4.01 195.11 4.01 55.7 16.63 104.97 32.96 132.43"/>
+        </g>
+        <g>
+          <polygon class="cls-4" points="134.16 195.11 203.98 195.11 203.98 4.15 181.99 4.15 169.69 84.36 158.06 109.14 146.09 125.92 134.16 195.11"/>
+          <polygon class="cls-6" points="134.16 195.11 203.98 195.11 203.98 4.15 181.99 4.15 169.69 84.36 158.06 109.14 146.09 125.92 134.16 195.11"/>
+          <polygon class="cls-4" points="163.03 195.11 203.98 195.11 203.98 4.5 186.16 41.6 176.19 87.66 166.77 111.7 157.07 127.98 157.07 154.71 163.03 195.11"/>
+          <polygon class="cls-15" points="175.03 132.43 177.88 162.29 191.05 194.71 203.98 195.11 203.98 55.7 191.36 104.97 175.03 132.43"/>
+        </g>
+      </g>
+      <g>
+        <text class="cls-3" transform="translate(233.47 113.27)"><tspan x="0" y="0">S</tspan><tspan class="cls-16" x="51.16" y="0">o</tspan><tspan class="cls-11" x="99.98" y="0">u</tspan><tspan class="cls-12" x="153.58" y="0">t</tspan><tspan class="cls-14" x="189.69" y="0">h</tspan><tspan class="cls-17" x="242.59" y="0">w</tspan><tspan x="312.72" y="0">est</tspan></text>
+        <text class="cls-2" transform="translate(347.57 149.49)"><tspan class="cls-8" x="0" y="0">G</tspan><tspan class="cls-9" x="25.8" y="0">ALLERIES</tspan></text>
+        <rect class="cls-4" x="237.64" y="159.12" width="432.54" height="3.79" rx="1.59" ry="1.59"/>
+        <rect class="cls-15" x="237.64" y="177.29" width="432.54" height="3.79" rx="1.59" ry="1.59"/>
+        <rect class="cls-10" x="237.64" y="195.47" width="432.54" height="3.79" rx="1.59" ry="1.59"/>
+        <rect class="cls-5" x="237.64" y="140.94" width="99.64" height="3.79" rx="1.59" ry="1.59"/>
+        <rect class="cls-5" x="569.67" y="140.94" width="99.64" height="3.79" rx="1.59" ry="1.59"/>
+      </g>
+    </g>
+  </g>
+</svg>

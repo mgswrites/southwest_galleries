@@ -175,15 +175,16 @@ const upgraded = Astro.url.searchParams.get('upgraded') === '1';
   @media (max-width: 900px) { .tiers-grid { grid-template-columns: 1fr; max-width: 480px; } }
 
   .tier-card {
-    border: 1.5px solid var(--border);
+    border: 1.5px solid #3d3020;
     border-radius: 12px;
     padding: 2rem;
     position: relative;
-    background: #fff;
+    background: var(--surface);
+    color: var(--sand);
   }
   .tier-card.highlight {
     border-color: var(--turquoise);
-    box-shadow: 0 4px 24px rgba(0, 150, 150, 0.12);
+    box-shadow: 0 4px 24px rgba(0, 150, 150, 0.25);
   }
 
   .popular-badge {
@@ -197,28 +198,29 @@ const upgraded = Astro.url.searchParams.get('upgraded') === '1';
   .tier-header { margin-bottom: 1.5rem; }
   .tier-header h2 { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
   .price-row { display: flex; align-items: baseline; gap: 0.2rem; }
-  .price { font-size: 2.25rem; font-weight: 800; color: var(--ink); }
-  .period { font-size: 0.875rem; color: var(--muted); }
+  .price { font-size: 2.25rem; font-weight: 800; color: var(--sand); }
+  .period { font-size: 0.875rem; color: var(--surface-muted); }
 
   .feature-list { list-style: none; padding: 0; margin: 0 0 1.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
   .feature-list li { display: flex; gap: 0.6rem; font-size: 0.9rem; }
   .check { color: var(--turquoise); font-weight: 700; flex-shrink: 0; }
 
   .form-field { margin-bottom: 0.75rem; }
-  .form-field label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
+  .form-field label { display: block; font-size: 0.75rem; font-weight: 600; color: var(--surface-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.3rem; }
   .form-field input {
     width: 100%; padding: 0.55rem 0.75rem;
-    border: 1.5px solid var(--border); border-radius: 6px;
+    border: 1.5px solid #5a4a30; border-radius: 6px;
     font-size: 0.9rem; font-family: inherit; box-sizing: border-box;
+    background: #3d3020; color: var(--sand);
   }
   .form-field input:focus { outline: none; border-color: var(--turquoise); }
 
   .cta-btn {
     display: block; width: 100%; padding: 0.75rem 1rem;
-    background: var(--sand); border: 1.5px solid var(--border);
+    background: #3d3020; border: 1.5px solid #5a4a30;
     border-radius: 8px; font-size: 1rem; font-weight: 700;
     cursor: pointer; transition: all 0.15s; margin-top: 0.5rem;
-    color: var(--ink); font-family: inherit;
+    color: var(--sand); font-family: inherit;
   }
   .cta-btn.primary { background: var(--turquoise); border-color: var(--turquoise); color: #fff; }
   .cta-btn:hover:not(:disabled) { opacity: 0.88; }
