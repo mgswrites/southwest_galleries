@@ -250,13 +250,13 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
   .founder-inner {
     display: flex;
     gap: 1.75rem;
-    align-items: flex-start;
+    align-items: stretch;
     margin-top: 0.5rem;
   }
-  .founder-photo-wrap { flex-shrink: 0; width: 180px; }
+  .founder-photo-wrap { flex-shrink: 0; width: 180px; align-self: stretch; }
   .founder-photo {
     width: 180px;
-    height: 270px;
+    height: 100%;
     object-fit: cover;
     object-position: center 10%;
     border-radius: 8px;
