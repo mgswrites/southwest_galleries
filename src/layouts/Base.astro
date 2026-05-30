@@ -89,6 +89,7 @@ const schemaBlocks = schema
           <li><a href="/art-styles/">Art Styles</a></li>
           <li><a href="/guides/">Guides</a></li>
           <li><a href="/events/">Events</a></li>
+          <li><a href="/artists/">Artists</a></li>
           <li><a href="/about/">About</a></li>
         </ul>
         <a href="/submit/" class="mobile-cta">Submit Listing</a>
@@ -254,8 +255,8 @@ const schemaBlocks = schema
   }
   .logo { display: flex; align-items: center; flex-shrink: 0; }
   .logo img { height: 78px; width: auto; display: block; }
-  .nav-links { list-style: none; display: flex; gap: 1.5rem; margin-left: auto; align-items: center; }
-  header nav a { color: var(--ink); font-size: 0.9rem; }
+  .nav-links { list-style: none; display: flex; gap: clamp(0.75rem, 1.2vw, 1.5rem); margin-left: auto; align-items: center; }
+  header nav a { color: var(--ink); font-size: clamp(0.8rem, 0.9vw, 0.9rem); }
   header nav a.cta {
     background: var(--turquoise);
     color: #fff;
