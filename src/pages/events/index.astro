@@ -6,13 +6,13 @@ import sql from '../../lib/db';
 
 const events = await sql`
   SELECT e.id, e.slug, e.title, e.description, e.event_date, e.start_time, e.end_time,
-         e.is_free, e.ticket_url, e.website_url, e.image_url,
+         e.is_free, e.ticket_url, e.website_url, e.image_url, e.is_recurring,
          c.name AS city_name, s.name AS state_name
   FROM events e
   LEFT JOIN cities c ON c.id = e.city_id
   LEFT JOIN states s ON s.code = e.state_code
-  WHERE e.event_date >= CURRENT_DATE
-  ORDER BY e.event_date ASC
+  WHERE e.is_recurring = true OR e.event_date >= CURRENT_DATE
+  ORDER BY e.is_recurring DESC, e.event_date ASC
   LIMIT 60
 `;
 ---
@@ -38,8 +38,8 @@ const events = await sql`
               {e.image_url && <img src={e.image_url} alt={e.title} loading="lazy" />}
               <div class="event-body">
                 <div class="event-date">
-                  {new Date(e.event_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
-                  {e.start_time && ` · ${e.start_time}`}
+                  {e.is_recurring ? 'Recurring' : new Date(e.event_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}
+                  {e.start_time && ` · ${(() => { const [h,m] = e.start_time.split(':').map(Number); return `${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`; })()}`}
                 </div>
                 <h2>{e.title}</h2>
                 {(e.city_name || e.state_name) && (
