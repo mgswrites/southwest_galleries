@@ -79,6 +79,10 @@ const websiteSchema = {
       <div class="hero-text">
         <h1>Discover Art in the<br />American Southwest</h1>
         <p>The definitive directory of galleries, museums, and cultural venues across Arizona, New Mexico, Colorado, and beyond.</p>
+        <form class="hero-search" action="/search/" method="get">
+          <input type="search" name="q" placeholder="Search galleries, artists, cities…" autocomplete="off" />
+          <button type="submit">Search</button>
+        </form>
         <div class="hero-actions">
           <a href="/galleries/" class="btn-primary">Browse Galleries</a>
           <a href="/guides/" class="btn-secondary">Read Guides</a>
@@ -159,7 +163,7 @@ const websiteSchema = {
     <section class="featured-section">
       <div class="container">
         <div class="section-header">
-          <h2>Featured Galleries</h2>
+          <h2>Featured Venues</h2>
           <a href="/galleries/" class="see-all">See all →</a>
         </div>
         <div class="listings-grid">
@@ -260,6 +264,12 @@ const websiteSchema = {
   }
   .hero h1 { font-family: 'Rye', serif; font-size: clamp(1.8rem, 4vw, 3rem); font-weight: 400; line-height: 1.18; margin-bottom: 1.1rem; letter-spacing: 0.01em; }
   .hero p { font-size: 1.1rem; color: rgba(255,255,255,0.88); margin-bottom: 2rem; line-height: 1.65; max-width: 460px; }
+  .hero-search { display: flex; gap: 0; max-width: 460px; margin-bottom: 1.5rem; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+  .hero-search input { flex: 1; padding: 0.75rem 1rem; border: none; font-size: 0.95rem; font-family: inherit; background: #fff; color: #111; min-width: 0; }
+  .hero-search input::placeholder { color: #999; }
+  .hero-search input:focus { outline: none; }
+  .hero-search button { padding: 0.75rem 1.25rem; background: var(--clay); color: #fff; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; white-space: nowrap; }
+  .hero-search button:hover { background: #a04e20; }
   .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
   .btn-primary { background: var(--turquoise); color: #fff; padding: 0.75rem 1.75rem; border-radius: 6px; font-weight: 700; font-size: 1rem; text-decoration: none; }
   .btn-primary:hover { background: #0a7070; text-decoration: none; }
