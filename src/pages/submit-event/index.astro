@@ -53,6 +53,32 @@ if (Astro.request.method === 'POST') {
         ${formData.description?.trim().slice(0, 160) || null}
       )
     `;
+    const resendKey = import.meta.env.RESEND_API_KEY;
+    if (resendKey) {
+      try {
+        const td = 'padding:4px 12px 4px 0;font-weight:600';
+        const row = (k: string, v: string) => `<tr><td style="${td}">${k}</td><td>${v}</td></tr>`;
+        const rows = [
+          row('Event', formData.title.trim()),
+          row('Date', formData.event_date + (formData.event_end_date ? ' – ' + formData.event_end_date : '')),
+          row('Time', [formData.start_time, formData.end_time].filter(Boolean).join(' – ') || '(not specified)'),
+          row('Location', formData.city_name + ', ' + formData.state_code),
+          row('Free?', formData.is_free === 'yes' ? 'Yes' : formData.is_free === 'no' ? 'No' : 'Not specified'),
+          row('Website', formData.website_url || '(none)'),
+          row('Submitter', formData.submitter_name || '(none)' + ' <' + formData.submitter_email + '>'),
+        ].join('');
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + resendKey, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from: 'Southwest Galleries <noreply@southwestgalleries.com>',
+            to: ['mgswrites@gmail.com'],
+            subject: 'New event submission: ' + formData.title.trim(),
+            html: '<h2>New Event Submission</h2><table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">' + rows + '</table><p style="margin-top:16px"><a href="https://southwestgalleries.com/events/">View Events Page</a></p>',
+          }),
+        });
+      } catch (_) { /* email failure should not block submission */ }
+    }
     success = true;
   }
 }

@@ -229,9 +229,10 @@ const localBusinessSchema = {
 
         {(listing.tier === 'free' || !listing.tier) && (
           <div class="upgrade-cta">
-            <p>Own this gallery? Upgrade for more visibility.</p>
-            <a href={`/upgrade/${listing.slug}/`} class="upgrade-btn">Upgrade this listing →</a>
-            <a href={`/claim/${listing.slug}/`} class="claim-link">Claim this listing</a>
+            <strong>Is this your venue?</strong>
+            <p>Claim this listing to update your hours, add photos, and respond to visitors.</p>
+            <a href={`/claim/${listing.slug}/`} class="claim-btn">Claim This Listing</a>
+            <a href={`/upgrade/${listing.slug}/`} class="upgrade-link">Upgrade for more visibility →</a>
           </div>
         )}
       </aside>
@@ -292,12 +293,13 @@ const localBusinessSchema = {
   .website-btn { display: block; text-align: center; background: var(--turquoise); color: #fff; padding: 0.65rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; text-decoration: none; margin-top: 0.5rem; }
   .website-btn:hover { background: #0a7070; text-decoration: none; }
 
-  .upgrade-cta { margin-top: 1rem; padding: 1rem; background: var(--sand); border: 1px dashed var(--border); border-radius: 8px; text-align: center; }
-  .upgrade-cta p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
-  .upgrade-btn { display: inline-block; font-size: 0.85rem; font-weight: 600; color: var(--turquoise); text-decoration: none; }
-  .upgrade-btn:hover { text-decoration: underline; }
-  .claim-link { display: block; font-size: 0.78rem; color: var(--muted); margin-top: 0.4rem; }
-  .claim-link:hover { color: var(--ink); }
+  .upgrade-cta { margin-top: 1rem; padding: 1.1rem; background: #fdf8f2; border: 1px solid var(--clay); border-radius: 8px; text-align: center; }
+  .upgrade-cta strong { display: block; font-size: 0.85rem; color: var(--clay); margin-bottom: 0.3rem; }
+  .upgrade-cta p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.4; }
+  .claim-btn { display: block; background: var(--clay); color: #fff; padding: 0.6rem 1rem; border-radius: 5px; font-size: 0.875rem; font-weight: 700; text-decoration: none; margin-bottom: 0.5rem; }
+  .claim-btn:hover { background: #a04e20; text-decoration: none; }
+  .upgrade-link { display: block; font-size: 0.78rem; color: var(--turquoise); }
+  .upgrade-link:hover { text-decoration: underline; }
 
   .hours-card strong { display: block; margin-bottom: 0.75rem; }
   .hours-list { display: flex; flex-direction: column; gap: 0.3rem; }
