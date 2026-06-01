@@ -4,17 +4,19 @@ import type { APIRoute } from 'astro';
 import sql from '../lib/db';
 
 const SITE = 'https://southwestgalleries.com';
+const TODAY = new Date().toISOString().slice(0, 10);
 
-function entry(path: string, priority: string, changefreq: string) {
-  return `  <url>\n    <loc>${SITE}${path}</loc>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
+function entry(path: string, priority: string, changefreq: string, lastmod?: string) {
+  const mod = lastmod ?? TODAY;
+  return `  <url>\n    <loc>${SITE}${path}</loc>\n    <lastmod>${mod}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
 }
 
 export const GET: APIRoute = async () => {
   const [listings, posts, artists, states, galleryCities, museumCities, artStyles, events] =
     await Promise.all([
-      sql`SELECT slug FROM listings WHERE status = 'approved' AND deleted_at IS NULL`,
-      sql`SELECT slug FROM posts WHERE is_published = true`,
-      sql`SELECT slug FROM artists`,
+      sql`SELECT slug, updated_at FROM listings WHERE status = 'approved' AND deleted_at IS NULL`,
+      sql`SELECT slug, updated_at FROM posts WHERE is_published = true`,
+      sql`SELECT slug, updated_at FROM artists`,
       sql`SELECT slug FROM states ORDER BY name`,
       sql`
         SELECT DISTINCT c.slug AS city_slug, s.slug AS state_slug
@@ -31,7 +33,7 @@ export const GET: APIRoute = async () => {
         WHERE l.listing_type = 'museum' AND l.status = 'approved' AND l.deleted_at IS NULL
       `,
       sql`SELECT slug FROM art_styles ORDER BY name`,
-      sql`SELECT slug FROM events WHERE event_date >= CURRENT_DATE`,
+      sql`SELECT slug FROM events WHERE is_recurring = true OR event_date >= CURRENT_DATE`,
     ]);
 
   const urls = [
@@ -43,6 +45,8 @@ export const GET: APIRoute = async () => {
     entry('/artists/', '0.7', 'weekly'),
     entry('/events/', '0.7', 'daily'),
     entry('/about/', '0.5', 'monthly'),
+    entry('/privacy/', '0.3', 'yearly'),
+    entry('/terms/', '0.3', 'yearly'),
     ...states.map((s: { slug: string }) => entry(`/galleries/${s.slug}/`, '0.8', 'weekly')),
     ...states.map((s: { slug: string }) => entry(`/museums/${s.slug}/`, '0.8', 'weekly')),
     ...galleryCities.map((c: { state_slug: string; city_slug: string }) =>
@@ -50,9 +54,12 @@ export const GET: APIRoute = async () => {
     ...museumCities.map((c: { state_slug: string; city_slug: string }) =>
       entry(`/museums/${c.state_slug}/${c.city_slug}/`, '0.7', 'weekly')),
     ...artStyles.map((s: { slug: string }) => entry(`/art-styles/${s.slug}/`, '0.7', 'monthly')),
-    ...listings.map((l: { slug: string }) => entry(`/listing/${l.slug}/`, '0.8', 'monthly')),
-    ...posts.map((p: { slug: string }) => entry(`/guides/${p.slug}/`, '0.7', 'monthly')),
-    ...artists.map((a: { slug: string }) => entry(`/artists/${a.slug}/`, '0.6', 'monthly')),
+    ...listings.map((l: { slug: string; updated_at: string }) =>
+      entry(`/listing/${l.slug}/`, '0.8', 'monthly', l.updated_at?.slice(0, 10))),
+    ...posts.map((p: { slug: string; updated_at: string }) =>
+      entry(`/guides/${p.slug}/`, '0.7', 'monthly', p.updated_at?.slice(0, 10))),
+    ...artists.map((a: { slug: string; updated_at: string }) =>
+      entry(`/artists/${a.slug}/`, '0.6', 'monthly', a.updated_at?.slice(0, 10))),
     ...events.map((e: { slug: string }) => entry(`/events/${e.slug}/`, '0.6', 'weekly')),
   ];
 
