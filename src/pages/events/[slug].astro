@@ -43,6 +43,13 @@ const eventSchema = {
   image: event.image_url ?? undefined,
   isAccessibleForFree: event.is_free ?? undefined,
   url: event.website_url ?? undefined,
+  offers: {
+    '@type': 'Offer',
+    price: event.is_free === true ? '0' : undefined,
+    priceCurrency: 'USD',
+    url: event.ticket_url ?? event.website_url ?? undefined,
+    availability: 'https://schema.org/InStock',
+  },
   eventStatus: 'https://schema.org/EventScheduled',
   eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
   ...(event.city_name
