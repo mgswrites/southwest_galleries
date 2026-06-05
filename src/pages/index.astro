@@ -2,6 +2,7 @@
 export const prerender = true;
 import Base from '../layouts/Base.astro';
 import ListingCard from '../components/ListingCard.astro';
+import AdUnit from '../components/AdUnit.astro';
 import { getStates, getArtStyles, getPublishedPosts } from '../lib/queries';
 import sql from '../lib/db';
 
@@ -179,6 +180,8 @@ const websiteSchema = {
       </div>
     </section>
   )}
+
+  <div class="container"><AdUnit /></div>
 
   {featuredGuides.length > 0 && (
     <section class="guides-section">

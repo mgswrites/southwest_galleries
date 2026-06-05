@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import MapView from '../../components/MapView.astro';
 import { getAllApprovedListingSlugs, getListing, getListingArtStyles, getListingImages, getGuidesByListing, getNearbyListings } from '../../lib/queries';
+import AdUnit from '../../components/AdUnit.astro';
 
 export async function getStaticPaths() {
   const rows = await getAllApprovedListingSlugs();
@@ -108,6 +109,8 @@ const localBusinessSchema = {
             ))}
           </div>
         )}
+
+        <AdUnit />
 
         {artStyles.length > 0 && (
           <div class="art-styles">
