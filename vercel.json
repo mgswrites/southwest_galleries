@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.southwestgalleries.com" }],
+      "destination": "https://southwestgalleries.com/:path*",
+      "permanent": true
+    }
+  ]
+}
