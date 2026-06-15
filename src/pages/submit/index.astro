@@ -5,6 +5,7 @@ import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import { submissionSchema } from '../../lib/schema';
 import { createSubmission } from '../../lib/queries';
+import { put } from '@vercel/blob';
 
 let success = false;
 let errors: Record<string, string> = {};
@@ -13,13 +14,26 @@ let formData: Record<string, string> = {};
 if (Astro.request.method === 'POST') {
   const raw = await Astro.request.formData();
   formData = Object.fromEntries(raw.entries()) as Record<string, string>;
+
+  // Upload photo to Vercel Blob if provided
+  let photoUrl: string | null = null;
+  const photoFile = raw.get('photo') as File | null;
+  if (photoFile && photoFile.size > 0) {
+    try {
+      const ext = photoFile.name.split('.').pop()?.toLowerCase() ?? 'jpg';
+      const filename = `submissions/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const blob = await put(filename, photoFile, { access: 'public' });
+      photoUrl = blob.url;
+    } catch (_) { /* photo upload failure is non-blocking */ }
+  }
+
   const result = submissionSchema.safeParse({
     ...formData,
     art_styles: raw.getAll('art_styles'),
   });
 
   if (result.success) {
-    await createSubmission(result.data);
+    await createSubmission({ ...result.data, photo_url: photoUrl });
 
     const resendKey = import.meta.env.RESEND_API_KEY;
     if (resendKey) {
@@ -39,6 +53,7 @@ if (Astro.request.method === 'POST') {
           row('Art styles', stylesList),
           row('Submitter', (d.submitter_name ?? '(none)') + ' <' + d.submitter_email + '>'),
           ...(d.submitter_note ? [row('Note', d.submitter_note)] : []),
+          ...(photoUrl ? [row('Photo', '<a href="' + photoUrl + '">' + photoUrl + '</a>')] : []),
         ].join('');
         const emailHtml =
           '<h2>New Listing Submission</h2>' +
@@ -121,7 +136,7 @@ const TYPES = [
         <a href="/" class="btn">Return Home</a>
       </div>
     ) : (
-      <form method="POST" novalidate>
+      <form method="POST" enctype="multipart/form-data" novalidate>
         <fieldset>
           <legend>Venue Information</legend>
 
@@ -192,6 +207,12 @@ const TYPES = [
           </div>
 
           <div class="field">
+            <label for="photo">Photo <span class="hint-inline">(optional - JPG, PNG, or WebP, max 4 MB)</span></label>
+            <input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp" />
+            <span class="hint">A photo of your venue, artwork, or exterior. Used as the hero image on your listing page.</span>
+          </div>
+
+          <div class="field">
             <label>Art Styles (select all that apply)</label>
             <div class="checkbox-grid">
               {ART_STYLES.map((s) => (
@@ -245,6 +266,9 @@ const TYPES = [
   }
   input:not([type="checkbox"]):focus, select:focus, textarea:focus { outline: none; border-color: var(--turquoise); }
   input[type="checkbox"] { width: 1rem; height: 1rem; flex-shrink: 0; margin: 0; cursor: pointer; accent-color: var(--turquoise); vertical-align: middle; }
+  input[type="file"] { border: 1px dashed var(--border); border-radius: 5px; padding: 0.55rem 0.75rem; font-size: 0.875rem; font-family: inherit; width: 100%; background: var(--sand); cursor: pointer; }
+  input[type="file"]:hover { border-color: var(--turquoise); }
+  .hint-inline { font-size: 0.75rem; font-weight: 400; color: var(--muted); }
   .error { font-size: 0.8rem; color: #c0392b; }
   .hint { font-size: 0.75rem; color: var(--muted); }
   .checkbox-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem 2rem; margin-top: 0.5rem; }

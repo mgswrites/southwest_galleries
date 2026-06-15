@@ -416,7 +416,7 @@ export async function createSubmission(data: Record<string, unknown>) {
     INSERT INTO listing_submissions (
       name, listing_type, state_code, city_name, address,
       website_url, phone, email, description, art_styles,
-      submitter_name, submitter_email, submitter_note, status
+      submitter_name, submitter_email, submitter_note, photo_url, status
     ) VALUES (
       ${data.name as string}, ${data.listing_type as string}, ${data.state_code as string},
       ${data.city_name as string}, ${data.address as string ?? null},
@@ -424,7 +424,7 @@ export async function createSubmission(data: Record<string, unknown>) {
       ${data.email as string ?? null}, ${data.description as string ?? null},
       ${data.art_styles as string[] ?? []}, ${data.submitter_name as string ?? null},
       ${data.submitter_email as string}, ${data.submitter_note as string ?? null},
-      'pending'
+      ${data.photo_url as string ?? null}, 'pending'
     )
   `;
 }
