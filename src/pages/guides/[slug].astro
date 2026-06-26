@@ -26,6 +26,11 @@ const linkedCities = [
   ).values(),
 ];
 
+const bookingDestination = post.state_code
+  ? `https://www.booking.com/searchresults.en-us.html?ss=${encodeURIComponent(post.state_code === 'NM' ? 'New Mexico' : post.state_code === 'AZ' ? 'Arizona' : post.state_code === 'CO' ? 'Colorado' : post.state_code === 'TX' ? 'Texas' : post.state_code === 'UT' ? 'Utah' : post.state_code === 'NV' ? 'Nevada' : post.state_code === 'CA' ? 'California' : 'American Southwest')}`
+  : 'https://www.booking.com';
+const bookingLink = `https://www.anrdoezrs.net/click-101807255-17293132?url=${encodeURIComponent(bookingDestination)}`;
+
 const title = post.meta_title ?? `${post.title} | Southwest Galleries`;
 const description = post.meta_description ?? post.excerpt ?? '';
 
@@ -95,6 +100,21 @@ const articleSchema = {
         </div>
       </section>
     )}
+
+    <section class="hotel-cta">
+      <div class="hotel-cta-inner">
+        <div class="hotel-cta-text">
+          <h2>Planning a Visit?</h2>
+          <p>Find hotels, inns, and vacation rentals near the galleries and venues in this guide.</p>
+        </div>
+        <div>
+          <a href={bookingLink} target="_blank" rel="noopener noreferrer sponsored" class="hotel-cta-btn">
+            Search Hotels on Booking.com →
+          </a>
+          <p class="hotel-disclosure">Affiliate link — we may earn a commission at no cost to you.</p>
+        </div>
+      </div>
+    </section>
   </div>
 </Base>
 
@@ -118,4 +138,11 @@ const articleSchema = {
   .city-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .city-link { padding: 0.35rem 0.85rem; border: 1px solid var(--border); border-radius: 20px; font-size: 0.875rem; color: var(--ink); text-decoration: none; }
   .city-link:hover { background: var(--sand); border-color: var(--turquoise); }
+  .hotel-cta { margin-top: 2.5rem; background: var(--turquoise); border-radius: 10px; padding: 1.75rem 2rem; }
+  .hotel-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .hotel-cta-text h2 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 0.35rem; }
+  .hotel-cta-text p { font-size: 0.875rem; color: rgba(255,255,255,0.85); margin: 0; line-height: 1.5; }
+  .hotel-cta-btn { display: inline-block; background: #fff; color: var(--turquoise); padding: 0.7rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap; }
+  .hotel-cta-btn:hover { background: rgba(255,255,255,0.9); text-decoration: none; }
+  .hotel-disclosure { font-size: 0.7rem; color: rgba(255,255,255,0.65); margin-top: 0.5rem; text-align: center; }
 </style>
