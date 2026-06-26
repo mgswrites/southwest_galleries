@@ -199,9 +199,12 @@ const schema = [
           <h2>Where to Stay in {stateData.name}</h2>
           <p>Find hotels, inns, and vacation rentals near {stateData.name}'s galleries and cultural venues.</p>
         </div>
-        <a href={bookingLink} target="_blank" rel="noopener noreferrer sponsored" class="hotel-cta-btn">
-          Search Hotels on Booking.com →
-        </a>
+        <div>
+          <a href={bookingLink} target="_blank" rel="noopener noreferrer sponsored" class="hotel-cta-btn">
+            Search Hotels on Booking.com →
+          </a>
+          <p class="hotel-disclosure">Affiliate link — we may earn a commission at no cost to you.</p>
+        </div>
       </div>
     </section>
 
@@ -222,6 +225,7 @@ const schema = [
   .hotel-cta-text p { font-size: 0.9rem; color: var(--surface-muted); margin: 0; line-height: 1.5; }
   .hotel-cta-btn { display: inline-block; background: #003580; color: #fff; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.9rem; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
   .hotel-cta-btn:hover { background: #002a6b; text-decoration: none; }
+  .hotel-disclosure { font-size: 0.7rem; color: rgba(255,255,255,0.65); margin-top: 0.5rem; text-align: center; }
   .deep-dive {
     margin-top: 3rem;
     padding: 2rem;

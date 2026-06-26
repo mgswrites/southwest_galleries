@@ -236,6 +236,7 @@ const localBusinessSchema = {
           <a href={bookingLink} target="_blank" rel="noopener noreferrer sponsored" class="hotel-btn">
             Search Hotels on Booking.com →
           </a>
+          <p class="hotel-disclosure">Affiliate link — we may earn a commission at no cost to you.</p>
         </div>
 
         {(listing.tier === 'free' || !listing.tier) && (
@@ -308,6 +309,7 @@ const localBusinessSchema = {
   .hotel-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.4; margin-bottom: 0.75rem; }
   .hotel-btn { display: block; text-align: center; background: #003580; color: #fff; padding: 0.65rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; text-decoration: none; }
   .hotel-btn:hover { background: #002a6b; text-decoration: none; }
+  .hotel-disclosure { font-size: 0.68rem; color: var(--muted); margin-top: 0.4rem; text-align: center; line-height: 1.4; }
   .upgrade-cta { margin-top: 1rem; padding: 1.1rem; background: #fdf8f2; border: 1px solid var(--clay); border-radius: 8px; text-align: center; }
   .upgrade-cta strong { display: block; font-size: 0.85rem; color: var(--clay); margin-bottom: 0.3rem; }
   .upgrade-cta p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.4; }
