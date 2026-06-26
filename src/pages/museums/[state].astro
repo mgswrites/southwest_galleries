@@ -43,6 +43,8 @@ const museumEditorials: Record<string, string> = {
 };
 const museumEditorial = museumEditorials[stateSlug] ?? `${stateData.name} has ${listings.length} museums, cultural centers, and sculpture parks listed on Southwest Galleries. Browse by city below to find hours, locations, and visitor information.`;
 
+const bookingLink = `https://www.anrdoezrs.net/click-101807255-17293132?url=${encodeURIComponent('https://www.booking.com/searchresults.en-us.html?ss=' + stateData.name)}`;
+
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -102,6 +104,17 @@ const faqSchema = {
     {listings.length === 0 && (
       <p style="color:var(--muted);text-align:center;padding:3rem">No museum listings yet. <a href="/submit/">Submit one →</a></p>
     )}
+    <section class="hotel-cta">
+      <div class="hotel-cta-inner">
+        <div class="hotel-cta-text">
+          <h2>Where to Stay in {stateData.name}</h2>
+          <p>Find hotels, inns, and vacation rentals near {stateData.name}'s museums and cultural venues.</p>
+        </div>
+        <a href={bookingLink} target="_blank" rel="noopener noreferrer sponsored" class="hotel-cta-btn">
+          Search Hotels on Booking.com →
+        </a>
+      </div>
+    </section>
   </div>
 </Base>
 
@@ -110,4 +123,10 @@ const faqSchema = {
   .city-pill { padding: 0.4rem 0.9rem; border: 1px solid var(--border); border-radius: 20px; font-size: 0.875rem; color: var(--ink); text-decoration: none; }
   .city-pill:hover { background: var(--sand); border-color: var(--turquoise); text-decoration: none; }
   .listings-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .hotel-cta { margin-top: 3rem; background: var(--surface); border-radius: 10px; padding: 1.75rem 2rem; }
+  .hotel-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .hotel-cta-text h2 { font-size: 1.2rem; font-weight: 700; color: var(--sand); margin-bottom: 0.35rem; }
+  .hotel-cta-text p { font-size: 0.9rem; color: var(--surface-muted); margin: 0; line-height: 1.5; }
+  .hotel-cta-btn { display: inline-block; background: #003580; color: #fff; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.9rem; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .hotel-cta-btn:hover { background: #002a6b; text-decoration: none; }
 </style>

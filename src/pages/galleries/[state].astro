@@ -37,6 +37,8 @@ const stateEditorials: Record<string, string> = {
 };
 const stateEditorial = stateEditorials[stateSlug] ?? `${stateName} has ${listings.length} galleries, museums, and cultural venues listed on Southwest Galleries, spanning cities including ${topCities}. Browse by city or scroll down to explore all listings.`;
 
+const bookingLink = `https://www.anrdoezrs.net/click-101807255-17293132?url=${encodeURIComponent('https://www.booking.com/searchresults.en-us.html?ss=' + stateData.name)}`;
+
 const stateDeepDives: Record<string, { heading: string; body: string }> = {
   arizona: {
     heading: 'Collecting Art in Arizona',
@@ -191,6 +193,18 @@ const schema = [
       </section>
     )}
 
+    <section class="hotel-cta">
+      <div class="hotel-cta-inner">
+        <div class="hotel-cta-text">
+          <h2>Where to Stay in {stateData.name}</h2>
+          <p>Find hotels, inns, and vacation rentals near {stateData.name}'s galleries and cultural venues.</p>
+        </div>
+        <a href={bookingLink} target="_blank" rel="noopener noreferrer sponsored" class="hotel-cta-btn">
+          Search Hotels on Booking.com →
+        </a>
+      </div>
+    </section>
+
     {stateDeepDives[stateSlug] && (
       <section class="deep-dive">
         <h2>{stateDeepDives[stateSlug].heading}</h2>
@@ -202,6 +216,12 @@ const schema = [
 
 <style>
   .cities-section h2, section h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .hotel-cta { margin-top: 3rem; background: var(--surface); border-radius: 10px; padding: 1.75rem 2rem; }
+  .hotel-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .hotel-cta-text h2 { font-size: 1.2rem; font-weight: 700; color: var(--sand); margin-bottom: 0.35rem; }
+  .hotel-cta-text p { font-size: 0.9rem; color: var(--surface-muted); margin: 0; line-height: 1.5; }
+  .hotel-cta-btn { display: inline-block; background: #003580; color: #fff; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.9rem; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .hotel-cta-btn:hover { background: #002a6b; text-decoration: none; }
   .deep-dive {
     margin-top: 3rem;
     padding: 2rem;
