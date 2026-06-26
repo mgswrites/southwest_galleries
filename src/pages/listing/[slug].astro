@@ -33,6 +33,9 @@ const dayNames: Record<string, string> = {
   fri: 'Friday', sat: 'Saturday', sun: 'Sunday',
 };
 
+const bookingSearchUrl = `https://www.booking.com/searchresults.en-us.html?ss=${encodeURIComponent(listing.city_name + ', ' + listing.state_name)}`;
+const bookingLink = `https://www.anrdoezrs.net/click-101807255-17293132?url=${encodeURIComponent(bookingSearchUrl)}`;
+
 const title = listing.meta_title ?? `${listing.name} | ${listing.city_name}, ${listing.state_name} | Southwest Galleries`;
 const description = listing.meta_description ?? listing.short_description ?? `Visit ${listing.name} in ${listing.city_name}, ${listing.state_name}. Find hours, location, and more.`;
 
@@ -227,6 +230,14 @@ const localBusinessSchema = {
           </div>
         )}
 
+        <div class="sidebar-card hotel-card">
+          <strong>Where to Stay</strong>
+          <p>Find hotels near {listing.name} in {listing.city_name}.</p>
+          <a href={bookingLink} target="_blank" rel="noopener noreferrer sponsored" class="hotel-btn">
+            Search Hotels on Booking.com →
+          </a>
+        </div>
+
         {(listing.tier === 'free' || !listing.tier) && (
           <div class="upgrade-cta">
             <strong>Is this your venue?</strong>
@@ -293,6 +304,10 @@ const localBusinessSchema = {
   .website-btn { display: block; text-align: center; background: var(--turquoise); color: #fff; padding: 0.65rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.9rem; text-decoration: none; margin-top: 0.5rem; }
   .website-btn:hover { background: #0a7070; text-decoration: none; }
 
+  .hotel-card strong { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.4rem; }
+  .hotel-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.4; margin-bottom: 0.75rem; }
+  .hotel-btn { display: block; text-align: center; background: #003580; color: #fff; padding: 0.65rem 1rem; border-radius: 6px; font-weight: 600; font-size: 0.85rem; text-decoration: none; }
+  .hotel-btn:hover { background: #002a6b; text-decoration: none; }
   .upgrade-cta { margin-top: 1rem; padding: 1.1rem; background: #fdf8f2; border: 1px solid var(--clay); border-radius: 8px; text-align: center; }
   .upgrade-cta strong { display: block; font-size: 0.85rem; color: var(--clay); margin-bottom: 0.3rem; }
   .upgrade-cta p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.4; }

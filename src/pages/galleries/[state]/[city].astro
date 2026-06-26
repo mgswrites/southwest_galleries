@@ -171,6 +171,9 @@ const cityEditorials: Record<string, { intro: string; deepDive: string; deepDive
 const cityKey = `${stateSlug}/${citySlug}`;
 const cityEditorial = cityEditorials[cityKey];
 
+const bookingSearchUrl = `https://www.booking.com/searchresults.en-us.html?ss=${encodeURIComponent(cityData.name + ', ' + stateData.name)}`;
+const bookingLink = `https://www.anrdoezrs.net/click-101807255-17293132?url=${encodeURIComponent(bookingSearchUrl)}`;
+
 const title = cityData.meta_title ?? `Art Galleries in ${cityData.name}, ${stateData.name} | Southwest Galleries`;
 const description = cityData.meta_description ?? `Find the best art galleries and cultural venues in ${cityData.name}, ${stateData.name}. ${listings.length > 0 ? `${listings.length} listings.` : ''}`;
 
@@ -304,6 +307,18 @@ const schema = [
       </p>
     )}
 
+    <section class="hotel-cta">
+      <div class="hotel-cta-inner">
+        <div class="hotel-cta-text">
+          <h2>Where to Stay in {cityData.name}</h2>
+          <p>Find hotels, inns, and vacation rentals near {cityData.name}'s galleries and cultural venues.</p>
+        </div>
+        <a href={bookingLink} target="_blank" rel="noopener noreferrer sponsored" class="hotel-cta-btn">
+          Search Hotels on Booking.com →
+        </a>
+      </div>
+    </section>
+
     {cityGuides.length > 0 && (
       <section class="city-guides">
         <h2>Guides for {cityData.name}</h2>
@@ -340,6 +355,12 @@ const schema = [
   }
   .deep-dive h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; }
   .deep-dive p { font-size: 0.975rem; line-height: 1.85; color: var(--muted); }
+  .hotel-cta { margin-top: 3rem; background: var(--surface); border-radius: 10px; padding: 1.75rem 2rem; }
+  .hotel-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .hotel-cta-text h2 { font-size: 1.2rem; font-weight: 700; color: var(--sand); margin-bottom: 0.35rem; }
+  .hotel-cta-text p { font-size: 0.9rem; color: var(--surface-muted); margin: 0; line-height: 1.5; }
+  .hotel-cta-btn { display: inline-block; background: #003580; color: #fff; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.9rem; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .hotel-cta-btn:hover { background: #002a6b; text-decoration: none; }
   .city-guides { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
   .city-guides h2 { margin-bottom: 0.75rem; }
   .guide-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.5rem; }
