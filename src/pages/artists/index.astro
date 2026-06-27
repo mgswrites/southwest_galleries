@@ -46,7 +46,7 @@ const schema = {
           {byState[stateName].map((artist) => (
             <a href={`/artists/${artist.slug}/`} class="artist-card">
               {artist.hero_image_url ? (
-                <img src={artist.hero_image_url} alt={artist.name as string} loading="lazy" />
+                <img src={artist.hero_image_url} alt={artist.name as string} loading="lazy" width="320" height="180" />
               ) : (
                 <div class="artist-placeholder">
                   <span>{(artist.name as string).charAt(0)}</span>

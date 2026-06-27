@@ -30,7 +30,7 @@ const typeLabel: Record<string, string> = {
   <a href={`/listing/${slug}/`} class="card-link">
     <div class="card-image">
       {hero_image_url
-        ? <img src={hero_image_url} alt={`${name}${city_name ? `, ${city_name}` : ''}`} loading="lazy" />
+        ? <img src={hero_image_url} alt={`${name}${city_name ? `, ${city_name}` : ''}`} loading="lazy" width="800" height="450" />
         : <div class="placeholder-image" aria-hidden="true"></div>
       }
       <span class="type-badge">{typeLabel[listing_type] ?? listing_type}</span>

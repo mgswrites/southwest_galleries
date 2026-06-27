@@ -35,7 +35,7 @@ const events = await sql`
         <div class="events-list">
           {events.map((e) => (
             <div class="event-card">
-              {e.image_url && <img src={e.image_url} alt={e.title} loading="lazy" />}
+              {e.image_url && <img src={e.image_url} alt={e.title} loading="lazy" width="180" height="120" />}
               <div class="event-body">
                 <div class="event-date">
                   {e.is_recurring ? 'Recurring' : new Date(e.event_date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}

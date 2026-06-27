@@ -26,7 +26,7 @@ const posts = await getPublishedPosts();
         {posts.map((p) => (
           <a href={`/guides/${p.slug}/`} class="post-card">
             {p.hero_image_url && (
-              <img src={p.hero_image_url} alt={p.title} loading="lazy" />
+              <img src={p.hero_image_url} alt={p.title} loading="lazy" width="400" height="225" />
             )}
             <div class="post-body">
               <h2>{p.title}</h2>

@@ -76,7 +76,7 @@ const localBusinessSchema = {
 
     <div class="listing-hero">
       {listing.hero_image_url && (
-        <img src={listing.hero_image_url} alt={`${listing.name} exterior, ${listing.city_name} ${listing.state_name}`} />
+        <img src={listing.hero_image_url} alt={`${listing.name} exterior, ${listing.city_name} ${listing.state_name}`} width="800" height="420" />
       )}
     </div>
 
@@ -91,7 +91,7 @@ const localBusinessSchema = {
             <h1>{listing.name}</h1>
             {listing.neighborhood && <p class="neighborhood">{listing.neighborhood} · {listing.city_name}, {listing.state_name}</p>}
           </div>
-          {listing.logo_url && <img src={listing.logo_url} alt={`${listing.name} logo`} class="logo" />}
+          {listing.logo_url && <img src={listing.logo_url} alt={`${listing.name} logo`} class="logo" width="80" height="80" />}
         </div>
 
         {listing.full_description && (
@@ -105,7 +105,7 @@ const localBusinessSchema = {
           <div class="image-gallery">
             {images.map((img) => (
               <figure>
-                <img src={img.url} alt={img.alt_text ?? listing.name} loading="lazy" />
+                <img src={img.url} alt={img.alt_text ?? listing.name} loading="lazy" width="400" height="300" />
                 {img.caption && <figcaption>{img.caption}</figcaption>}
               </figure>
             ))}
@@ -142,7 +142,7 @@ const localBusinessSchema = {
                 <li class="nearby-item">
                   <a href={`/listing/${l.slug}/`} class="nearby-link">
                     {l.hero_image_url && (
-                      <img src={l.hero_image_url} alt={l.name} loading="lazy" />
+                      <img src={l.hero_image_url} alt={l.name} loading="lazy" width="80" height="60" />
                     )}
                     <div class="nearby-body">
                       <span class="nearby-type">{typeLabel[l.listing_type] ?? l.listing_type}</span>
