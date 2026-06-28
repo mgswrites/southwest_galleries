@@ -109,9 +109,16 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
             </p>
             <div class="founder-book">
               <p class="founder-book-label">Latest Book</p>
-              <p class="founder-book-text"><em>Striking the Black Snake: Standing on the Frontlines</em> — available now on Amazon.</p>
-              <a href="https://amzn.to/4g5I2Kf" target="_blank" rel="noopener noreferrer sponsored" class="founder-book-btn">Get the Book →</a>
-              <p class="founder-book-disclosure">As an Amazon Associate, we earn from qualifying purchases.</p>
+              <div class="founder-book-inner">
+                <a href="https://amzn.to/4g5I2Kf" target="_blank" rel="noopener noreferrer sponsored" class="founder-book-cover-link">
+                  <img src="https://m.media-amazon.com/images/I/81+y7ibvnqL._SL1500_.jpg" alt="Striking the Black Snake: Standing on the Frontlines by M.G. Salazar" class="founder-book-cover" width="120" height="180" />
+                </a>
+                <div>
+                  <p class="founder-book-text"><em>Striking the Black Snake: Standing on the Frontlines</em> by M.G. Salazar — available now on Amazon.</p>
+                  <a href="https://amzn.to/4g5I2Kf" target="_blank" rel="noopener noreferrer sponsored" class="founder-book-btn">Get the Book →</a>
+                  <p class="founder-book-disclosure">As an Amazon Associate, we earn from qualifying purchases.</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -282,6 +289,9 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
     margin-bottom: 0.75rem;
   }
   .founder-book { margin-top: 1.25rem; padding: 1rem 1.25rem; background: #fdf8f4; border: 1px solid var(--border); border-left: 4px solid var(--clay); border-radius: 6px; }
+  .founder-book-inner { display: flex; gap: 1rem; align-items: flex-start; margin-top: 0.5rem; }
+  .founder-book-cover { display: block; width: 90px; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.18); flex-shrink: 0; height: auto; }
+  .founder-book-cover-link { flex-shrink: 0; }
   .founder-book-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--clay); margin-bottom: 0.3rem; line-height: 1.2; }
   .founder-book-text { font-size: 0.9rem; line-height: 1.5; color: var(--ink); margin-bottom: 0.75rem; }
   .founder-book-btn { display: inline-block; background: var(--clay); color: #fff; padding: 0.55rem 1.1rem; border-radius: 6px; font-weight: 700; font-size: 0.875rem; text-decoration: none; }
