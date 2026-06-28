@@ -107,6 +107,12 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
               passionate as the work they produce. Built by someone from here, for everyone who loves
               this place.
             </p>
+            <div class="founder-book">
+              <p class="founder-book-label">Latest Book</p>
+              <p class="founder-book-text"><em>Striking the Black Snake: Standing on the Frontlines</em> — available now on Amazon.</p>
+              <a href="https://amzn.to/4g5I2Kf" target="_blank" rel="noopener noreferrer sponsored" class="founder-book-btn">Get the Book →</a>
+              <p class="founder-book-disclosure">As an Amazon Associate, we earn from qualifying purchases.</p>
+            </div>
           </div>
         </div>
       </section>
@@ -275,6 +281,12 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
     color: var(--clay);
     margin-bottom: 0.75rem;
   }
+  .founder-book { margin-top: 1.25rem; padding: 1rem 1.25rem; background: #fdf8f4; border: 1px solid var(--border); border-left: 4px solid var(--clay); border-radius: 6px; }
+  .founder-book-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--clay); margin-bottom: 0.3rem; line-height: 1.2; }
+  .founder-book-text { font-size: 0.9rem; line-height: 1.5; color: var(--ink); margin-bottom: 0.75rem; }
+  .founder-book-btn { display: inline-block; background: var(--clay); color: #fff; padding: 0.55rem 1.1rem; border-radius: 6px; font-weight: 700; font-size: 0.875rem; text-decoration: none; }
+  .founder-book-btn:hover { opacity: 0.88; text-decoration: none; }
+  .founder-book-disclosure { font-size: 0.68rem; color: #999; margin-top: 0.6rem; line-height: 1.4; }
 
   @media (max-width: 860px) {
     .content-container { grid-template-columns: 1fr; }
