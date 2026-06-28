@@ -107,6 +107,19 @@ const collectionSchema = {
         No listings yet for this style. <a href="/submit/">Submit one →</a>
       </p>
     )}
+
+    {styleSlug === 'abstract' && (
+      <div class="amazon-book-cta">
+        <div class="amazon-book-inner">
+          <div>
+            <p class="amazon-book-label">Recommended Reading</p>
+            <p class="amazon-book-text">An in-depth look at New Mexico's abstract artists, their perspectives, and how the landscape of the Southwest shapes contemporary abstract practice.</p>
+          </div>
+          <a href="https://amzn.to/4vDK1KG" target="_blank" rel="noopener noreferrer sponsored" class="amazon-book-btn">View on Amazon →</a>
+        </div>
+        <p class="amazon-disclosure">As an Amazon Associate, we earn from qualifying purchases.</p>
+      </div>
+    )}
   </div>
 </Base>
 
@@ -128,4 +141,11 @@ const collectionSchema = {
     transition: color 0.15s, border-color 0.15s;
   }
   .back-top-btn:hover { color: var(--turquoise); border-color: var(--turquoise); }
+  .amazon-book-cta { margin-top: 2.5rem; padding: 1.25rem 1.5rem; background: #fdf8f4; border: 1px solid var(--border); border-left: 4px solid var(--clay); border-radius: 6px; }
+  .amazon-book-inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  .amazon-book-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--clay); margin-bottom: 0.3rem; line-height: 1.2; }
+  .amazon-book-text { font-size: 0.9rem; line-height: 1.5; color: var(--ink); margin: 0; }
+  .amazon-book-btn { flex-shrink: 0; display: inline-block; background: var(--clay); color: #fff; padding: 0.65rem 1.25rem; border-radius: 6px; font-weight: 700; font-size: 0.875rem; text-decoration: none; white-space: nowrap; }
+  .amazon-book-btn:hover { opacity: 0.88; text-decoration: none; }
+  .amazon-disclosure { font-size: 0.7rem; color: #999; margin-top: 0.75rem; margin-bottom: 0; line-height: 1.4; }
 </style>
