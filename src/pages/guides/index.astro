@@ -42,6 +42,18 @@ const posts = await getPublishedPosts();
     ) : (
       <p style="color:var(--muted);text-align:center;padding:3rem">Editorial guides coming soon.</p>
     )}
+    <section class="hotel-cta">
+      <div class="hotel-cta-inner">
+        <div class="hotel-cta-text">
+          <h2>Planning a Trip to the Southwest?</h2>
+          <p>Find hotels, inns, and vacation rentals near galleries and cultural venues across all seven states.</p>
+        </div>
+        <div>
+          <a href="https://www.anrdoezrs.net/click-101807255-17293132" target="_blank" rel="noopener noreferrer sponsored" class="hotel-cta-btn">Search Hotels on Booking.com →</a>
+          <p class="hotel-disclosure">Affiliate link. We may earn a commission at no cost to you.</p>
+        </div>
+      </div>
+    </section>
   </div>
 </Base>
 
@@ -55,4 +67,11 @@ const posts = await getPublishedPosts();
   .post-body h2 { font-size: 1.05rem; font-weight: 700; line-height: 1.35; margin-bottom: 0.5rem; }
   .post-body p { font-size: 0.875rem; color: var(--muted); line-height: 1.5; margin-bottom: 0.75rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .post-meta { font-size: 0.75rem; color: #999; }
+  .hotel-cta { margin-top: 3rem; background: var(--surface); border-radius: 10px; padding: 1.75rem 2rem; }
+  .hotel-cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .hotel-cta-text h2 { font-size: 1.2rem; font-weight: 700; color: var(--sand); margin-bottom: 0.35rem; }
+  .hotel-cta-text p { font-size: 0.9rem; color: var(--surface-muted); margin: 0; line-height: 1.5; }
+  .hotel-cta-btn { display: inline-block; background: #003580; color: #fff; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 700; font-size: 0.9rem; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+  .hotel-cta-btn:hover { background: #002a6b; text-decoration: none; }
+  .hotel-disclosure { font-size: 0.7rem; color: rgba(255,255,255,0.65); margin-top: 0.5rem; text-align: center; }
 </style>
