@@ -75,7 +75,14 @@ const personSchema = {
         <section class="galleries-section">
           <h2>Associated Galleries</h2>
           <div class="listings-grid">
-            {listings.map((l) => <ListingCard listing={l} />)}
+            {listings.map((l) => (
+              <ListingCard
+                slug={l.slug} name={l.name} listing_type={l.listing_type} tier={l.tier}
+                short_description={l.short_description} hero_image_url={l.hero_image_url}
+                neighborhood={l.neighborhood} city_name={l.city_name} city_slug={l.city_slug}
+                state_slug={l.state_slug}
+              />
+            ))}
           </div>
         </section>
       )}
@@ -112,6 +119,15 @@ const personSchema = {
           <a href="/artists/" class="nav-link">
             All Southwest Artists →
           </a>
+        </div>
+      )}
+
+      {slug === 'luis-jimenez' && (
+        <div class="amazon-book-cta">
+          <p class="amazon-book-label">Recommended Reading</p>
+          <p class="amazon-book-text">A collection of Jiménez's bold fiberglass works and drawings, including Howl and his landmark Chicano sculptures from New Mexico and beyond.</p>
+          <a href="https://amzn.to/4gfvXCp" target="_blank" rel="noopener noreferrer sponsored" class="amazon-book-btn">View on Amazon →</a>
+          <p class="amazon-disclosure">As an Amazon Associate, we earn from qualifying purchases.</p>
         </div>
       )}
 
