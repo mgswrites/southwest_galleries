@@ -337,6 +337,18 @@ const schema = [
       <section class="deep-dive">
         <h2>{cityEditorial.deepDiveHeading}</h2>
         <p>{cityEditorial.deepDive}</p>
+        {citySlug === 'albuquerque' && (
+          <div class="amazon-book-cta">
+            <div class="amazon-book-inner">
+              <div>
+                <p class="amazon-book-label">Recommended Reading</p>
+                <p class="amazon-book-text">Explore Albuquerque's rich art history through the Albuquerque Museum's permanent collection, spanning four centuries of New Mexico culture.</p>
+              </div>
+              <a href="https://amzn.to/4f5Rlc6" target="_blank" rel="noopener noreferrer sponsored" class="amazon-book-btn">View on Amazon →</a>
+            </div>
+            <p class="amazon-disclosure">As an Amazon Associate, we earn from qualifying purchases.</p>
+          </div>
+        )}
         {citySlug === 'santa-fe' && (
           <>
             <div class="amazon-book-cta">
