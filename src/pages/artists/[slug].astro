@@ -114,6 +114,15 @@ const personSchema = {
           </a>
         </div>
       )}
+
+      {slug === 'rc-gorman' && (
+        <div class="amazon-book-cta">
+          <p class="amazon-book-label">Recommended Reading</p>
+          <p class="amazon-book-text">Gorman's own words and images: a collection of his lithographs and writings celebrating Diné life and culture.</p>
+          <a href="https://amzn.to/4wjdSIq" target="_blank" rel="noopener noreferrer sponsored" class="amazon-book-btn">View on Amazon →</a>
+          <p class="amazon-disclosure">As an Amazon Associate, we earn from qualifying purchases.</p>
+        </div>
+      )}
     </aside>
   </div>
 </Base>
@@ -160,6 +169,12 @@ const personSchema = {
   .info-row a { color: var(--turquoise); }
   .sidebar-links { display: flex; flex-direction: column; gap: 0.5rem; }
   .nav-link { font-size: 0.875rem; font-weight: 600; color: var(--clay); }
+  .amazon-book-cta { padding: 1.1rem 1.25rem; background: #fdf8f4; border: 1px solid var(--border); border-left: 4px solid var(--clay); border-radius: 6px; }
+  .amazon-book-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--clay); margin-bottom: 0.3rem; line-height: 1.2; }
+  .amazon-book-text { font-size: 0.875rem; line-height: 1.5; color: var(--ink); margin-bottom: 0.85rem; }
+  .amazon-book-btn { display: inline-block; background: var(--clay); color: #fff; padding: 0.55rem 1.1rem; border-radius: 6px; font-weight: 700; font-size: 0.825rem; text-decoration: none; }
+  .amazon-book-btn:hover { opacity: 0.88; text-decoration: none; }
+  .amazon-disclosure { font-size: 0.68rem; color: #999; margin-top: 0.6rem; line-height: 1.4; }
 
   @media (max-width: 768px) { .artist-layout { grid-template-columns: 1fr; } }
 </style>
