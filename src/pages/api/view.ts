@@ -3,6 +3,9 @@ export const prerender = false;
 import type { APIRoute } from 'astro';
 import { recordListingView } from '../../lib/queries';
 
+export const GET: APIRoute = () =>
+  new Response(null, { status: 405, headers: { Allow: 'POST' } });
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();

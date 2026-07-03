@@ -27,7 +27,7 @@ const typeLabel: Record<string, string> = {
 ---
 
 <article class={`listing-card tier-${tier}`}>
-  <a href={`/listing/${slug}/`} class="card-link">
+  <a href={slug ? `/listing/${slug}/` : '/galleries/'} class="card-link">
     <div class="card-image">
       {hero_image_url
         ? <img src={hero_image_url} alt={`${name}${city_name ? `, ${city_name}` : ''}`} loading="lazy" width="800" height="450" />
