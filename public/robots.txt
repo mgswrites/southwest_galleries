@@ -1,9 +1,5 @@
 User-agent: *
-Disallow: /submit/
-Disallow: /submit-event/
-Disallow: /upgrade/
 Disallow: /admin/
-Disallow: /search/
 Allow: /
 
 Sitemap: https://southwestgalleries.com/sitemap.xml
