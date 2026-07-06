@@ -16,6 +16,27 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
     </div>
   </div>
 
+  <div class="container stats-bar-wrap">
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-n">352</span>
+        <span class="stat-label">Venues Listed</span>
+      </div>
+      <div class="stat">
+        <span class="stat-n">35</span>
+        <span class="stat-label">Editorial Guides</span>
+      </div>
+      <div class="stat">
+        <span class="stat-n">39</span>
+        <span class="stat-label">Events Tracked</span>
+      </div>
+      <div class="stat">
+        <span class="stat-n">7</span>
+        <span class="stat-label">States Covered</span>
+      </div>
+    </div>
+  </div>
+
   <div class="container content-container">
 
     <div class="about-main">
@@ -72,13 +93,33 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
         <p>
           We cover the seven states that define the American Southwest: <strong>Arizona</strong>, <strong>New Mexico</strong>,
           <strong>Colorado</strong>, <strong>Nevada</strong>, <strong>Utah</strong>, <strong>Texas</strong>, and <strong>California</strong>.
-          From Taos to Tucson, Marfa to Moab, Sedona to San Francisco. If it's art and it's in the Southwest, it belongs here.
+          From Taos to Tucson, Marfa to Moab, Sedona to San Francisco, Austin to Albuquerque. If it's art and it's in the Southwest, it belongs here.
         </p>
         <p>
           We give particular depth to the region's most storied art communities: Santa Fe and Taos, the oldest art
           markets in the country; Phoenix and Scottsdale, with their world-class museum infrastructure; the canyon
           country of Utah and Colorado, which has inspired landscape painters for over a century; and the Indigenous
           art traditions of the Diné Nation, Pueblo communities, and beyond.
+        </p>
+      </section>
+
+      <section class="about-section">
+        <h2>How We Curate</h2>
+        <p>
+          Every listing on Southwest Galleries is individually reviewed before publication. We do not accept
+          auto-generated or bulk-submitted content. Our editorial team researches each venue, verifies it is
+          actively operating, and writes or edits descriptions to ensure they are accurate, informative, and
+          useful to visitors.
+        </p>
+        <p>
+          Our guides are written with the same care. Each one is researched by someone with direct knowledge
+          of the Southwest art world and focuses on giving readers the context they need to understand a scene,
+          an art form, or a city's creative community, not just a list of names and addresses.
+        </p>
+        <p>
+          Listings are free for venues to claim and update. We offer paid featured and premium tiers for
+          galleries that want enhanced visibility, but editorial decisions about what we cover and how we
+          cover it are entirely independent of commercial relationships.
         </p>
       </section>
 
@@ -162,6 +203,27 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 </Base>
 
 <style>
+  .stats-bar-wrap { padding-top: 2rem; }
+  .stats-bar {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem 1rem;
+    border-right: 1px solid var(--border);
+    background: #fff;
+  }
+  .stat:last-child { border-right: none; }
+  .stat-n { font-family: 'Rye', serif; font-size: 2rem; color: var(--clay); line-height: 1; margin-bottom: 0.3rem; }
+  .stat-label { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; text-align: center; }
+
   .content-container {
     padding-top: 1.5rem;
     padding-bottom: 5rem;
