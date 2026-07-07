@@ -76,7 +76,10 @@ const localBusinessSchema = {
 
     <div class="listing-hero">
       {listing.hero_image_url && (
-        <img src={listing.hero_image_url} alt={`${listing.name} exterior, ${listing.city_name} ${listing.state_name}`} width="800" height="420" />
+        <>
+          <img src={listing.hero_image_url} alt={listing.name} width="800" height="420" />
+          <p class="img-caption">Representative image</p>
+        </>
       )}
     </div>
 
@@ -263,8 +266,9 @@ const localBusinessSchema = {
 
 <style>
   .listing-container { padding-top: 1rem; padding-bottom: 3rem; }
-  .listing-hero { margin: 1rem 0; border-radius: 12px; overflow: hidden; max-height: 420px; }
+  .listing-hero { margin: 1rem 0; border-radius: 12px; overflow: hidden; max-height: 420px; position: relative; }
   .listing-hero img { width: 100%; height: 420px; object-fit: cover; }
+  .img-caption { position: absolute; bottom: 0.5rem; right: 0.75rem; font-size: 0.68rem; color: rgba(255,255,255,0.7); background: rgba(0,0,0,0.35); padding: 0.15rem 0.4rem; border-radius: 3px; margin: 0; }
 
   .listing-layout { display: grid; grid-template-columns: 1fr 340px; gap: 2.5rem; margin-top: 1.5rem; }
 
