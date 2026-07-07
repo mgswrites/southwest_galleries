@@ -291,6 +291,19 @@ const faqSchema = {
   ],
 };
 
+const itemListSchema = listings.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: `Art Galleries in ${cityData.name}, ${stateData.name}`,
+  numberOfItems: listings.length,
+  itemListElement: listings.slice(0, 20).map((l, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    url: new URL(`/listing/${l.slug}/`, Astro.site).toString(),
+    name: l.name,
+  })),
+} : null;
+
 const schema = [
   {
     '@context': 'https://schema.org',
@@ -300,6 +313,7 @@ const schema = [
     url: new URL(`/galleries/${stateSlug}/${citySlug}/`, Astro.site).toString(),
   },
   faqSchema,
+  ...(itemListSchema ? [itemListSchema] : []),
 ];
 ---
 

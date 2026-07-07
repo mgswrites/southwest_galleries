@@ -40,7 +40,7 @@ const articleSchema = {
   headline: post.title,
   description: description || undefined,
   image: post.hero_image_url ?? undefined,
-  author: { '@type': 'Organization', name: post.author_name },
+  author: { '@type': 'Person', name: post.author_name, url: 'https://southwestgalleries.com/about/' },
   datePublished: post.published_at,
   publisher: {
     '@type': 'Organization',
@@ -65,7 +65,7 @@ const articleSchema = {
     <article>
       <h1>{post.title}</h1>
       <div class="article-meta">
-        <span>{post.author_name}</span>
+        <span>By <a href="/about/" class="author-link">{post.author_name}</a> <span class="author-cred">· Emmy Award-winning writer &amp; cultural critic</span></span>
         {post.published_at && (
           <span>{new Date(post.published_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
         )}
@@ -122,7 +122,9 @@ const articleSchema = {
   .article-container { max-width: 800px; padding-top: 1rem; padding-bottom: 3rem; }
   .hero-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; margin: 1rem 0 2rem; }
   h1 { font-size: 2rem; font-weight: 800; line-height: 1.2; margin-bottom: 0.75rem; }
-  .article-meta { display: flex; gap: 1rem; color: var(--muted); font-size: 0.875rem; margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
+  .article-meta { display: flex; gap: 1rem; color: var(--muted); font-size: 0.875rem; margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; align-items: center; }
+  .author-link { color: var(--turquoise); font-weight: 600; }
+  .author-cred { color: var(--muted); font-weight: 400; font-style: italic; font-size: 0.8rem; }
   .article-body { line-height: 1.8; font-size: 1rem; color: #2a2420; }
   .article-body :global(h2) { font-size: 1.4rem; font-weight: 700; margin: 2rem 0 0.75rem; }
   .article-body :global(h3) { font-size: 1.15rem; font-weight: 700; margin: 1.5rem 0 0.5rem; }

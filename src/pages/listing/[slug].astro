@@ -37,11 +37,30 @@ const bookingSearchUrl = `https://www.booking.com/searchresults.en-us.html?ss=${
 const bookingLink = `https://www.anrdoezrs.net/click-101807255-17293132?url=${encodeURIComponent(bookingSearchUrl)}`;
 
 const title = listing.meta_title ?? `${listing.name} | ${listing.city_name}, ${listing.state_name} | Southwest Galleries`;
-const description = listing.meta_description ?? listing.short_description ?? `Visit ${listing.name} in ${listing.city_name}, ${listing.state_name}. Find hours, location, and more.`;
+
+function truncateMeta(text: string, max = 155): string {
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max).replace(/\s+\S*$/, '');
+  return cut.endsWith('.') ? cut : cut + '.';
+}
+const rawDesc = listing.meta_description ?? listing.short_description ?? `Visit ${listing.name} in ${listing.city_name}, ${listing.state_name}. Find hours, location, and more.`;
+const description = truncateMeta(rawDesc);
+
+const schemaTypeMap: Record<string, string[]> = {
+  gallery: ['LocalBusiness', 'ArtGallery'],
+  museum: ['LocalBusiness', 'Museum'],
+  cultural_center: ['LocalBusiness', 'CivicStructure'],
+  artist_studio: ['LocalBusiness', 'ArtGallery'],
+  art_fair: ['LocalBusiness', 'Event'],
+  sculpture_park: ['LocalBusiness', 'Park'],
+  auction_house: ['LocalBusiness'],
+  art_school: ['LocalBusiness', 'EducationalOrganization'],
+};
+const schemaType = schemaTypeMap[listing.listing_type] ?? ['LocalBusiness'];
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': ['LocalBusiness', 'ArtGallery'],
+  '@type': schemaType,
   name: listing.name,
   description: listing.short_description ?? undefined,
   url: listing.website_url ?? undefined,
