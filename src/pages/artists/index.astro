@@ -36,6 +36,19 @@ const schema = {
     </div>
   </div>
 
+  <section class="artists-editorial">
+    <div class="container">
+      <div class="editorial-body">
+        <h2>Artists of the American Southwest</h2>
+        <p>The American Southwest has produced artists of extraordinary range and ambition for as long as human beings have lived here, and the tradition shows no signs of slowing. From the ancient potters of Acoma Pueblo, whose ceramic lineage extends back more than a thousand years, to the contemporary painters, sculptors, and mixed-media artists currently reshaping the international art world from studios in Santa Fe, Marfa, and Denver, the Southwest's creative tradition is one of the most vital in North America.</p>
+        <p>What makes the Southwest a particularly generative environment for artists is the convergence of forces that few regions can match. The physical landscape, the vast scale of the desert and canyon country, the quality of the light at altitude, the palette of iron-rich earth and mineral-saturated sky, presents painters, photographers, and sculptors with problems of representation and response that have no easy solutions. The cultural landscape is equally complex: the meeting of Indigenous, Hispanic, and Anglo-American traditions creates a field of creative tension and cross-pollination that has produced some of the most distinctive art in the country. Artists who settle in the Southwest, as many do after arriving for other reasons, often find that the place begins to change their work in ways they did not anticipate.</p>
+        <p>The Indigenous artistic traditions of the Southwest form the deepest layer of the region's creative culture. Pueblo pottery, Diné weaving, Hopi kachina carving, Zuni inlay jewelry: these traditions have been maintained through unbroken lineages of practice across centuries of disruption and pressure, and they continue to produce work of the highest quality in the hands of living artists. Contemporary Indigenous artists working in the Southwest, including painters, sculptors, and installation artists who trained at major art schools and show in international venues, bring these deep traditions into active conversation with global contemporary practice, producing work that cannot be understood without reference to either context.</p>
+        <p>The Hispanic artistic tradition of the Southwest is equally deep and equally vital. The santeros of New Mexico, who carve and paint wooden religious figures in a tradition established by the first Spanish missionaries in the 16th century, maintain a living practice that connects contemporary devotional art to its medieval Iberian sources. Contemporary Chicano and Chicana artists working in cities from Albuquerque to San Antonio engage with the border experience, colonial history, and the ongoing negotiation of identity in the Southwest borderlands, producing some of the most politically engaged and aesthetically powerful work being made in the United States today.</p>
+        <p>The artists profiled here represent a cross-section of the Southwest's extraordinary creative community, from historic figures who shaped the region's artistic identity to living artists whose work continues to define what Southwest art can mean. Each profile links to the galleries and institutions where their work can be experienced, giving collectors, students, and art lovers a map of the living art world that these artists inhabit and shape.</p>
+      </div>
+    </div>
+  </section>
+
   <div class="container" style="padding-top:2rem;padding-bottom:3rem">
     {artists.length === 0 ? (
       <p style="color:var(--muted);text-align:center;padding:3rem">Artist profiles coming soon.</p>
@@ -79,6 +92,11 @@ const schema = {
 </Base>
 
 <style>
+  .artists-editorial { padding: 2.5rem 0; border-bottom: 1px solid var(--border); }
+  .editorial-body { max-width: 780px; }
+  .editorial-body h2 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--ink); }
+  .editorial-body p { font-size: 0.975rem; line-height: 1.8; color: var(--muted); margin-bottom: 1.1rem; }
+  .editorial-body p:last-child { margin-bottom: 0; }
   .state-section { margin-bottom: 2.5rem; }
   .state-section h2 { font-size: 1.1rem; font-weight: 700; border-bottom: 2px solid var(--sand); padding-bottom: 0.5rem; margin-bottom: 1.25rem; }
   .artist-grid {

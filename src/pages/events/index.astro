@@ -29,6 +29,19 @@ const events = await sql`
     </div>
   </div>
 
+  <section class="events-editorial">
+    <div class="container">
+      <div class="editorial-body">
+        <h2>The Southwest Art Calendar</h2>
+        <p>The American Southwest operates on an art calendar unlike any other region in the country. Driven by the rhythms of the desert climate, the schedules of resort communities, and the deep community traditions of gallery walks and Indigenous markets that predate the commercial gallery world, the Southwest's event calendar offers art lovers something happening in virtually every city and season.</p>
+        <p>The most embedded tradition is the First Friday gallery walk, which runs in cities across the region from Albuquerque and Santa Fe to Phoenix, Denver, Fort Collins, and San Antonio. These monthly events, held on the first Friday evening of each month, transform downtown gallery districts into walkable social occasions, with galleries staying open late, artists meeting the public, and a festive atmosphere that makes art accessible to visitors who might hesitate to enter a gallery alone during business hours. Phoenix's Roosevelt Row First Fridays draw crowds of thousands to one of the most vibrant gallery neighborhoods in the Mountain West. Denver's Santa Fe Arts District First Fridays have been running for decades and continue to be the heart of the city's visual arts social calendar.</p>
+        <p>Major annual art fairs mark the peaks of the Southwest calendar. The Dallas Art Fair in April is the most commercially significant, attracting galleries from across the country and internationally to a city that has become one of America's most important art markets. The Santa Fe Indian Market in August is the largest and most prestigious Indigenous art market in the world, filling the historic Plaza with artists from hundreds of tribal nations who sell directly to collectors under strict authenticity standards maintained by the Southwestern Association for Indian Arts. The Kimball Arts Festival in Park City each August and the Sedona Plein Air Festival each October draw painters and collectors to events centered on live painting competitions.</p>
+        <p>Recurring gallery walks at the neighborhood or city level form the backbone of community arts life throughout the region. Scottsdale's Thursday ArtWalk, held weekly from October through May in Old Town, is one of the longest-running gallery walk traditions in the country. Marfa's gallery openings cluster around Chinati Foundation Open House weekend each October, drawing the international art world to the Chihuahuan Desert for an occasion that has become one of the most anticipated events on the contemporary art calendar. The Heard Museum Guild Indian Fair and Market in Phoenix each March provides a spring counterpart to Santa Fe's August market, with Indigenous artists from across the Southwest selling directly in a museum setting with guaranteed authenticity.</p>
+        <p>For visitors planning trips around events, the most important planning consideration is the Southwest's dramatic seasonal character. Summer heat in the lower desert drives many events to spring and fall, while mountain resort communities like Aspen, Telluride, and Park City concentrate their most ambitious programming in summer and winter. The high desert cities of Santa Fe and Taos are comfortable year-round, with their most important markets in summer and their gallery scene active through the winter for the collector community that travels there specifically for the art.</p>
+      </div>
+    </div>
+  </section>
+
   <section class="events-section">
     <div class="container">
       {events.length > 0 ? (
@@ -79,6 +92,11 @@ const events = await sql`
 </Base>
 
 <style>
+  .events-editorial { padding: 2.5rem 0 0; border-bottom: 1px solid var(--border); margin-bottom: 0; }
+  .editorial-body { max-width: 780px; padding-bottom: 2.5rem; }
+  .editorial-body h2 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--ink); }
+  .editorial-body p { font-size: 0.975rem; line-height: 1.8; color: var(--muted); margin-bottom: 1.1rem; }
+  .editorial-body p:last-child { margin-bottom: 0; }
   .events-section { padding: 2rem 0 3rem; }
   .events-list { display: flex; flex-direction: column; gap: 1rem; }
   .event-card { border: 1px solid var(--border); border-radius: 8px; overflow: hidden; display: flex; gap: 0; background: var(--sand); color: var(--ink); }
