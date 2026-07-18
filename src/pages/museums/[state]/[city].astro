@@ -128,7 +128,7 @@ const cityKey = `${stateSlug}/${citySlug}`;
 const cityEditorial = cityMuseumEditorials[cityKey];
 ---
 
-<Base {title} {description}>
+<Base {title} {description} noindex={listings.length === 0}>
   <div class="page-header">
     <div class="container">
       <BreadcrumbNav crumbs={[

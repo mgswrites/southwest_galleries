@@ -397,7 +397,7 @@ const schema = [
 ];
 ---
 
-<Base {title} {description} schema={schema}>
+<Base {title} {description} schema={schema} noindex={listings.length === 0}>
   <div class="page-header">
     <div class="container">
       <BreadcrumbNav crumbs={[
