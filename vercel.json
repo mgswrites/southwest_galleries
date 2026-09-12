@@ -5,6 +5,11 @@
       "has": [{ "type": "host", "value": "www.southwestgalleries.com" }],
       "destination": "https://southwestgalleries.com/:path*",
       "permanent": true
+    },
+    {
+      "source": "/events/scottsdale-artwalk",
+      "destination": "/events/scottsdale-artwalk-thursday",
+      "permanent": true
     }
   ],
   "headers": [

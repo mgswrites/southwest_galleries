@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless';
 import { execSync } from 'child_process';
-import { mkdirSync, copyFileSync, existsSync } from 'fs';
+import { mkdirSync, copyFileSync, existsSync, readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -9,6 +9,16 @@ const ROOT = join(__dirname, '..');
 const EVENTS_DIR = join(ROOT, 'public', 'events');
 const GUIDES_DIR = join(ROOT, 'public', 'guides');
 const STATES_DIR = join(ROOT, 'public', 'states');
+
+if (!process.env.NEON_DB_KEY) {
+  const envFile = join(ROOT, '.env');
+  if (existsSync(envFile)) {
+    for (const line of readFileSync(envFile, 'utf8').split('\n')) {
+      const m = line.match(/^([A-Z_]+)=(.*)$/);
+      if (m) process.env[m[1]] = m[2];
+    }
+  }
+}
 
 const NEON_DB_KEY = process.env.NEON_DB_KEY;
 if (!NEON_DB_KEY) { console.error('NEON_DB_KEY not set'); process.exit(1); }
@@ -41,6 +51,7 @@ const STATE_FALLBACKS = {
   'TX': join(STATES_DIR, 'texas.jpg'),
   'UT': join(STATES_DIR, 'utah.jpg'),
   'NV': join(STATES_DIR, 'nevada.jpg'),
+  'CA': join(STATES_DIR, 'california.jpg'),
 };
 
 function extractOgImage(html) {
