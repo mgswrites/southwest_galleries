@@ -124,8 +124,6 @@ const localBusinessSchema = {
           <p class="description">{listing.short_description}</p>
         )}
 
-        <AdUnit />
-
         {images.length > 0 && (
           <div class="image-gallery">
             {images.map((img) => (
@@ -274,6 +272,8 @@ const localBusinessSchema = {
         )}
       </aside>
     </div>
+
+    <AdUnit />
   </div>
 </Base>
 
