@@ -3,6 +3,7 @@ export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import MapView from '../../components/MapView.astro';
+import AdUnit from '../../components/AdUnit.astro';
 import { getAllApprovedListingSlugs, getListing, getListingArtStyles, getListingImages, getGuidesByListing, getNearbyListings } from '../../lib/queries';
 
 export async function getStaticPaths() {
@@ -122,6 +123,8 @@ const localBusinessSchema = {
         {!listing.full_description && listing.short_description && (
           <p class="description">{listing.short_description}</p>
         )}
+
+        <AdUnit />
 
         {images.length > 0 && (
           <div class="image-gallery">

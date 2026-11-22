@@ -3,6 +3,7 @@ export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import ListingCard from '../../components/ListingCard.astro';
+import AdUnit from '../../components/AdUnit.astro';
 import { getAllArtistSlugs, getArtist, getArtistListings } from '../../lib/queries';
 
 export async function getStaticPaths() {
@@ -70,6 +71,8 @@ const personSchema = {
           <div class="bio-text">{artist.bio}</div>
         </section>
       )}
+
+      <AdUnit />
 
       {listings.length > 0 && (
         <section class="galleries-section">

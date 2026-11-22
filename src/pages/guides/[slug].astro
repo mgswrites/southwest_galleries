@@ -3,6 +3,7 @@ export const prerender = true;
 import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import ListingCard from '../../components/ListingCard.astro';
+import AdUnit from '../../components/AdUnit.astro';
 import { getPublishedPosts, getPost, getPostListings } from '../../lib/queries';
 
 export async function getStaticPaths() {
@@ -72,6 +73,8 @@ const articleSchema = {
       </div>
       <div class="article-body" set:html={post.content} />
     </article>
+
+    <AdUnit />
 
     {listings.length > 0 && (
       <section class="featured-listings">
