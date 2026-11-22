@@ -74,8 +74,6 @@ const articleSchema = {
       <div class="article-body" set:html={post.content} />
     </article>
 
-    <AdUnit />
-
     {listings.length > 0 && (
       <section class="featured-listings">
         <h2>Featured in This Guide</h2>
@@ -118,6 +116,8 @@ const articleSchema = {
         </div>
       </div>
     </section>
+
+    <AdUnit />
   </div>
 </Base>
 
