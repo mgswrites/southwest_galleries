@@ -6,6 +6,7 @@ import ListingCard from '../../../components/ListingCard.astro';
 import MapView from '../../../components/MapView.astro';
 import { getStates, getState, getCitiesByState, getCity, getListingsByCity, getGuidesByCity } from '../../../lib/queries';
 
+import AdUnit from '../../../components/AdUnit.astro';
 export async function getStaticPaths() {
   const states = await getStates();
   const paths = [];
@@ -513,6 +514,10 @@ const schema = [
         <p>{cityEditorial.deepDive}</p>
       </section>
     )}
+  </div>
+
+  <div class="container">
+    <AdUnit />
   </div>
 </Base>
 

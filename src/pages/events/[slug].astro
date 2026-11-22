@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import { getAllEventSlugs, getEvent } from '../../lib/queries';
 
+import AdUnit from '../../components/AdUnit.astro';
 export async function getStaticPaths() {
   const slugs = await getAllEventSlugs();
   return slugs.map((e) => ({ params: { slug: e.slug } }));
@@ -184,6 +185,10 @@ const eventSchema = {
         )}
       </div>
     </aside>
+  </div>
+
+  <div class="container">
+    <AdUnit />
   </div>
 </Base>
 

@@ -5,6 +5,7 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import { getStates } from '../../lib/queries';
 import sql from '../../lib/db';
 
+import AdUnit from '../../components/AdUnit.astro';
 const states = await getStates();
 
 const museumCounts = await sql`
@@ -62,6 +63,10 @@ const description = 'Explore museums, cultural centers, and sculpture parks acro
         </div>
       </div>
     </section>
+  </div>
+
+  <div class="container">
+    <AdUnit />
   </div>
 </Base>
 

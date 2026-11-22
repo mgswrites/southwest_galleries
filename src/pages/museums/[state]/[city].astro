@@ -6,6 +6,7 @@ import ListingCard from '../../../components/ListingCard.astro';
 import { getStates, getState, getCitiesByState, getCity } from '../../../lib/queries';
 import sql from '../../../lib/db';
 
+import AdUnit from '../../../components/AdUnit.astro';
 export async function getStaticPaths() {
   const states = await getStates();
   const paths = [];
@@ -216,6 +217,10 @@ const cityEditorial = cityMuseumEditorials[cityKey];
         )}
       </section>
     )}
+  </div>
+
+  <div class="container">
+    <AdUnit />
   </div>
 </Base>
 

@@ -5,6 +5,7 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import ListingCard from '../../components/ListingCard.astro';
 import { getArtStyles, getArtStyle, getListingsByArtStyle } from '../../lib/queries';
 
+import AdUnit from '../../components/AdUnit.astro';
 export async function getStaticPaths() {
   const styles = await getArtStyles();
   return styles.map((s) => ({ params: { style: s.slug } }));
@@ -240,6 +241,10 @@ const collectionSchema = {
         </div>
       </div>
     </section>
+  </div>
+
+  <div class="container">
+    <AdUnit />
   </div>
 </Base>
 

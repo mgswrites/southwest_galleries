@@ -6,6 +6,7 @@ import ListingCard from '../../components/ListingCard.astro';
 import { getStates, getState, getCitiesByState } from '../../lib/queries';
 import sql from '../../lib/db';
 
+import AdUnit from '../../components/AdUnit.astro';
 export async function getStaticPaths() {
   const states = await getStates();
   return states.map((s) => ({ params: { state: s.slug } }));
@@ -118,6 +119,10 @@ const faqSchema = {
         </div>
       </div>
     </section>
+  </div>
+
+  <div class="container">
+    <AdUnit />
   </div>
 </Base>
 

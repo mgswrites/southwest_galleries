@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import { getArtStyles } from '../../lib/queries';
 
+import AdUnit from '../../components/AdUnit.astro';
 const styles = await getArtStyles();
 ---
 
@@ -34,6 +35,10 @@ const styles = await getArtStyles();
         </a>
       ))}
     </div>
+  </div>
+
+  <div class="container">
+    <AdUnit />
   </div>
 </Base>
 

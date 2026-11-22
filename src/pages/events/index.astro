@@ -4,6 +4,7 @@ import Base from '../../layouts/Base.astro';
 import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import sql from '../../lib/db';
 
+import AdUnit from '../../components/AdUnit.astro';
 const events = await sql`
   SELECT e.id, e.slug, e.title, e.description, e.event_date, e.start_time, e.end_time,
          e.is_free, e.ticket_url, e.website_url, e.image_url, e.is_recurring,
@@ -89,6 +90,10 @@ const events = await sql`
       </div>
     </section>
   </section>
+
+  <div class="container">
+    <AdUnit />
+  </div>
 </Base>
 
 <style>
