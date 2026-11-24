@@ -211,22 +211,24 @@ export async function searchListings(query: string, filters: {
   const tierFilter = filters.tier || null;
   const styleFilter = filters.style || null;
   return sql`
-    SELECT DISTINCT l.id, l.slug, l.name, l.listing_type, l.tier, l.short_description,
+    SELECT l.id, l.slug, l.name, l.listing_type, l.tier, l.short_description,
            l.hero_image_url, l.neighborhood,
            c.name AS city_name, c.slug AS city_slug,
            s.name AS state_name, s.slug AS state_slug
     FROM listings l
     LEFT JOIN cities c ON c.id = l.city_id
     LEFT JOIN states s ON s.code = l.state_code
-    LEFT JOIN listing_art_styles las ON las.listing_id = l.id
-    LEFT JOIN art_styles ast ON ast.id = las.style_id
     WHERE l.status = 'approved'
       AND l.deleted_at IS NULL
       AND (${tsQuery}::text IS NULL OR l.search_vector @@ plainto_tsquery('english', ${tsQuery}::text))
       AND (${typeFilter}::text IS NULL OR l.listing_type::text = ${typeFilter}::text)
       AND (${stateFilter}::text IS NULL OR l.state_code::text = ${stateFilter}::text)
       AND (${cityFilter}::text IS NULL OR c.slug = ${cityFilter}::text)
-      AND (${styleFilter}::text IS NULL OR ast.slug = ${styleFilter}::text)
+      AND (${styleFilter}::text IS NULL OR EXISTS (
+        SELECT 1 FROM listing_art_styles las
+        JOIN art_styles ast ON ast.id = las.style_id
+        WHERE las.listing_id = l.id AND ast.slug = ${styleFilter}::text
+      ))
       AND (${tierFilter}::text IS NULL OR l.tier::text = ${tierFilter}::text)
     ORDER BY
       CASE WHEN ${tsQuery}::text IS NOT NULL
