@@ -1,4 +1,6 @@
-export const prerender = false;
+// Built once at deploy time (static), so crawlers fetching /sitemap.xml
+// never wake the database. Redeploy to refresh it.
+export const prerender = true;
 
 import type { APIRoute } from 'astro';
 import sql from '../lib/db';
