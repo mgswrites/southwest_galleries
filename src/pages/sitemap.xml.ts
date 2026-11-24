@@ -1,10 +1,19 @@
-export const prerender = false;
+// Built once at deploy time (static), so crawlers fetching /sitemap.xml
+// never wake the database. Redeploy to refresh it.
+export const prerender = true;
 
 import type { APIRoute } from 'astro';
 import sql from '../lib/db';
 
 const SITE = 'https://southwestgalleries.com';
 const TODAY = new Date().toISOString().slice(0, 10);
+
+// The database driver can return timestamps as Date objects or strings.
+function day(v: unknown): string | undefined {
+  if (!v) return undefined;
+  const d = new Date(v as string | number | Date);
+  return isNaN(d.getTime()) ? undefined : d.toISOString().slice(0, 10);
+}
 
 function entry(path: string, priority: string, changefreq: string, lastmod?: string) {
   const mod = lastmod ?? TODAY;
@@ -54,12 +63,12 @@ export const GET: APIRoute = async () => {
     ...museumCities.map((c: { state_slug: string; city_slug: string }) =>
       entry(`/museums/${c.state_slug}/${c.city_slug}/`, '0.7', 'weekly')),
     ...artStyles.map((s: { slug: string }) => entry(`/art-styles/${s.slug}/`, '0.7', 'monthly')),
-    ...listings.map((l: { slug: string; updated_at: string }) =>
-      entry(`/listing/${l.slug}/`, '0.8', 'monthly', l.updated_at?.slice(0, 10))),
-    ...posts.map((p: { slug: string; updated_at: string }) =>
-      entry(`/guides/${p.slug}/`, '0.7', 'monthly', p.updated_at?.slice(0, 10))),
-    ...artists.map((a: { slug: string; updated_at: string }) =>
-      entry(`/artists/${a.slug}/`, '0.6', 'monthly', a.updated_at?.slice(0, 10))),
+    ...listings.map((l: { slug: string; updated_at: unknown }) =>
+      entry(`/listing/${l.slug}/`, '0.8', 'monthly', day(l.updated_at))),
+    ...posts.map((p: { slug: string; updated_at: unknown }) =>
+      entry(`/guides/${p.slug}/`, '0.7', 'monthly', day(p.updated_at))),
+    ...artists.map((a: { slug: string; updated_at: unknown }) =>
+      entry(`/artists/${a.slug}/`, '0.6', 'monthly', day(a.updated_at))),
     ...events.map((e: { slug: string }) => entry(`/events/${e.slug}/`, '0.6', 'weekly')),
   ];
 

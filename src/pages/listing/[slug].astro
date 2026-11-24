@@ -278,12 +278,25 @@ const localBusinessSchema = {
 </Base>
 
 <script is:inline define:vars={{ listingId: listing.id }}>
-  // Fire-and-forget view tracking; does not affect page render
-  fetch('/api/view', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id: listingId }),
-  }).catch(() => {});
+  // Fire-and-forget view tracking; does not affect page render.
+  // Counts one view per listing per browser per day, and skips automated
+  // browsers, so repeat loads and bots do not wake the database.
+  (function () {
+    try {
+      if (navigator.webdriver) return;
+      var key = 'swg_view_' + listingId;
+      var today = new Date().toISOString().slice(0, 10);
+      if (localStorage.getItem(key) === today) return;
+      localStorage.setItem(key, today);
+    } catch (e) {
+      // storage unavailable: fall through and count the view
+    }
+    fetch('/api/view', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: listingId }),
+    }).catch(function () {});
+  })();
 </script>
 
 <style>
